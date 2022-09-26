@@ -1,1 +1,1 @@
-# bomberman-uet
+# Bomberman game for OOP class
