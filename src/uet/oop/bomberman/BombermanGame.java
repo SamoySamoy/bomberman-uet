@@ -22,85 +22,85 @@ import java.util.List;
 
 public class BombermanGame extends Application {
 
-    // screen size
-    public static final int WIDTH = 25;
-    public static final int HEIGHT = 15;
+  // screen size
+  public static final int WIDTH = 25;
+  public static final int HEIGHT = 15;
 
-    // javafx init
-    private GraphicsContext gc;
-    private Canvas canvas;
+  // javafx init
+  private GraphicsContext gc;
+  private Canvas canvas;
 
-    // game objects
-    public static List<Entity> entities = new ArrayList<>();
-    public static List<Entity> stillObjects = new ArrayList<>();
-    public static int[][] objId;
-    public static int level = 1;
-    Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+  // game objects
+  public static List<Entity> entities = new ArrayList<>();
+  public static List<Entity> stillObjects = new ArrayList<>();
+  public static int[][] objId;
+  public static int level = 1;
+  Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage(), 1, 1);
 
-    public static void main(String[] args) {
-        Application.launch(BombermanGame.class);
-    }
+  public static void main(String[] args) {
+    Application.launch(BombermanGame.class);
+  }
 
-    // game init
-    @Override
-    public void start(Stage stage) {
-        // Tao Canvas
-        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
-        gc = canvas.getGraphicsContext2D();
+  // game init
+  @Override
+  public void start(Stage stage) {
+    // Tao Canvas
+    canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
+    gc = canvas.getGraphicsContext2D();
 
-        // Tao root container
-        Group root = new Group();
-        root.getChildren().add(canvas);
+    // Tao root container
+    Group root = new Group();
+    root.getChildren().add(canvas);
 
-        // Tao scene
-        Scene scene = new Scene(root);
+    // Tao scene
+    Scene scene = new Scene(root);
 
-        // Them scene vao stage
-        stage.setScene(scene);
-        stage.show();
+    // Them scene vao stage
+    stage.setScene(scene);
+    stage.show();
 
-        // Lang nghe su kien tu ban phim
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                bomberman.handleEventPress(keyEvent);
-            }
-        });
+    // Lang nghe su kien tu ban phim
+    scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+      @Override
+      public void handle(KeyEvent keyEvent) {
+        bomberman.handleEventPress(keyEvent);
+      }
+    });
 
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                bomberman.handleEventRelease(keyEvent);
-            }
-        });
+    scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+      @Override
+      public void handle(KeyEvent keyEvent) {
+        bomberman.handleEventRelease(keyEvent);
+      }
+    });
 
-        // game loop
-        AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long l) {
-                render();
-                update();
-//                bomberman.move();
-            }
-        };
-        timer.start();
+    // game loop
+    AnimationTimer timer = new AnimationTimer() {
+      @Override
+      public void handle(long l) {
+        render();
+        update();
+        // bomberman.move();
+      }
+    };
+    timer.start();
 
-        // map render
-        new Map("res/levels/Level1.txt");
+    // map render
+    new Map("res/levels/Level1.txt");
 
-    }
+  }
 
-    // stage update
-    public void update() {
-        entities.forEach(Entity::update);
-        bomberman.update();
-    }
+  // stage update
+  public void update() {
+    entities.forEach(Entity::update);
+    bomberman.update();
+  }
 
-    // object render
-    public void render() {
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        stillObjects.forEach(g -> g.render(gc));
-        entities.forEach(g -> g.render(gc));
-        bomberman.render(gc);
-    }
+  // object render
+  public void render() {
+    gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    stillObjects.forEach(g -> g.render(gc));
+    entities.forEach(g -> g.render(gc));
+    bomberman.render(gc);
+  }
 }
