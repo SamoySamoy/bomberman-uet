@@ -1,1 +1,2 @@
-# Bomberman game for OOP class
+## Demo 
+
