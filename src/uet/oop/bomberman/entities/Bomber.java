@@ -12,18 +12,18 @@ import static uet.oop.bomberman.BombermanGame.*;
 public class Bomber extends Entity {
   public int velX;
   public int velY;
-  public int vx;
-  public int vy;
+  public int rx;
+  public int ry;
 
   public static final int DEFAULT_SPEED = 32;
   public static final int HIGH_SPEED = DEFAULT_SPEED * 2;
 
-  public Bomber(int x, int y, Image img, int vx, int vy) {
+  public Bomber(int x, int y, Image img, int rx, int ry) {
     super(x, y, img);
     velX = 0;
     velY = 0;
-    this.vx = vx;
-    this.vy = vy;
+    this.rx = rx;
+    this.ry = ry;
   }
 
   // Handle keyboard event
@@ -32,33 +32,33 @@ public class Bomber extends Entity {
       case W:
         // move up
         // velY = -DEFAULT_SPEED;
-        if (objId[vx][vy - 1] == 0) {
+        if (objId[rx][ry - 1] == 0) {
           y -= DEFAULT_SPEED;
-          vy--;
+          ry--;
         }
         break;
       case S:
         // move down
         // velY = DEFAULT_SPEED;
-        if (objId[vx][vy + 1] == 0) {
+        if (objId[rx][ry + 1] == 0) {
           y += DEFAULT_SPEED;
-          vy++;
+          ry++;
         }
         break;
       case A:
         // move
         // velX = -DEFAULT_SPEED;
-        if (objId[vx - 1][vy] == 0) {
+        if (objId[rx - 1][ry] == 0) {
           x -= DEFAULT_SPEED;
-          vx--;
+          rx--;
         }
         break;
       case D:
         // move up
         // velX = +DEFAULT_SPEED;
-        if (objId[vx + 1][vy] == 0) {
+        if (objId[rx + 1][ry] == 0) {
           x += DEFAULT_SPEED;
-          vx++;
+          rx++;
         }
         break;
     }
