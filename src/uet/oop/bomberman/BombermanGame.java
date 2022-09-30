@@ -10,8 +10,6 @@ import javafx.stage.Stage;
 
 import uet.oop.bomberman.entities.Bomber;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Grass;
-import uet.oop.bomberman.entities.Wall;
 import uet.oop.bomberman.graphics.Map;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.graphics.Map.*;
@@ -80,7 +78,7 @@ public class BombermanGame extends Application {
     entities.forEach(Entity::update);
   }
 
-  // render
+  // object render
   public void render() {
     gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     stillObjects.forEach(g -> g.render(gc));
