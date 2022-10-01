@@ -17,7 +17,7 @@ public class Bomber extends Entity {
   public static final int DEFAULT_SPEED = 32;
   public static final int HIGH_SPEED = DEFAULT_SPEED * 2;
 
-  public Bomber(int x, int y, Image img, int rx, int ry) {
+  public Bomber(int x, int y, int rx, int ry, Image img) {
     super(x, y, img);
     velX = 0;
     velY = 0;
@@ -25,13 +25,15 @@ public class Bomber extends Entity {
     this.ry = ry;
   }
 
-  // Handle keyboard event
+  // keyboard event
   public void handleEventPress(KeyEvent e) {
     switch (e.getCode()) {
       case W:
       case UP:
         // move up
         // velY = -DEFAULT_SPEED;
+
+        // only move when adjacent objId is 0(grass)
         if (objId[rx][ry - 1] == 0) {
           y -= DEFAULT_SPEED;
           ry--;

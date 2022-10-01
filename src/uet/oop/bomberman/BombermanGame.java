@@ -16,9 +16,7 @@ import uet.oop.bomberman.graphics.Map;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.graphics.Map.*;
 
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class BombermanGame extends Application {
 
@@ -33,9 +31,14 @@ public class BombermanGame extends Application {
   // game objects
   public static List<Entity> entities = new ArrayList<>();
   public static List<Entity> stillObjects = new ArrayList<>();
+  // cordinates of all objects in a simplify matrix
+  // handle while rendering in Map.java
   public static int[][] objId;
+  // first level
   public static int level = 1;
-  Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage(), 1, 1);
+  // add main player start at (rx:1, ry:1) (coordinates in objId),
+  // (x:1, y:1) (cordinates in screen size)
+  Bomber bomberman = new Bomber(1, 1, 1, 1, Sprite.player_right.getFxImage());
 
   public static void main(String[] args) {
     Application.launch(BombermanGame.class);
@@ -44,22 +47,22 @@ public class BombermanGame extends Application {
   // game init
   @Override
   public void start(Stage stage) {
-    // Tao Canvas
+    // Create canvas
     canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
     gc = canvas.getGraphicsContext2D();
 
-    // Tao root container
+    // root container
     Group root = new Group();
     root.getChildren().add(canvas);
 
-    // Tao scene
+    // scene
     Scene scene = new Scene(root);
 
-    // Them scene vao stage
+    // add scene vao stage
     stage.setScene(scene);
     stage.show();
 
-    // Lang nghe su kien tu ban phim
+    // Handle keyboard events
     scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
       @Override
       public void handle(KeyEvent keyEvent) {
@@ -84,7 +87,6 @@ public class BombermanGame extends Application {
       }
     };
     timer.start();
-
     // map render
     new Map("res/levels/Level1.txt");
 
