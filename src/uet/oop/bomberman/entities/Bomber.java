@@ -9,26 +9,27 @@ import javafx.scene.paint.Color;
 import java.util.*;
 
 import javafx.scene.input.KeyEvent;
+import uet.oop.bomberman.graphics.Sprite;
 
 import static uet.oop.bomberman.BombermanGame.*;
 
 import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
 public class Bomber extends Entity {
-    public int velX;
-    public int velY;
     public int rx;
     public int ry;
+
+    // Huong di chuyen cua nhan vat
+    public String direction;
 
     public static final int DEFAULT_SPEED = 32;
     public static final int HIGH_SPEED = DEFAULT_SPEED * 2;
 
     public Bomber(int x, int y, Image img, int rx, int ry) {
         super(x, y, img);
-        velX = 0;
-        velY = 0;
         this.rx = rx;
         this.ry = ry;
+        this.direction = "down";
     }
 
     // Handle keyboard event
@@ -37,42 +38,57 @@ public class Bomber extends Entity {
             case W:
             case UP:
                 // move up
-                // velY = -DEFAULT_SPEED;
                 if (objId[rx][ry - 1] == 0) {
                     y -= DEFAULT_SPEED;
                     ry--;
+                }
+                // Thay doi hinh anh cua nhan vat khi di chuyen
+                if (!direction.equals("up")) {
+                    direction = "up";
+                    this.img = Sprite.player_up.getFxImage();
                 }
                 break;
             case S:
             case DOWN:
                 // move down
-                // velY = DEFAULT_SPEED;
                 if (objId[rx][ry + 1] == 0) {
                     y += DEFAULT_SPEED;
                     ry++;
                 }
+                // Thay doi hinh anh cua nhan vat khi di chuyen
+                if (!direction.equals("down")) {
+                    direction = "down";
+                    this.img = Sprite.player_down.getFxImage();
+                }
                 break;
             case A:
             case LEFT:
-                // move
-                // velX = -DEFAULT_SPEED;
+                // move left
                 if (objId[rx - 1][ry] == 0) {
                     x -= DEFAULT_SPEED;
                     rx--;
                 }
+                // Thay doi hinh anh cua nhan vat khi di chuyen
+                if (!direction.equals("left")) {
+                    direction = "left";
+                    this.img = Sprite.player_left.getFxImage();
+                }
                 break;
             case D:
             case RIGHT:
-                // move up
-                // velX = +DEFAULT_SPEED;
+                // move right
                 if (objId[rx + 1][ry] == 0) {
                     x += DEFAULT_SPEED;
                     rx++;
                 }
+                // Thay doi hinh anh cua nhan vat khi di chuyen
+                if (!direction.equals("right")) {
+                    direction = "right";
+                    this.img = Sprite.player_right.getFxImage();
+                }
                 break;
         }
     }
-
 
     // check collision
     public boolean checkCollision(List<Entity> stillObjects) {

@@ -35,7 +35,7 @@ public class BombermanGame extends Application {
     public static List<Entity> stillObjects = new ArrayList<>();
     public static int[][] objId;
     public static int level = 1;
-    Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage(), 1, 1);
+    Bomber bomberman = new Bomber(1, 1, Sprite.player_down.getFxImage(), 1, 1);
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
