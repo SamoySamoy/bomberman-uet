@@ -35,7 +35,7 @@ public class BombermanGame extends Application {
     public static List<Entity> stillObjects = new ArrayList<>();
     public static int[][] objId;
     public static int level = 1;
-    Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+    Bomber bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage(), 1, 1);
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
@@ -66,21 +66,13 @@ public class BombermanGame extends Application {
                 bomberman.handleEventPress(keyEvent);
             }
         });
-
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                bomberman.handleEventRelease(keyEvent);
-            }
-        });
-
         // game loop
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
                 render();
                 update();
-
+                // bomberman.move();
             }
         };
         timer.start();

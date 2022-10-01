@@ -10,60 +10,69 @@ import java.util.*;
 
 import javafx.scene.input.KeyEvent;
 
+import static uet.oop.bomberman.BombermanGame.*;
+
 import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
 public class Bomber extends Entity {
     public int velX;
     public int velY;
+    public int rx;
+    public int ry;
 
     public static final int DEFAULT_SPEED = 32;
     public static final int HIGH_SPEED = DEFAULT_SPEED * 2;
 
-    public Bomber(int x, int y, Image img) {
+    public Bomber(int x, int y, Image img, int rx, int ry) {
         super(x, y, img);
         velX = 0;
         velY = 0;
+        this.rx = rx;
+        this.ry = ry;
     }
 
     // Handle keyboard event
     public void handleEventPress(KeyEvent e) {
         switch (e.getCode()) {
             case W:
+            case UP:
                 // move up
-//                velY = -DEFAULT_SPEED;
-                y -= DEFAULT_SPEED;
+                // velY = -DEFAULT_SPEED;
+                if (objId[rx][ry - 1] == 0) {
+                    y -= DEFAULT_SPEED;
+                    ry--;
+                }
                 break;
             case S:
+            case DOWN:
                 // move down
-//                velY = DEFAULT_SPEED;
-                y += DEFAULT_SPEED;
+                // velY = DEFAULT_SPEED;
+                if (objId[rx][ry + 1] == 0) {
+                    y += DEFAULT_SPEED;
+                    ry++;
+                }
                 break;
             case A:
-//                 move
-//                velX = -DEFAULT_SPEED;
-                x -= DEFAULT_SPEED;
+            case LEFT:
+                // move
+                // velX = -DEFAULT_SPEED;
+                if (objId[rx - 1][ry] == 0) {
+                    x -= DEFAULT_SPEED;
+                    rx--;
+                }
                 break;
             case D:
+            case RIGHT:
                 // move up
-//                velX = +DEFAULT_SPEED;
-                x += DEFAULT_SPEED;
+                // velX = +DEFAULT_SPEED;
+                if (objId[rx + 1][ry] == 0) {
+                    x += DEFAULT_SPEED;
+                    rx++;
+                }
                 break;
         }
     }
 
-    public void handleEventRelease(KeyEvent e) {
-        switch (e.getCode()) {
-            case W:
-            case S:
-//                velY = 0;
-                break;
-            case A:
-            case D:
-//                velX = 0;
-                // move
-                break;
-        }
-    }
 
     // check collision
     public boolean checkCollision(List<Entity> stillObjects) {
@@ -122,6 +131,5 @@ public class Bomber extends Entity {
 
     @Override
     public void update() {
-
     }
 }
