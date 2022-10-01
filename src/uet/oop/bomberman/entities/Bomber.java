@@ -5,7 +5,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
-
 import javafx.scene.input.KeyEvent;
 import static uet.oop.bomberman.BombermanGame.*;
 
@@ -30,6 +29,7 @@ public class Bomber extends Entity {
   public void handleEventPress(KeyEvent e) {
     switch (e.getCode()) {
       case W:
+      case UP:
         // move up
         // velY = -DEFAULT_SPEED;
         if (objId[rx][ry - 1] == 0) {
@@ -38,6 +38,7 @@ public class Bomber extends Entity {
         }
         break;
       case S:
+      case DOWN:
         // move down
         // velY = DEFAULT_SPEED;
         if (objId[rx][ry + 1] == 0) {
@@ -46,6 +47,7 @@ public class Bomber extends Entity {
         }
         break;
       case A:
+      case LEFT:
         // move
         // velX = -DEFAULT_SPEED;
         if (objId[rx - 1][ry] == 0) {
@@ -54,6 +56,7 @@ public class Bomber extends Entity {
         }
         break;
       case D:
+      case RIGHT:
         // move up
         // velX = +DEFAULT_SPEED;
         if (objId[rx + 1][ry] == 0) {
