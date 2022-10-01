@@ -25,14 +25,14 @@ public class Bomber extends Entity {
     public static final int DEFAULT_SPEED = 32;
     public static final int HIGH_SPEED = DEFAULT_SPEED * 2;
 
-    public Bomber(int x, int y, Image img, int rx, int ry) {
+    public Bomber(int x, int y, int rx, int ry, Image img) {
         super(x, y, img);
         this.rx = rx;
         this.ry = ry;
-        this.direction = "down";
+        this.direction = "right";
     }
 
-    // Handle keyboard event
+    // keyboard event
     public void handleEventPress(KeyEvent e) {
         switch (e.getCode()) {
             case W:
