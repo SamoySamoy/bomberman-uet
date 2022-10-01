@@ -80,7 +80,7 @@ public class BombermanGame extends Application {
             public void handle(long l) {
                 render();
                 update();
-//                bomberman.move();
+
             }
         };
         timer.start();
