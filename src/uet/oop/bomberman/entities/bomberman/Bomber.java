@@ -1,14 +1,13 @@
-package uet.oop.bomberman.entities;
+package uet.oop.bomberman.entities.bomberman;
 
-import javafx.scene.SnapshotParameters;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 
 import java.util.*;
 
 import javafx.scene.input.KeyEvent;
+import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.blocks.Brick;
+import uet.oop.bomberman.entities.blocks.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
 import static uet.oop.bomberman.BombermanGame.*;
@@ -16,8 +15,8 @@ import static uet.oop.bomberman.BombermanGame.*;
 import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
 public class Bomber extends Entity {
-    public int rx;
-    public int ry;
+    private int rx;
+    private int ry;
 
     // Huong di chuyen cua nhan vat
     public String direction;
@@ -90,55 +89,70 @@ public class Bomber extends Entity {
         }
     }
 
+    public int getRx() {
+        return rx;
+    }
+
+    public void setRx(int rx) {
+        this.rx = rx;
+    }
+
+    public int getRy() {
+        return ry;
+    }
+
+    public void setRy(int ry) {
+        this.ry = ry;
+    }
     // check collision
-    public boolean checkCollision(List<Entity> stillObjects) {
-        for (Entity x : stillObjects) {
-            if (x instanceof Wall || x instanceof Brick) {
-                return checkCollision(x);
-            }
-        }
-        return false;
-    }
-
-    private boolean checkCollision(Entity block) {
-        // The sides of the rectangles
-        int leftA, leftB;
-        int rightA, rightB;
-        int topA, topB;
-        int bottomA, bottomB;
-
-        // Calculate the sides of rect A
-        leftA = this.x;
-        rightA = this.x + SCALED_SIZE;
-        topA = this.y;
-        bottomA = this.y + SCALED_SIZE;
-
-        // Calculate the sides of rect B
-        leftB = block.x;
-        rightB = block.x + SCALED_SIZE;
-        topB = block.y;
-        bottomB = block.y + SCALED_SIZE;
-
-        // If any of the sides from A are outside of B
-        if (bottomA <= topB) {
-            return false;
-        }
-
-        if (topA >= bottomB) {
-            return false;
-        }
-
-        if (rightA <= leftB) {
-            return false;
-        }
-
-        if (leftA >= rightB) {
-            return false;
-        }
-
-        // If none of the sides from A are outside B
-        return true;
-    }
+//    public boolean checkCollision(List<Entity> stillObjects) {
+//        for (Entity x : stillObjects) {
+//            if (x instanceof Wall || x instanceof Brick) {
+//                return checkCollision(x);
+//            }
+//        }
+//        return false;
+//    }
+//
+//    private boolean checkCollision(Entity block) {
+//        // The sides of the rectangles
+//        int leftA, leftB;
+//        int rightA, rightB;
+//        int topA, topB;
+//        int bottomA, bottomB;
+//
+//        // Calculate the sides of rect A
+//        leftA = this.x;
+//        rightA = this.x + SCALED_SIZE;
+//        topA = this.y;
+//        bottomA = this.y + SCALED_SIZE;
+//
+//        // Calculate the sides of rect B
+//        leftB = block.x;
+//        rightB = block.x + SCALED_SIZE;
+//        topB = block.y;
+//        bottomB = block.y + SCALED_SIZE;
+//
+//        // If any of the sides from A are outside of B
+//        if (bottomA <= topB) {
+//            return false;
+//        }
+//
+//        if (topA >= bottomB) {
+//            return false;
+//        }
+//
+//        if (rightA <= leftB) {
+//            return false;
+//        }
+//
+//        if (leftA >= rightB) {
+//            return false;
+//        }
+//
+//        // If none of the sides from A are outside B
+//        return true;
+//    }
 
     // Move
     public void move() {

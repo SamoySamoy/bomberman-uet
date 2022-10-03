@@ -10,11 +10,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
-import uet.oop.bomberman.entities.Bomber;
+import uet.oop.bomberman.entities.bomberman.Bomber;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.enemies.Ballom;
+import uet.oop.bomberman.entities.enemies.Enemy;
 import uet.oop.bomberman.graphics.Map;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.graphics.Map.*;
 
 import java.util.*;
 
@@ -39,6 +40,7 @@ public class BombermanGame extends Application {
     // add main player start at (rx:1, ry:1) (coordinates in objId),
     // (x:1, y:1) (cordinates in screen size)
     Bomber bomberman = new Bomber(1, 1, 1, 1, Sprite.player_right.getFxImage());
+    Enemy ballom1 = new Ballom(3, 3, Sprite.balloom_left1.getFxImage(), 3, 3, true, "left");
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
@@ -79,6 +81,7 @@ public class BombermanGame extends Application {
             public void handle(long l) {
                 render();
                 update();
+                ballom1.move();
                 // bomberman.move();
             }
         };
@@ -89,6 +92,7 @@ public class BombermanGame extends Application {
     public void update() {
         entities.forEach(Entity::update);
         bomberman.update();
+        ballom1.update();
     }
 
 
@@ -98,5 +102,6 @@ public class BombermanGame extends Application {
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
         bomberman.render(gc);
+        ballom1.render(gc);
     }
 }
