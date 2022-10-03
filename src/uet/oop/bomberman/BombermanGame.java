@@ -20,83 +20,80 @@ import java.util.*;
 
 public class BombermanGame extends Application {
 
-    // screen size
-    public static final int WIDTH = 25;
-    public static final int HEIGHT = 15;
+  // screen size
+  public static final int WIDTH = 25;
+  public static final int HEIGHT = 15;
 
-    // javafx init
-    private GraphicsContext gc;
-    private Canvas canvas;
+  // javafx init
+  private GraphicsContext gc;
+  private Canvas canvas;
 
-    // game objects
-    public static List<Entity> entities = new ArrayList<>();
-    public static List<Entity> stillObjects = new ArrayList<>();
-    // cordinates of all objects in a simplify matrix
-    // handle while rendering in Map.java
-    public static int[][] objId;
-    // first level
-    public static int level = 1;
-    // add main player start at (rx:1, ry:1) (coordinates in objId),
-    // (x:1, y:1) (cordinates in screen size)
-    Bomber bomberman = new Bomber(1, 1, 1, 1, Sprite.player_right.getFxImage());
+  // game objects
+  public static List<Entity> entities = new ArrayList<>();
+  public static List<Entity> stillObjects = new ArrayList<>();
+  public static int[][] objId;
+  public static int level = 1;
+  // add main player start at (rx:1, ry:1) (coordinates in objId),
+  // (x:1, y:1) (cordinates in screen size)
+  Bomber bomberman = new Bomber(1, 1, 1, 1, Sprite.player_right.getFxImage());
+  
+  public static void main(String[] args) {
+    Application.launch(BombermanGame.class);
+  }
 
-    public static void main(String[] args) {
-        Application.launch(BombermanGame.class);
-    }
+  // game init
+  @Override
+  public void start(Stage stage) {
+    // Create canvas
+    canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
+    gc = canvas.getGraphicsContext2D();
 
-    // game init
-    @Override
-    public void start(Stage stage) {
-        // Create canvas
-        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
-        gc = canvas.getGraphicsContext2D();
+    // root container
+    Group root = new Group();
+    root.getChildren().add(canvas);
 
-        // root container
-        Group root = new Group();
-        root.getChildren().add(canvas);
+    // scene
+    Scene scene = new Scene(root);
 
-        // scene
-        Scene scene = new Scene(root);
+    // add scene vao stage
+    stage.setScene(scene);
+    stage.show();
 
-        // add scene vao stage
-        stage.setScene(scene);
-        stage.show();
+    // Handle keyboard events
+    scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+      @Override
+      public void handle(KeyEvent keyEvent) {
+        bomberman.handleEventPress(keyEvent);
+      }
+    });
 
-        // Handle keyboard events
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                bomberman.handleEventPress(keyEvent);
-            }
-        });
+    // map render
+    new Map("res/levels/Level1.txt");
 
-        // map render
-        new Map("res/levels/Level1.txt");
+    // game loop
+    AnimationTimer timer = new AnimationTimer() {
+      @Override
+      public void handle(long l) {
+        render();
+        update();
+        // bomberman.move();
+      }
+    };
+    timer.start();
+  }
 
-        // game loop
-        AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long l) {
-                render();
-                update();
-                // bomberman.move();
-            }
-        };
-        timer.start();
-    }
-
-    // stage update
-    public void update() {
-        entities.forEach(Entity::update);
-        bomberman.update();
-    }
+  // stage update
+  public void update() {
+    entities.forEach(Entity::update);
+    bomberman.update();
+  }
 
 
-    // object render
-    public void render() {
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        stillObjects.forEach(g -> g.render(gc));
-        entities.forEach(g -> g.render(gc));
-        bomberman.render(gc);
-    }
+  // object render
+  public void render() {
+    gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    stillObjects.forEach(g -> g.render(gc));
+    entities.forEach(g -> g.render(gc));
+    bomberman.render(gc);
+  }
 }

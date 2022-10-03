@@ -75,6 +75,7 @@ public class Map {
           }
         }
       }
+      ip.close();
     } catch (IOException e) { // Catch exception
       e.printStackTrace(); // printStackTrace(): Help to understand where the problem is actually
                            // happening.
