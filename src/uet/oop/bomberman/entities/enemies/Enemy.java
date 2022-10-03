@@ -10,6 +10,7 @@ import static uet.oop.bomberman.BombermanGame.objId;
 public abstract class Enemy extends Entity {
   protected static final long ENEMY_DELAY = 1000;
   protected static final int DEFAULT_ENEMY_SPEED = 32;
+  protected static final int DEATH_DISTANCE = 48;
   protected int rx;
   protected int ry;
   protected boolean isALive;
@@ -47,6 +48,7 @@ public abstract class Enemy extends Entity {
     if (objId[rx][ry - 1] == 0) {
       y -= DEFAULT_ENEMY_SPEED;
       ry--;
+      this.direction = "up";
     }
   }
 
@@ -54,6 +56,7 @@ public abstract class Enemy extends Entity {
     if (objId[rx][ry + 1] == 0) {
       y += DEFAULT_ENEMY_SPEED;
       ry++;
+      this.direction = "down";
     }
   }
 
@@ -61,6 +64,7 @@ public abstract class Enemy extends Entity {
     if (objId[rx - 1][ry] == 0) {
       x -= DEFAULT_ENEMY_SPEED;
       rx--;
+      this.direction = "left";
     }
     if (!direction.equals("left")) {
       this.img = enemyLeftImage;
@@ -71,15 +75,30 @@ public abstract class Enemy extends Entity {
     if (objId[rx + 1][ry] == 0) {
       x += DEFAULT_ENEMY_SPEED;
       rx++;
+      this.direction = "right";
     }
     if (!direction.equals("right")) {
       this.img = enemyRightImage;
     }
   }
 
+  public boolean checkOpposite(String a, String b) {
+    if (a.equals("left") && b.equals("right") || a.equals("right") && b.equals("left")
+        || a.equals("up") && b.equals("down") || a.equals("down") && b.equals("up")) {
+      return true;
+    }
+    return false;
+  }
+
   public void killBomber() {
-    if (bomberman.getX() == this.getX() && Math.abs(bomberman.getY() - this.getY()) < 64
-        || bomberman.getY() == this.getY() && Math.abs(bomberman.getX() - this.getX()) < 64) {
+    if (bomberman.getX() == this.getX() && Math.abs(bomberman.getY() - this.getY()) == 0
+        || bomberman.getX() == this.getX()
+            && Math.abs(bomberman.getY() - this.getY()) < DEATH_DISTANCE
+            && checkOpposite(bomberman.getDirection(), this.direction)
+        || bomberman.getY() == this.getY() && Math.abs(bomberman.getX() - this.getX()) == 0
+        || bomberman.getY() == this.getY()
+            && Math.abs(bomberman.getX() - this.getX()) < DEATH_DISTANCE
+            && checkOpposite(bomberman.getDirection(), this.direction)) {
       bomberman.killedByEnemy();
       bomberman.setAlive(false);
     }
