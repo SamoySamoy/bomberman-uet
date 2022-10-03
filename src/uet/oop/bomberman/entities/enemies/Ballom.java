@@ -5,7 +5,7 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.Random;
 
-import static uet.oop.bomberman.BombermanGame.objId;
+import static uet.oop.bomberman.BombermanGame.*;
 
 public class Ballom extends Enemy {
 
@@ -55,12 +55,19 @@ public class Ballom extends Enemy {
     }
 
     @Override
-    public void kill() {
+    public void killBomber() {
+        if (bomberman.getRx() == this.getRx() && bomberman.getRy() == this.getRy()) {
+            bomberman.killedByEnemy();
+        }
+    }
+
+    @Override
+    public void destroyed() {
 
     }
 
     @Override
     public void update() {
-        super.update();
+
     }
 }

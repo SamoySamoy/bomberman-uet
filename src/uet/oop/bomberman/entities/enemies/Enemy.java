@@ -39,7 +39,9 @@ public abstract class Enemy extends Entity {
 
     public abstract void move();
 
-    public abstract void kill();
+    public abstract void killBomber();
+
+    public abstract void destroyed();
 
     @Override
     public void update() {

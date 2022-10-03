@@ -15,6 +15,7 @@ import static uet.oop.bomberman.BombermanGame.*;
 import static uet.oop.bomberman.graphics.Sprite.SCALED_SIZE;
 
 public class Bomber extends Entity {
+    private boolean isAlive;
     private int rx;
     private int ry;
 
@@ -24,11 +25,12 @@ public class Bomber extends Entity {
     public static final int DEFAULT_SPEED = 32;
     public static final int HIGH_SPEED = DEFAULT_SPEED * 2;
 
-    public Bomber(int x, int y, int rx, int ry, Image img) {
+    public Bomber(int x, int y, int rx, int ry, Image img,String direction) {
         super(x, y, img);
         this.rx = rx;
         this.ry = ry;
-        this.direction = "right";
+        this.direction = direction;
+        this.isAlive = true;
     }
 
     // keyboard event
@@ -88,7 +90,11 @@ public class Bomber extends Entity {
                 break;
         }
     }
-  
+
+    public void killedByEnemy() {
+        System.out.println("Killed by enemy");
+    }
+
     public int getRx() {
         return rx;
     }
@@ -104,7 +110,23 @@ public class Bomber extends Entity {
     public void setRy(int ry) {
         this.ry = ry;
     }
-    // check collision
+
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    public void setAlive(boolean alive) {
+        isAlive = alive;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+// check collision
 //    public boolean checkCollision(List<Entity> stillObjects) {
 //        for (Entity x : stillObjects) {
 //            if (x instanceof Wall || x instanceof Brick) {
