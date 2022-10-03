@@ -32,11 +32,11 @@ public class BombermanGame extends Application {
   public static List<Entity> entities = new ArrayList<>();
   public static List<Entity> stillObjects = new ArrayList<>();
   public static int[][] objId;
-  public static int level = 1;
+  public static int level = 2;
   // add main player start at (rx:1, ry:1) (coordinates in objId),
   // (x:1, y:1) (cordinates in screen size)
   Bomber bomberman = new Bomber(1, 1, 1, 1, Sprite.player_right.getFxImage());
-  
+
   public static void main(String[] args) {
     Application.launch(BombermanGame.class);
   }
@@ -68,7 +68,7 @@ public class BombermanGame extends Application {
     });
 
     // map render
-    new Map("res/levels/Level1.txt");
+    new Map("res/levels/Level2.txt");
 
     // game loop
     AnimationTimer timer = new AnimationTimer() {
@@ -87,7 +87,6 @@ public class BombermanGame extends Application {
     entities.forEach(Entity::update);
     bomberman.update();
   }
-
 
   // object render
   public void render() {

@@ -18,7 +18,6 @@ import java.util.Scanner;
 import java.util.StringTokenizer;
 
 
-// cai nay di chom cua bon kia =)) nma sua di ti thi van chay dc
 public class Map {
   // Constructor MapCreation with parameter "level" in string data type.
   public Map(String level) {
