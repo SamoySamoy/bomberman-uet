@@ -94,6 +94,7 @@ public class Bomber extends Entity {
 
   public void killedByEnemy() {
     if (this.isAlive == false) {
+      // change from dead1 to dead3
       if (animation == 1) {
         this.img = Sprite.player_dead1.getFxImage();
         animation = 2;
