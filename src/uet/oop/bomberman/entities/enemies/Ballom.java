@@ -20,54 +20,26 @@ public class Ballom extends Enemy {
         if (temp - lastMoveTime >= ENEMY_DELAY) {
             lastMoveTime = temp;
             Random random = new Random();
-            int direction = random.nextInt(4);
-            switch (direction) {
+            int randomDirection = random.nextInt(4);
+            switch (randomDirection) {
                 case 0:
-                    // move up
-                    if (objId[rx][ry - 1] == 0) {
-                        y -= DEFAULT_ENEMY_SPEED;
-                        ry--;
-                    }
+                    this.moveUp();
                     break;
                 case 1:
-                    // move down
-                    if (objId[rx][ry + 1] == 0) {
-                        y += DEFAULT_ENEMY_SPEED;
-                        ry++;
-                    }
+                    this.moveDown();
                     break;
                 case 2:
-                    // move left
-                    if (objId[rx - 1][ry] == 0) {
-                        x -= DEFAULT_ENEMY_SPEED;
-                        rx--;
-                    }
+                    this.moveLeft(Sprite.balloom_left3.getFxImage());
                     break;
                 case 3:
-                    // move right
-                    if (objId[rx + 1][ry] == 0) {
-                        x += DEFAULT_ENEMY_SPEED;
-                        rx++;
-                    }
+                    this.moveRight(Sprite.balloom_right3.getFxImage());
                     break;
             }
         }
     }
 
     @Override
-    public void killBomber() {
-        if (bomberman.getRx() == this.getRx() && bomberman.getRy() == this.getRy()) {
-            bomberman.killedByEnemy();
-        }
-    }
-
-    @Override
     public void destroyed() {
-
-    }
-
-    @Override
-    public void update() {
 
     }
 }

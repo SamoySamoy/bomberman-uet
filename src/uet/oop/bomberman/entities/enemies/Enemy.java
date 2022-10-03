@@ -2,10 +2,14 @@ package uet.oop.bomberman.entities.enemies;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.graphics.Sprite;
+
+import static uet.oop.bomberman.BombermanGame.bomberman;
+import static uet.oop.bomberman.BombermanGame.objId;
 
 public abstract class Enemy extends Entity {
+    protected static final long ENEMY_DELAY = 1000;
     protected static final int DEFAULT_ENEMY_SPEED = 32;
-    protected static final long ENEMY_DELAY = 800;
     protected int rx;
     protected int ry;
     protected boolean isALive;
@@ -39,12 +43,51 @@ public abstract class Enemy extends Entity {
 
     public abstract void move();
 
-    public abstract void killBomber();
+    public void moveUp() {
+        if (objId[rx][ry - 1] == 0) {
+            y -= DEFAULT_ENEMY_SPEED;
+            ry--;
+        }
+    }
+
+    public void moveDown() {
+        if (objId[rx][ry + 1] == 0) {
+            y += DEFAULT_ENEMY_SPEED;
+            ry++;
+        }
+    }
+
+    public void moveLeft(Image enemyLeftImage) {
+        if (objId[rx - 1][ry] == 0) {
+            x -= DEFAULT_ENEMY_SPEED;
+            rx--;
+        }
+        if (!direction.equals("left")) {
+            this.img = enemyLeftImage;
+        }
+    }
+
+    public void moveRight(Image enemyRightImage) {
+        if (objId[rx + 1][ry] == 0) {
+            x += DEFAULT_ENEMY_SPEED;
+            rx++;
+        }
+        if (!direction.equals("right")) {
+            this.img = enemyRightImage;
+        }
+    }
+
+    public void killBomber() {
+        if (bomberman.getRx() == this.getRx() && bomberman.getRy() == this.getRy()) {
+            bomberman.killedByEnemy();
+            bomberman.setAlive(false);
+        }
+    }
 
     public abstract void destroyed();
 
     @Override
     public void update() {
-
+        killBomber();
     }
 }

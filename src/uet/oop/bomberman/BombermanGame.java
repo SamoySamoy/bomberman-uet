@@ -14,6 +14,7 @@ import uet.oop.bomberman.entities.bomberman.Bomber;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.enemies.Ballom;
 import uet.oop.bomberman.entities.enemies.Enemy;
+import uet.oop.bomberman.entities.enemies.Oneal;
 import uet.oop.bomberman.graphics.Map;
 import uet.oop.bomberman.graphics.Sprite;
 
@@ -32,6 +33,8 @@ public class BombermanGame extends Application {
     // game objects
     public static List<Entity> entities = new ArrayList<>();
     public static List<Entity> stillObjects = new ArrayList<>();
+
+    public static List<Enemy> enemies = new ArrayList<>();
     // cordinates of all objects in a simplify matrix
     // handle while rendering in Map.java
     public static int[][] objId;
@@ -39,8 +42,9 @@ public class BombermanGame extends Application {
     public static int level = 1;
     // add main player start at (rx:1, ry:1) (coordinates in objId),
     // (x:1, y:1) (cordinates in screen size)
-    public static Bomber bomberman = new Bomber(1, 1, 1, 1, Sprite.player_right.getFxImage(),"right");
-    Enemy ballom1 = new Ballom(3, 3, Sprite.balloom_left1.getFxImage(), 3, 3, true, "left");
+    public static Bomber bomberman = new Bomber(1, 1, 1, 1, Sprite.player_right.getFxImage(), "right");
+    Enemy ballom1 = new Ballom(1, 5, Sprite.balloom_left1.getFxImage(), 1, 5, true, "left");
+    Enemy oneal1 = new Oneal(8, 8, Sprite.oneal_left1.getFxImage(), 8, 8, true, "left");
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
@@ -73,7 +77,11 @@ public class BombermanGame extends Application {
         });
 
         // map render
-        new Map("res/levels/Level2.txt");
+        new Map("res/levels/Level1.txt");
+
+        // add enemies tạm thời, sẽ add enemies ở phần tạo level sau
+        enemies.add(ballom1);
+        enemies.add(oneal1);
 
         // game loop
         AnimationTimer timer = new AnimationTimer() {
@@ -81,8 +89,7 @@ public class BombermanGame extends Application {
             public void handle(long l) {
                 render();
                 update();
-                ballom1.move();
-                // bomberman.move();
+                enemies.forEach(Enemy::move);
             }
         };
         timer.start();
@@ -92,7 +99,7 @@ public class BombermanGame extends Application {
     public void update() {
         entities.forEach(Entity::update);
         bomberman.update();
-        ballom1.update();
+        enemies.forEach(Enemy::update);
     }
 
 
@@ -102,7 +109,7 @@ public class BombermanGame extends Application {
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
         bomberman.render(gc);
-        ballom1.render(gc);
+        enemies.forEach(enemy -> enemy.render(gc));
     }
 
 }
