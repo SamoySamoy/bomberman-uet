@@ -88,7 +88,7 @@ public class Bomber extends Entity {
                 break;
         }
     }
-
+  
     public int getRx() {
         return rx;
     }

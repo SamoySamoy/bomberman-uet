@@ -73,7 +73,7 @@ public class BombermanGame extends Application {
         });
 
         // map render
-        new Map("res/levels/Level1.txt");
+        new Map("res/levels/Level2.txt");
 
         // game loop
         AnimationTimer timer = new AnimationTimer() {
@@ -104,4 +104,5 @@ public class BombermanGame extends Application {
         bomberman.render(gc);
         ballom1.render(gc);
     }
+
 }
