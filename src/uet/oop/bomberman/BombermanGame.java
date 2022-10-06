@@ -17,6 +17,7 @@ import uet.oop.bomberman.entities.enemies.Enemy;
 import uet.oop.bomberman.entities.enemies.Oneal;
 import uet.oop.bomberman.graphics.Map;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.entities.blocks.Bomb;
 
 import java.util.*;
 
@@ -34,6 +35,7 @@ public class BombermanGame extends Application {
   public static List<Entity> entities = new ArrayList<>();
   public static List<Entity> stillObjects = new ArrayList<>();
   public static List<Enemy> enemies = new ArrayList<>();
+  public static List<Entity> bombs = new ArrayList<>();
 
   // cordinates of all objects in a simplify matrix
   // handle while rendering in Map.java
@@ -47,6 +49,7 @@ public class BombermanGame extends Application {
   Enemy ballom1 = new Ballom(1, 5, Sprite.balloom_left1.getFxImage(), 1, 5, true, "left");
   Enemy oneal1 = new Oneal(8, 8, Sprite.oneal_left1.getFxImage(), 8, 8, true, "left");
   public static boolean isOver = false;
+
 
   public static void main(String[] args) {
     Application.launch(BombermanGame.class);
@@ -70,17 +73,8 @@ public class BombermanGame extends Application {
     stage.setScene(scene);
     stage.show();
 
-    // Handle keyboard events
-    scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-      @Override
-      public void handle(KeyEvent keyEvent) {
-        bomberman.handleEventPress(keyEvent);
-      }
-    });
-
     // map render
     new Map("res/levels/Level1.txt");
-
     // add enemies tạm thời, sẽ add enemies ở phần tạo level sau
     enemies.add(ballom1);
     enemies.add(oneal1);
@@ -90,20 +84,30 @@ public class BombermanGame extends Application {
       @Override
       public void handle(long l) {
         if (isOver == false) {
+          enemies.forEach(Enemy::move);
+          // keyboard events
+          scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+              bomberman.handleEventPress(keyEvent);
+            }
+          });
           render();
           update();
-          enemies.forEach(Enemy::move);
         }
       }
     };
     timer.start();
   }
 
+  public void putBomb() {}
+
   // stage update
   public void update() {
     entities.forEach(Entity::update);
     bomberman.update();
     enemies.forEach(Enemy::update);
+    bombs.forEach(Entity::update);
   }
 
 
@@ -114,6 +118,7 @@ public class BombermanGame extends Application {
     entities.forEach(g -> g.render(gc));
     bomberman.render(gc);
     enemies.forEach(enemy -> enemy.render(gc));
+    bombs.forEach(bomb -> bomb.render(gc));
   }
 
 }

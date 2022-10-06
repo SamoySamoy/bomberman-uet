@@ -6,6 +6,7 @@ import java.util.*;
 
 import javafx.scene.input.KeyEvent;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.blocks.Bomb;
 import uet.oop.bomberman.entities.blocks.Brick;
 import uet.oop.bomberman.entities.blocks.Wall;
 import uet.oop.bomberman.graphics.Sprite;
@@ -32,6 +33,42 @@ public class Bomber extends Entity {
     this.ry = ry;
     this.direction = direction;
     this.isAlive = true;
+  }
+
+  public int getRx() {
+    return rx;
+  }
+
+  public void setRx(int rx) {
+    this.rx = rx;
+  }
+
+  public int getRy() {
+    return ry;
+  }
+
+  public void setRy(int ry) {
+    this.ry = ry;
+  }
+
+  public boolean isAlive() {
+    return isAlive;
+  }
+
+  public void setAlive(boolean alive) {
+    isAlive = alive;
+  }
+
+  public String getDirection() {
+    return direction;
+  }
+
+  public void setDirection(String direction) {
+    this.direction = direction;
+  }
+
+  public void move() {
+
   }
 
   // keyboard event
@@ -92,6 +129,12 @@ public class Bomber extends Entity {
           this.img = Sprite.player_right.getFxImage();
         }
         break;
+      case SPACE:
+        // put bomb
+        System.out.println(x + " " + y + " " + rx + " " + ry);
+        Entity bomb = new Bomb(x, y, Sprite.bomb.getFxImage(), rx, ry, false);
+        bombs.add(bomb);
+        break;
     }
   }
 
@@ -111,42 +154,6 @@ public class Bomber extends Entity {
         isOver = true;
       }
     }
-  }
-
-  public int getRx() {
-    return rx;
-  }
-
-  public void setRx(int rx) {
-    this.rx = rx;
-  }
-
-  public int getRy() {
-    return ry;
-  }
-
-  public void setRy(int ry) {
-    this.ry = ry;
-  }
-
-  public boolean isAlive() {
-    return isAlive;
-  }
-
-  public void setAlive(boolean alive) {
-    isAlive = alive;
-  }
-
-  public String getDirection() {
-    return direction;
-  }
-
-  public void setDirection(String direction) {
-    this.direction = direction;
-  }
-
-  public void move() {
-
   }
 
   @Override

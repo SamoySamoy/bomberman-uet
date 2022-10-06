@@ -82,13 +82,13 @@ public abstract class Enemy extends Entity {
     }
   }
 
-  public boolean checkOpposite(String a, String b) {
+  /* public boolean checkOpposite(String a, String b) {
     if (a.equals("left") && b.equals("right") || a.equals("right") && b.equals("left")
         || a.equals("up") && b.equals("down") || a.equals("down") && b.equals("up")) {
       return true;
     }
     return false;
-  }
+  } */
 
   public void killBomber() {
     if (bomberman.getRx() == this.getRx() && bomberman.getRy() == this.getRy()) {
