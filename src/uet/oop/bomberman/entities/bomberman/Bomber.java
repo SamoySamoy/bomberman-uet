@@ -18,7 +18,7 @@ public class Bomber extends Entity {
   private boolean isAlive;
   private int rx;
   private int ry;
-  private int animation = 1;
+  private int animationTransform = 1;
 
   // Huong di chuyen cua nhan vat
   public String direction;
@@ -56,6 +56,7 @@ public class Bomber extends Entity {
         if (objId[rx][ry + 1] == 0) {
           y += DEFAULT_SPEED;
           ry++;
+
         }
         // change direction when moving
         if (!direction.equals("down")) {
@@ -69,6 +70,7 @@ public class Bomber extends Entity {
         if (objId[rx - 1][ry] == 0) {
           x -= DEFAULT_SPEED;
           rx--;
+
         }
         // change direction when moving
         if (!direction.equals("left")) {
@@ -82,6 +84,7 @@ public class Bomber extends Entity {
         if (objId[rx + 1][ry] == 0) {
           x += DEFAULT_SPEED;
           rx++;
+
         }
         // change direction when moving
         if (!direction.equals("right")) {
@@ -94,16 +97,16 @@ public class Bomber extends Entity {
 
   public void killedByEnemy() {
     if (this.isAlive == false) {
-      // change from dead1 to dead3
-      if (animation == 1) {
+      // transform from dead1 state to dead3 state
+      if (animationTransform == 1) {
         this.img = Sprite.player_dead1.getFxImage();
-        animation = 2;
-      } else if (animation == 2) {
+        animationTransform = 2;
+      } else if (animationTransform == 2) {
         this.img = Sprite.player_dead2.getFxImage();
-        animation = 3;
-      } else if (animation == 3) {
+        animationTransform = 3;
+      } else if (animationTransform == 3) {
         this.img = Sprite.player_dead3.getFxImage();
-        animation = 4;
+        animationTransform = 4;
       } else {
         isOver = true;
       }

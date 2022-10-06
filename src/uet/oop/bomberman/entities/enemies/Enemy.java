@@ -91,14 +91,7 @@ public abstract class Enemy extends Entity {
   }
 
   public void killBomber() {
-    if (bomberman.getX() == this.getX() && Math.abs(bomberman.getY() - this.getY()) == 0
-        || bomberman.getX() == this.getX()
-            && Math.abs(bomberman.getY() - this.getY()) < DEATH_DISTANCE
-            && checkOpposite(bomberman.getDirection(), this.direction)
-        || bomberman.getY() == this.getY() && Math.abs(bomberman.getX() - this.getX()) == 0
-        || bomberman.getY() == this.getY()
-            && Math.abs(bomberman.getX() - this.getX()) < DEATH_DISTANCE
-            && checkOpposite(bomberman.getDirection(), this.direction)) {
+    if (bomberman.getRx() == this.getRx() && bomberman.getRy() == this.getRy()) {
       bomberman.killedByEnemy();
       bomberman.setAlive(false);
     }
