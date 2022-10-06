@@ -1,86 +1,64 @@
 package uet.oop.bomberman.entities.enemies;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.MovableEntity;
 import uet.oop.bomberman.graphics.Sprite;
 
 import static uet.oop.bomberman.BombermanGame.bomberman;
 import static uet.oop.bomberman.BombermanGame.objId;
 
-public abstract class Enemy extends Entity {
-  protected static final long ENEMY_DELAY = 1000;
-  protected static final int DEFAULT_ENEMY_SPEED = 32;
-  protected static final int DEATH_DISTANCE = 48;
-  protected int rx;
-  protected int ry;
-  protected boolean isALive;
-  protected String direction;
+public abstract class Enemy extends MovableEntity {
+    protected static final long ENEMY_DELAY = 1000;
+    protected static final int DEFAULT_ENEMY_SPEED = 32;
+    protected static final int DEATH_DISTANCE = 48;
+    protected boolean isALive;
+    protected String direction;
+    protected long lastMoveTime = 0;
 
-  protected long lastMoveTime = 0;
-
-  public Enemy(int xUnit, int yUnit, Image img, int rx, int ry, boolean isALive, String direction) {
-    super(xUnit, yUnit, img);
-    this.rx = rx;
-    this.ry = ry;
-    this.isALive = isALive;
-    this.direction = direction;
-  }
-
-  public int getRx() {
-    return rx;
-  }
-
-  public void setRx(int rx) {
-    this.rx = rx;
-  }
-
-  public int getRy() {
-    return ry;
-  }
-
-  public void setRy(int ry) {
-    this.ry = ry;
-  }
-
-  public abstract void move();
-
-  public void moveUp() {
-    if (objId[rx][ry - 1] == 0) {
-      y -= DEFAULT_ENEMY_SPEED;
-      ry--;
-      this.direction = "up";
+    public Enemy(int rx, int ry, Image img, boolean isALive, String direction) {
+        super(rx, ry, img);
+        this.isALive = isALive;
+        this.direction = direction;
     }
-  }
 
-  public void moveDown() {
-    if (objId[rx][ry + 1] == 0) {
-      y += DEFAULT_ENEMY_SPEED;
-      ry++;
-      this.direction = "down";
-    }
-  }
+    public abstract void move();
 
-  public void moveLeft(Image enemyLeftImage) {
-    if (objId[rx - 1][ry] == 0) {
-      x -= DEFAULT_ENEMY_SPEED;
-      rx--;
-      this.direction = "left";
+    public void moveUp(Image enemyUpImage) {
+        if (objId[rx][ry - 1] == 0) {
+            y -= DEFAULT_ENEMY_SPEED;
+            ry--;
+        }
+        this.direction = "up";
+        if (enemyUpImage != null) this.img = enemyUpImage;
     }
-    if (!direction.equals("left")) {
-      this.img = enemyLeftImage;
-    }
-  }
 
-  public void moveRight(Image enemyRightImage) {
-    if (objId[rx + 1][ry] == 0) {
-      x += DEFAULT_ENEMY_SPEED;
-      rx++;
-      this.direction = "right";
+    public void moveDown(Image enemyRightImage) {
+        if (objId[rx][ry + 1] == 0) {
+            y += DEFAULT_ENEMY_SPEED;
+            ry++;
+        }
+        this.direction = "down";
+        if (enemyRightImage != null) this.img = enemyRightImage;
     }
-    if (!direction.equals("right")) {
-      this.img = enemyRightImage;
+
+    public void moveLeft(Image enemyLeftImage) {
+        if (objId[rx - 1][ry] == 0) {
+            x -= DEFAULT_ENEMY_SPEED;
+            rx--;
+        }
+        this.direction = "left";
+        if (enemyLeftImage != null) this.img = enemyLeftImage;
     }
-  }
+
+    public void moveRight(Image enemyRightImage) {
+        if (objId[rx + 1][ry] == 0) {
+            x += DEFAULT_ENEMY_SPEED;
+            rx++;
+
+        }
+        this.direction = "right";
+        if (enemyRightImage != null) this.img = enemyRightImage;
+    }
 
   /* public boolean checkOpposite(String a, String b) {
     if (a.equals("left") && b.equals("right") || a.equals("right") && b.equals("left")
@@ -90,17 +68,41 @@ public abstract class Enemy extends Entity {
     return false;
   } */
 
-  public void killBomber() {
-    if (bomberman.getRx() == this.getRx() && bomberman.getRy() == this.getRy()) {
-      bomberman.killedByEnemy();
-      bomberman.setAlive(false);
+    public void killBomber() {
+        if (bomberman.getRx() == this.getRx() && bomberman.getRy() == this.getRy()) {
+            bomberman.killedByEnemy();
+            bomberman.setAlive(false);
+        }
     }
-  }
 
-  public abstract void destroyed();
+    public abstract void destroyed();
 
-  @Override
-  public void update() {
-    killBomber();
-  }
+    @Override
+    public void update() {
+        killBomber();
+    }
+
+    public boolean isALive() {
+        return isALive;
+    }
+
+    public void setALive(boolean ALive) {
+        isALive = ALive;
+    }
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
+    public long getLastMoveTime() {
+        return lastMoveTime;
+    }
+
+    public void setLastMoveTime(long lastMoveTime) {
+        this.lastMoveTime = lastMoveTime;
+    }
 }
