@@ -5,7 +5,6 @@ import javafx.scene.image.Image;
 import java.util.*;
 
 import javafx.scene.input.KeyEvent;
-import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.MovableEntity;
 import uet.oop.bomberman.entities.blocks.Bomb;
 import uet.oop.bomberman.graphics.Sprite;
@@ -46,8 +45,8 @@ public class Bomber extends MovableEntity {
                 break;
             case SPACE:
                 // put bomb
-                System.out.println(x + " " + y + " " + rx + " " + ry);
-                Entity bomb = new Bomb(x, y, Sprite.bomb.getFxImage(), rx, ry, false);
+                System.out.printf("x: %d, y: %d, rx: %d, ry: %d\n", this.x, this.y, this.rx, this.ry);
+                Bomb bomb = new Bomb(this.rx, this.ry, Sprite.bomb.getFxImage(), false);
                 bombs.add(bomb);
                 break;
         }

@@ -35,7 +35,7 @@ public class BombermanGame extends Application {
     public static List<Entity> entities = new ArrayList<>();
     public static List<Entity> stillObjects = new ArrayList<>();
     public static List<Enemy> enemies = new ArrayList<>();
-    public static List<Entity> bombs = new ArrayList<>();
+    public static List<Bomb> bombs = new ArrayList<>();
 
     // cordinates of all objects in a simplify matrix
     // handle while rendering in Map.java
@@ -45,7 +45,7 @@ public class BombermanGame extends Application {
     // add main player start at (rx:1, ry:1) (coordinates in objId),
     // (x:1, y:1) (cordinates in screen size)
     public static Bomber bomberman =
-            new Bomber(1,1,Sprite.player_right.getFxImage(), 1,true,"right");
+            new Bomber(1, 1, Sprite.player_right.getFxImage(), 1, true, "right");
     Enemy ballom1 = new Ballom(1, 5, Sprite.balloom_left3.getFxImage(), true, "left");
     Enemy oneal1 = new Oneal(8, 8, Sprite.oneal_left3.getFxImage(), true, "left");
     public static boolean isOver = false;
@@ -93,8 +93,8 @@ public class BombermanGame extends Application {
             public void handle(long l) {
                 if (!isOver) {
                     enemies.forEach(Enemy::move);
-                    render();
                     update();
+                    render();
                 }
             }
         };
@@ -109,7 +109,8 @@ public class BombermanGame extends Application {
         entities.forEach(Entity::update);
         bomberman.update();
         enemies.forEach(Enemy::update);
-        bombs.forEach(Entity::update);
+        bombs.forEach(Bomb::update);
+        bombs.removeIf(Bomb::isExploded);
     }
 
     // object render

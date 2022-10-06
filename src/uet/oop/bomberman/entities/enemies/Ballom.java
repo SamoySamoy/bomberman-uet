@@ -5,8 +5,6 @@ import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.Random;
 
-import static uet.oop.bomberman.BombermanGame.*;
-
 public class Ballom extends Enemy {
 
     public Ballom(int rx, int ry, Image img, boolean isALive, String direction) {
