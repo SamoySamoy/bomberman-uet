@@ -5,11 +5,12 @@ import javafx.scene.image.Image;
 public interface Movable {
     void move();
 
-    void moveUp(Image upImage);
+    // Di chuyển trái phải lên xuống thành công thì trả về true, di chuyển không thành công khi gặp tường,...
+    boolean moveUp(Image upImage, int speed);
 
-    void moveDown(Image downImage);
+    boolean moveDown(Image downImage, int speed);
 
-    void moveLeft(Image leftImage);
+    boolean moveLeft(Image leftImage, int speed);
 
-    void moveRight(Image rightImage);
+    boolean moveRight(Image rightImage, int speed);
 }

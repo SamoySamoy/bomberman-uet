@@ -45,7 +45,7 @@ public class BombermanGame extends Application {
     // add main player start at (rx:1, ry:1) (coordinates in objId),
     // (x:1, y:1) (cordinates in screen size)
     public static Bomber bomberman =
-            new Bomber(1, 1, 1, 1, Sprite.player_right.getFxImage(), "right");
+            new Bomber(1,1,Sprite.player_right.getFxImage(), 1,true,"right");
     Enemy ballom1 = new Ballom(1, 5, Sprite.balloom_left3.getFxImage(), true, "left");
     Enemy oneal1 = new Oneal(8, 8, Sprite.oneal_left3.getFxImage(), true, "left");
     public static boolean isOver = false;
