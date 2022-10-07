@@ -83,7 +83,7 @@ public class BombermanGame extends Application {
     stage.show();
 
     // map render
-    new Map("res/levels/Level1.txt");
+    new Map("res/levels/Level2.txt");
 
     // add enemies tạm thời, sẽ add enemies ở phần tạo level sau
     enemies.add(ballom1);
