@@ -1,7 +1,7 @@
 # BOMBERMAN GAME - PROJECT OOP 
 
 <!-- TABLE OF CONTENTS -->
-# Table of contents :round_pushpin:
+# Table of contents:
 1. [Introduction](#Introduction)
 2. [Game](#Game)
 3. [UML-class-diagram](#UML-class-diagram)
@@ -32,7 +32,7 @@
 
 ## Introduction <a name="Introduction"></a>:
 
-### Team Members :couplekiss_man_man:
+### Team Members:
 
 | Order |         Name          |     ID      |            Email            |                       Github account                                                     |
 | :---: | :-------------------: | :---------: | :-------------------------: | :---------------------------------------------------------: |
