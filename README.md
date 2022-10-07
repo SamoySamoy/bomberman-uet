@@ -30,7 +30,7 @@
 
 <!-- ABOUT THE PROJECT -->
 
-## Introduction <a name="Introduction"></a>:
+## 1. Introduction <a name="Introduction"></a>:
 
 ### Team Members:
 
@@ -58,7 +58,7 @@
 <!-- Game -->
 <br />
 
-## Game <a name="Game"></a>:
+## 2. Game <a name="Game"></a>:
 ### Technologies :
 
 - Language: [JAVA](https://www.java.com/en/)
@@ -96,33 +96,23 @@
 - ![](readme/oneal.png) *Oneal* knows how to chase Bomber when approaching, has increased movement speed while chasing Bomber.
 
 <br/>
-## UML Class Diagram<a name="UML-class-diagram"></a>:
+## 3. UML Class Diagram<a name="UML-class-diagram"></a>:
 .......
 <br/>
 
 <!-- FEATURES -->
-## Features<a name="Features">:
+## 4. Features<a name="Features">:
 - Completed: UX/UI, sound of game, enhancing algorithms
 - Incompleted: Minvo, 2 players, multiple characters for choosing, …
 <br />
 
 <!-- CHALLENGES -->
-## Challenges<a name="Challenges">:
+## 5. Challenges<a name="Challenges">:
 
 - Task allocation for each team member
 - Using platform for communication ([Trello](https://trello.com/b/Ac0ISkzt/bomber-game-oop-project-2022))
 - Working environment (Github)
 <br />
-	
-## Acknowledgments<a name="Acknowledgments">:
-<div style="text-align:justify">
-We would want to express our gratitude to Tom for providing us with the chance to
-participate in this project and apply what we learned in theory into practice. This project's
-learning curve was steep, but it was well worth it for all of us. We have learned more about interface technologies to construct a functioning application
-that interacts with our project. Tom, we want to thank you again for all the hard work and expertise that you have
-put into your teaching. We'll make sure that all we've learned doesn't go to waste, and that
-we can master them better from now on :heart:
-</div>
 
 <p align="right">(<a href="#top">Back to top</a>)</p>
 
