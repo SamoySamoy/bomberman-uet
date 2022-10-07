@@ -30,7 +30,7 @@
 
 <!-- ABOUT THE PROJECT -->
 
-## Introduction <a name="Introduction"></a> :bricks:
+## Introduction <a name="Introduction"></a>:
 
 ### Team Members :couplekiss_man_man:
 
@@ -39,7 +39,7 @@
 |   1   | Cao Xuan Dung         | 21020290    |   21020290@vnu.edu.vn       |          [cxddcx271](https://github.com/cxddcx271)          | 
 |   2   | Tran Viet Dung        | 21020009    |   21020009@vnu.edu.vn       |          [SamoySamoy](https://github.com/SamoySamoy)        |
 |   3   | Cong Nghia Hieu       | 21020540    |   21020540@vnu.edu.vn       |          [congnghiahieu](https://github.com/congnghiahieu)  |      
-### Installation :dart: 
+### Installation: 
 
 1. Open the terminal on your IDE
 2. Clone the repo
@@ -58,8 +58,8 @@
 <!-- Game -->
 <br />
 
-## Game <a name="Game"></a>:joystick:
-### Technologies :globe_with_meridians:
+## Game <a name="Game"></a>:
+### Technologies :
 
 - Language: [JAVA](https://www.java.com/en/)
 - Framework: [IntelliJ](https://www.jetbrains.com/idea/), [Visual Studio Code](https://code.visualstudio.com)
@@ -96,25 +96,25 @@
 - ![](readme/oneal.png) *Oneal* knows how to chase Bomber when approaching, has increased movement speed while chasing Bomber.
 
 <br/>
-## UML Class Diagram<a name="UML-class-diagram"></a>:clipboard:
+## UML Class Diagram<a name="UML-class-diagram"></a>:
 .......
 <br/>
 
 <!-- FEATURES -->
-## Features<a name="Features"> :triangular_flag_on_post:
+## Features<a name="Features">:
 - Completed: UX/UI, sound of game, enhancing algorithms
 - Incompleted: Minvo, 2 players, multiple characters for choosing, …
 <br />
 
 <!-- CHALLENGES -->
-## Challenges<a name="Challenges">:bangbang:
+## Challenges<a name="Challenges">:
 
 - Task allocation for each team member
 - Using platform for communication ([Trello](https://trello.com/b/Ac0ISkzt/bomber-game-oop-project-2022))
 - Working environment (Github)
 <br />
 	
-## Acknowledgments<a name="Acknowledgments">:brain:
+## Acknowledgments<a name="Acknowledgments">:
 <div style="text-align:justify">
 We would want to express our gratitude to Tom for providing us with the chance to
 participate in this project and apply what we learned in theory into practice. This project's
