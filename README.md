@@ -54,13 +54,7 @@
    ```js
    git checkout 'branch_name'
    ```
-
-### Motivation :mechanical_arm:
-
-<div style="text-align:justify">
-As a fresher developer, we assume that the Bomberman game is one of the most simple game which helps us in practicing coding with OOP also some significant aspects of the front-end such as: How to render the game? , How frame working in UX/UI? , ….
-</div>
-
+   
 <!-- Game -->
 <br />
 
@@ -70,7 +64,7 @@ As a fresher developer, we assume that the Bomberman game is one of the most sim
 - Language: [JAVA](https://www.java.com/en/)
 - Framework: [IntelliJ](https://www.jetbrains.com/idea/), [Visual Studio Code](https://code.visualstudio.com)
 - Intelligent: [A\* algorithms](https://www.geeksforgeeks.org/a-search-algorithm/)
-- Library: [JavaFx](https://openjfx.io), [FXGL](https://github.com/AlmasB/FXGL)
+- Library: [JavaFx](https://openjfx.io)
 
 ## Description
 
