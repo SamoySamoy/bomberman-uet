@@ -55,7 +55,7 @@ public class Bomber extends MovableEntity {
     isStopMoving = true;
     if (!this.isAlive) {
       // transform from dead1 state to dead3 state
-      if (countTransform % 16 == 0) {
+      if (countTransform % 25 == 0) {
         if (animationTransform == 1) {
           this.img = Sprite.player_dead1.getFxImage();
           animationTransform = 2;
