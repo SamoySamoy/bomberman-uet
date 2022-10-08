@@ -70,6 +70,7 @@ public class Bomber extends MovableEntity {
         if (bomb.getRx() == this.rx && bomb.getRy() == this.ry) {
           this.killedByEnemy();
           this.setAlive(false);
+          isOver = true;
         }
       }
     }
