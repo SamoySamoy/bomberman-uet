@@ -38,25 +38,25 @@ public class Bomb extends Entity {
             if (animationTransform == 1) {
                 this.img = Sprite.bomb_exploded.getFxImage();
                 animationTransform = 2;
-                if (objId[rx - 1][ry] != 2 && objId[rx - 1][ry] != 3) {
+                if (objId[rx - 1][ry] != 2) {
                     this.left =
                             new Bomb(rx - 1, ry, Sprite.explosion_horizontal_left_last.getFxImage(), false, true);
                     bombs.add(left);
                 }
 
-                if (objId[rx + 1][ry] != 2 && objId[rx + 1][ry] != 3) {
+                if (objId[rx + 1][ry] != 2) {
                     this.right =
                             new Bomb(rx + 1, ry, Sprite.explosion_horizontal_right_last.getFxImage(), false, true);
                     bombs.add(right);
                 }
 
-                if (objId[rx][ry - 1] != 2 && objId[rx][ry - 1] != 3) {
+                if (objId[rx][ry - 1] != 2) {
                     this.up =
                             new Bomb(rx, ry - 1, Sprite.explosion_vertical_top_last.getFxImage(), false, true);
                     bombs.add(up);
                 }
 
-                if (objId[rx][ry + 1] != 2 && objId[rx][ry + 1] != 3) {
+                if (objId[rx][ry + 1] != 2) {
                     this.down =
                             new Bomb(rx, ry + 1, Sprite.explosion_vertical_down_last.getFxImage(), false, true);
                     bombs.add(down);
@@ -84,25 +84,25 @@ public class Bomb extends Entity {
                 if (this.left != null) {
                     this.left.img = Sprite.explosion_horizontal_left_last2.getFxImage();
                     this.left.isFinal = true;
+                    this.left.checkImpact();
                 }
                 if (this.right != null) {
                     this.right.img = Sprite.explosion_horizontal_right_last2.getFxImage();
                     this.right.isFinal = true;
+                    this.right.checkImpact();
                 }
                 if (this.up != null) {
                     this.up.img = Sprite.explosion_vertical_top_last2.getFxImage();
                     this.up.isFinal = true;
+                    this.up.checkImpact();
                 }
                 if (this.down != null) {
                     this.down.img = Sprite.explosion_vertical_down_last2.getFxImage();
                     this.down.isFinal = true;
+                    this.down.checkImpact();
                 }
             } else {
                 this.isExploded = true;
-                left.isExploded = true;
-                right.isExploded = true;
-                up.isExploded = true;
-                down.isExploded = true;
             }
         }
     }
@@ -117,6 +117,24 @@ public class Bomb extends Entity {
         } else {
             if (System.currentTimeMillis() - this.bombStartTime > uiLastTime) {
                 isExploded = true;
+            }
+        }
+    }
+
+    private void checkImpact() {
+        System.out.printf("Check impact: objId[%d][%d]: %d\n", this.rx, this.ry, objId[this.rx][this.ry]);
+        // Mới chỉ check nổ với gạch, gạch là 3
+        //  && this.ui
+        if (this.isFinal && this.ui && objId[this.rx][this.ry] == 3) {
+            System.out.println("Found brick");
+            for (int i = 0; i < stillObjects.size(); i++) {
+                Entity block = stillObjects.get(i);
+                if (block.getX() / Sprite.SCALED_SIZE == this.rx && block.getY() / Sprite.SCALED_SIZE == this.ry) {
+                    System.out.println("Replace");
+                    stillObjects.set(i, new Grass(this.rx, this.ry, Sprite.grass.getFxImage()));
+                    objId[this.rx][this.ry] = 0;
+                    System.out.println("Replace success");
+                }
             }
         }
     }

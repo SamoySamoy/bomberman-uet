@@ -32,7 +32,6 @@ public abstract class Enemy extends MovableEntity {
             if (bomb.isFinal()) {
                 if (bomb.getRx() == this.rx && bomb.getRy() == this.ry) {
                     this.setAlive(false);
-                    enemies.remove(this);
                 }
             }
         }

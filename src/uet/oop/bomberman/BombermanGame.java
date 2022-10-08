@@ -111,6 +111,7 @@ public class BombermanGame extends Application {
         entities.forEach(Entity::update);
         bomberman.update();
         enemies.forEach(Enemy::update);
+        enemies.removeIf(enemy -> !enemy.isAlive());
         bombs.forEach(Bomb::update);
         bombs.removeIf(Bomb::isExploded);
     }

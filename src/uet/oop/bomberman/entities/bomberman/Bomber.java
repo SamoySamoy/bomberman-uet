@@ -47,25 +47,30 @@ public class Bomber extends MovableEntity {
                 this.moveRight(Sprite.player_right.getFxImage(), DEFAULT_SPEED);
                 break;
             case SPACE:
-                long now = System.currentTimeMillis();
-                if (now - lastPutBomb > putBombPeriod) {
-                    lastPutBomb = now;
-                    // put bomb
-                    System.out.printf("x: %d, y: %d, rx: %d, ry: %d\n", this.x, this.y, this.rx, this.ry);
-                    Bomb bomb = new Bomb(this.rx, this.ry, Sprite.bomb.getFxImage(), false, false);
-                    bombs.add(bomb);
-                }
+                this.putBomb();
                 break;
         }
     }
+
+    private void putBomb() {
+        long now = System.currentTimeMillis();
+        if (now - lastPutBomb > putBombPeriod) {
+            lastPutBomb = now;
+            // put bomb
+            System.out.printf("x: %d, y: %d, rx: %d, ry: %d\n", this.x, this.y, this.rx, this.ry);
+            Bomb bomb = new Bomb(this.rx, this.ry, Sprite.bomb.getFxImage(), false, false);
+            bombs.add(bomb);
+        }
+    }
+
 
     @Override
     public void killedByBomb() {
         for (Bomb bomb : bombs) {
             if (bomb.isFinal()) {
                 if (bomb.getRx() == this.rx && bomb.getRy() == this.ry) {
-                    killedByEnemy();
-                    bomberman.setAlive(false);
+                    this.killedByEnemy();
+                    this.setAlive(false);
                 }
             }
         }
