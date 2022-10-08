@@ -29,6 +29,7 @@ public class Level1 {
     // load authorView Scr
     Image transparent = new Image("images/transparent.png");
     author_view.setImage(transparent);
+
     enemies.add(ballom1);
     enemies.add(oneal1);
     enemies.add(oneal2);

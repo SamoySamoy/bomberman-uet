@@ -37,7 +37,6 @@ public class BombermanGame extends Application {
   public static List<Entity> stillObjects = new ArrayList<>();
   public static List<Enemy> enemies = new ArrayList<>();
   public static List<Bomb> bombs = new ArrayList<>();
-
   // cordinates of all objects in a simplify matrix
   // handle while rendering in Map.java
   public static int[][] objId;
@@ -47,9 +46,8 @@ public class BombermanGame extends Application {
   // (x:1, y:1) (cordinates in screen size)
   public static Bomber bomberman =
       new Bomber(1, 1, Sprite.player_right.getFxImage(), 1, true, "right");
-
   public static boolean isOver = false;
-  public static boolean isStopMoving = false;
+  public static boolean isStopMoving = false;// only bomberman, prevent press after being killed
   public static boolean isPause = false;
 
   public static void main(String[] args) {
@@ -74,7 +72,10 @@ public class BombermanGame extends Application {
     root.getChildren().add(canvas);
     root.getChildren().add(author_view);
     Scene scene = new Scene(root);
-
+    
+    // add scene to stage
+    stage.setScene(scene);
+    stage.show();
     // keyboard events
     scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
       @Override
@@ -83,10 +84,6 @@ public class BombermanGame extends Application {
           bomberman.handleEventPress(keyEvent);
       }
     });
-
-    // add scene to stage
-    stage.setScene(scene);
-    stage.show();
 
     // game loop
     AnimationTimer timer = new AnimationTimer() {
