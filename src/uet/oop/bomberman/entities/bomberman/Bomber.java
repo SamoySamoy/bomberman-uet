@@ -59,6 +59,18 @@ public class Bomber extends MovableEntity {
         }
     }
 
+    @Override
+    public void killedByBomb() {
+        for (Bomb bomb : bombs) {
+            if (bomb.isFinal()) {
+                if (bomb.getRx() == this.rx && bomb.getRy() == this.ry) {
+                    killedByEnemy();
+                    bomberman.setAlive(false);
+                }
+            }
+        }
+    }
+
     public void killedByEnemy() {
         isStopMoving = true;
         if (!this.isAlive) {
@@ -78,10 +90,12 @@ public class Bomber extends MovableEntity {
                 }
             }
         }
+
     }
 
     @Override
     public void update() {
         countTransform++;
+        killedByBomb();
     }
 }

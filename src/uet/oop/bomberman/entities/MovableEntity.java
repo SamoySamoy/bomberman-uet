@@ -74,6 +74,8 @@ public abstract class MovableEntity extends Entity implements Movable {
         return isMoveSuccess;
     }
 
+    public abstract void killedByBomb();
+
     public int getRx() {
         return rx;
     }
