@@ -8,7 +8,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import uet.oop.bomberman.BombermanGame;
 import static uet.oop.bomberman.BombermanGame.*;
 import uet.oop.bomberman.LevelMap.Level1;
 

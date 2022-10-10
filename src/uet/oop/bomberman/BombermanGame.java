@@ -115,11 +115,7 @@ public class BombermanGame extends Application {
     enemies.removeIf(enemy -> !enemy.isAlive());
     bombs.forEach(Bomb::update);
     bombs.removeIf(Bomb::isExploded);
-
-    if (enemies.size() == 0 && !isLevelUp) {
-      stillObjects.add(portal);
-      LevelUp.checkLevelUp();
-    }
+    portal.update();
   }
 
   // object render
