@@ -17,7 +17,7 @@ public class Level2 {
     isPause = false;
     enemies.clear();
     bombs.clear();
-    new Map("res/levels/Level1.txt");
+    new Map("res/levels/Level2.txt");
     bomberman.setAlive(true);
     bomberman.setRx(1);
     bomberman.setRy(1);
