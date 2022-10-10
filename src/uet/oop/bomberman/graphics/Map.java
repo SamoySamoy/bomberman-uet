@@ -36,7 +36,6 @@ public class Map {
       // main file.
 
       while (ip.hasNextLine()) {
-        objId = new int[WIDTH][HEIGHT]; // Create new object id_object from main file.
         for (int i = 0; i < HEIGHT; ++i) {
           String lineTile = ip.nextLine(); // Input variable lineTile in string data type.
           StringTokenizer tokenTile = new StringTokenizer(lineTile); // Create object tokenTile from
