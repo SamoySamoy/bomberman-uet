@@ -8,8 +8,8 @@ import uet.oop.bomberman.entities.enemies.*;
 import uet.oop.bomberman.graphics.Sprite;
 
 
-public class Level1 {
-  public Level1() {
+public class Level2 {
+  public Level2() {
     // clean and clear stage
     isStopMoving = false;
     isOver = false;
@@ -17,7 +17,7 @@ public class Level1 {
     isPause = false;
     enemies.clear();
     bombs.clear();
-    new Map("res/levels/Level2.txt");
+    new Map("res/levels/Level1.txt");
     bomberman.setAlive(true);
     bomberman.setRx(1);
     bomberman.setRy(1);
@@ -42,3 +42,4 @@ public class Level1 {
     }
   }
 }
+

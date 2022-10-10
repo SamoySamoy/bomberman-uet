@@ -17,8 +17,9 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.enemies.Enemy;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.entities.blocks.Bomb;
+import uet.oop.bomberman.LevelMap.LevelUp;
 import uet.oop.bomberman.Menu.Menu;
-
+import uet.oop.bomberman.entities.blocks.Portal;
 import java.util.*;
 
 public class BombermanGame extends Application {
@@ -46,9 +47,11 @@ public class BombermanGame extends Application {
   // (x:1, y:1) (cordinates in screen size)
   public static Bomber bomberman =
       new Bomber(1, 1, Sprite.player_right.getFxImage(), 1, true, "right");
+  public static Entity portal = new Portal(WIDTH - 2, HEIGHT - 2, Sprite.portal.getFxImage());
   public static boolean isOver = false;
   public static boolean isStopMoving = false;// only bomberman, prevent press after being killed
   public static boolean isPause = false;
+  public static boolean isLevelUp = false;
 
   public static void main(String[] args) {
     Application.launch(BombermanGame.class);
@@ -72,7 +75,7 @@ public class BombermanGame extends Application {
     root.getChildren().add(canvas);
     root.getChildren().add(author_view);
     Scene scene = new Scene(root);
-    
+
     // add scene to stage
     stage.setScene(scene);
     stage.show();
@@ -93,6 +96,7 @@ public class BombermanGame extends Application {
         if (!isOver) {
           enemies.forEach(Enemy::move);
           update();
+          Menu.updateMenu();
         } else {
           Image gameOver = new Image("images/gameOver.png");
           author_view.setImage(gameOver);
@@ -103,7 +107,6 @@ public class BombermanGame extends Application {
     bomberman.setAlive(false);
   }
 
-
   // stage update
   public void update() {
     entities.forEach(Entity::update);
@@ -112,6 +115,11 @@ public class BombermanGame extends Application {
     enemies.removeIf(enemy -> !enemy.isAlive());
     bombs.forEach(Bomb::update);
     bombs.removeIf(Bomb::isExploded);
+
+    if (enemies.size() == 0 && !isLevelUp) {
+      stillObjects.add(portal);
+      LevelUp.checkLevelUp();
+    }
   }
 
   // object render

@@ -66,11 +66,8 @@ public class Menu {
     });
 
   }
-
+  
   public static void updateMenu() { // Update menu
-    level.setText("Level: " + BombermanGame.level);
-    bomb.setText("Bombs: " + bomb_number);
-
     if (bomberman.isAlive())
       if (isPause) {
         statusGame.setImage(pauseGame);

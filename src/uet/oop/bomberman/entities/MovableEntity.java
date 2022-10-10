@@ -111,4 +111,8 @@ public abstract class MovableEntity extends Entity implements Movable {
   public void setAlive(boolean alive) {
     isAlive = alive;
   }
+
+  public void setImage(Image i) {
+    this.img = i;
+  }
 }
