@@ -64,7 +64,7 @@ public class BombermanGame extends Application {
     canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
     canvas.setTranslateY(32);
     gc = canvas.getGraphicsContext2D();
-    Image author = new Image("images/author.png");
+    Image author = new Image("images/background.jpg");
     author_view = new ImageView(author);
     author_view.setX(-400);
     author_view.setY(-208);
@@ -98,7 +98,7 @@ public class BombermanGame extends Application {
           update();
           Menu.updateMenu();
         } else {
-          Image gameOver = new Image("images/gameOver.png");
+          Image gameOver = new Image("images/over.png");
           author_view.setImage(gameOver);
         }
       }

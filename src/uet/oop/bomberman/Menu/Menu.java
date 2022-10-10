@@ -36,7 +36,7 @@ public class Menu {
     time.setX(608);
     time.setY(20);
 
-    Image newGame = new Image("images/startButton.png");
+    Image newGame = new Image("images/start.png");
     statusGame = new ImageView(newGame);
     statusGame.setX(-75);
     statusGame.setY(-10);
@@ -51,8 +51,8 @@ public class Menu {
 
     root.getChildren().add(pane);
 
-    playGame = new Image("images/pauseButton.png");
-    pauseGame = new Image("images/resumeButton.png");
+    playGame = new Image("images/pause.png");
+    pauseGame = new Image("images/resume.png");
 
     statusGame.setOnMouseClicked(event -> {
       if (bomberman.isAlive() == true) {
@@ -74,7 +74,7 @@ public class Menu {
         statusGame.setImage(playGame);
       }
     else {
-      Image newGame = new Image("images/startButton.png");
+      Image newGame = new Image("images/start.png");
       statusGame.setImage(newGame);
     }
   }
