@@ -20,6 +20,7 @@ import uet.oop.bomberman.entities.blocks.Bomb;
 import uet.oop.bomberman.LevelMap.LevelUp;
 import uet.oop.bomberman.Menu.Menu;
 import uet.oop.bomberman.entities.blocks.Portal;
+import uet.oop.bomberman.Sound.SoundManager;
 import java.util.*;
 
 public class BombermanGame extends Application {
@@ -116,6 +117,7 @@ public class BombermanGame extends Application {
     bombs.forEach(Bomb::update);
     bombs.removeIf(Bomb::isExploded);
     portal.update();
+    SoundManager.updateSound();
   }
 
   // object render

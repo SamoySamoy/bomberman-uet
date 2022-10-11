@@ -3,7 +3,7 @@ package uet.oop.bomberman.entities.blocks;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
-
+import uet.oop.bomberman.Sound.SoundManager;
 import static uet.oop.bomberman.BombermanGame.*;
 
 public class Bomb extends Entity {
@@ -77,6 +77,7 @@ public class Bomb extends Entity {
         if (this.down != null) {
           this.down.img = Sprite.explosion_vertical_down_last1.getFxImage();
         }
+        new SoundManager("sound/bomb_explosion.wav", "explosion");
       } else if (animationTransform == 3) {
         this.img = Sprite.bomb_exploded2.getFxImage();
         this.isFinal = true;
