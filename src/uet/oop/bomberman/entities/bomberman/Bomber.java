@@ -1,14 +1,11 @@
 package uet.oop.bomberman.entities.bomberman;
 
 import javafx.scene.image.Image;
-
-import java.util.*;
-
 import javafx.scene.input.KeyEvent;
 import uet.oop.bomberman.entities.MovableEntity;
 import uet.oop.bomberman.entities.blocks.Bomb;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.Sound.SoundManager;
+import uet.oop.bomberman.Sound.Sound;
 
 import static uet.oop.bomberman.BombermanGame.*;
 
@@ -59,7 +56,7 @@ public class Bomber extends MovableEntity {
       // put bomb
       System.out.printf("x: %d, y: %d, rx: %d, ry: %d\n", this.x, this.y, this.rx, this.ry);
       Bomb bomb = new Bomb(this.rx, this.ry, Sprite.bomb.getFxImage(), false, false);
-      new SoundManager("sound/put_bombs.wav", "putBomb");
+      new Sound("sound/put_bombs.wav", "putBomb");
       bombs.add(bomb);
     }
   }

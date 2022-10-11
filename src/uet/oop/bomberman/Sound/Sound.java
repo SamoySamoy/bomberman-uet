@@ -8,7 +8,7 @@ import java.net.URL;
 import uet.oop.bomberman.entities.bomberman.Bomber;
 import static uet.oop.bomberman.BombermanGame.*;
 
-public class SoundManager extends JFrame {
+public class Sound extends JFrame {
   public static Clip title_screen;
   public static Clip bomb_explosion;
   public static Clip just_died;
@@ -16,7 +16,7 @@ public class SoundManager extends JFrame {
   public static boolean is_sound_died;
   public static boolean is_sound_title;
 
-  public SoundManager(String name, String sound) {
+  public Sound(String name, String sound) {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     try {
       URL url = this.getClass().getClassLoader().getResource(name);
@@ -64,7 +64,7 @@ public class SoundManager extends JFrame {
 
   public static void updateSound() {
     if (!is_sound_title) {
-      new SoundManager("sound/title_screen.wav", "title");
+      new Sound("sound/title_screen.wav", "title");
       is_sound_title = true;
     }
     if (!bomberman.isAlive()) {
@@ -72,7 +72,7 @@ public class SoundManager extends JFrame {
        * title_screen.close(); bomb_explosion.close();
        */
       if (!is_sound_died) {
-        new SoundManager("sound/just_died.wav", "just_died");
+        new Sound("sound/just_died.wav", "just_died");
         is_sound_died = true;
       }
     }
