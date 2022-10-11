@@ -20,6 +20,7 @@ import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.entities.blocks.Bomb;
 import uet.oop.bomberman.Menu.Menu;
 import uet.oop.bomberman.entities.blocks.Portal;
+import uet.oop.bomberman.Sound.Sound;
 
 import java.util.*;
 
@@ -123,6 +124,7 @@ public class BombermanGame extends Application {
         items.forEach(Item::update);
         items.removeIf(Item::isPicked);
         portal.update();
+        Sound.updateSound();
     }
 
     // object render

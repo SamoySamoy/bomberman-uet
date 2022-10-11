@@ -27,6 +27,11 @@
             <artifactId>javafx-graphics</artifactId>
             <version>15</version>
         </dependency>
+        <dependency>
+            <groupId>de.huxhorn.sulky</groupId>
+            <artifactId>de.huxhorn.sulky.sounds-impl-jlayer</artifactId>
+            <version>8.3.0</version>
+        </dependency>
     </dependencies>
 
     <build>
