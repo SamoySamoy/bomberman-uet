@@ -2,6 +2,9 @@ package uet.oop.bomberman.entities.blocks;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.items.BombItem;
+import uet.oop.bomberman.entities.items.FlameItem;
+import uet.oop.bomberman.entities.items.SpeedItem;
 import uet.oop.bomberman.graphics.Sprite;
 
 import static uet.oop.bomberman.BombermanGame.*;
@@ -138,8 +141,19 @@ public class Bomb extends Entity {
                 if (block.getX() / Sprite.SCALED_SIZE == this.rx
                     && block.getY() / Sprite.SCALED_SIZE == this.ry) {
                     System.out.println("Replace");
+                    switch (itemMatrix[this.rx][this.ry]) {
+                        case 4:
+                            items.add(new SpeedItem(this.rx, this.ry, Sprite.powerup_speed.getFxImage()));
+                            break;
+                        case 5:
+                            items.add(new FlameItem(this.rx, this.ry, Sprite.powerup_flames.getFxImage()));
+                            break;
+                        case 6:
+                            items.add(new BombItem(this.rx, this.ry, Sprite.powerup_bombs.getFxImage()));
+                            break;
+                    }
                     stillObjects.set(i, new Grass(this.rx, this.ry, Sprite.grass.getFxImage()));
-                    objId[this.rx][this.ry] = 0;
+                    objId[this.rx][this.ry] = itemMatrix[this.rx][this.ry];
                     System.out.println("Replace success");
                 }
             }

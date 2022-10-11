@@ -7,6 +7,7 @@ import java.util.*;
 import javafx.scene.input.KeyEvent;
 import uet.oop.bomberman.entities.MovableEntity;
 import uet.oop.bomberman.entities.blocks.Bomb;
+import uet.oop.bomberman.entities.items.Item;
 import uet.oop.bomberman.graphics.Sprite;
 
 import static uet.oop.bomberman.BombermanGame.*;
@@ -33,24 +34,50 @@ public class Bomber extends MovableEntity {
             case W:
             case UP:
                 this.moveUp(Sprite.player_up.getFxImage(), DEFAULT_SPEED);
+                this.checkPickItem();
                 break;
             case S:
             case DOWN:
                 this.moveDown(Sprite.player_down.getFxImage(), DEFAULT_SPEED);
+                this.checkPickItem();
                 break;
             case A:
             case LEFT:
                 this.moveLeft(Sprite.player_left.getFxImage(), DEFAULT_SPEED);
+                this.checkPickItem();
                 break;
             case D:
             case RIGHT:
                 this.moveRight(Sprite.player_right.getFxImage(), DEFAULT_SPEED);
+                this.checkPickItem();
                 break;
             case SPACE:
                 this.putBomb();
                 break;
         }
     }
+
+    private void checkPickItem() {
+        if (itemMatrix[this.rx][this.ry] != 0) {
+            switch (itemMatrix[this.rx][this.ry]) {
+                case 4:
+                    System.out.println("An duoc speed item");
+                    break;
+                case 5:
+                    System.out.println("An duoc flame item");
+                    break;
+                case 6:
+                    System.out.println("An duoc bomb item");
+                    break;
+            }
+            for (Item item : items) {
+                if (item.getRx() == this.rx && item.getRy() == this.ry) item.setPicked(true);
+            }
+            objId[this.rx][this.ry] = 0;
+            itemMatrix[this.rx][this.ry] = 0;
+        }
+    }
+
 
     private void putBomb() {
         long now = System.currentTimeMillis();

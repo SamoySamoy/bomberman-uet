@@ -26,7 +26,7 @@ public abstract class MovableEntity extends Entity implements Movable {
     public boolean moveUp(Image upImage, int speed) {
         boolean isMoveSuccess = false;
         // Kiểm tra xem nếu phía trước là cỏ thì di chuyển, nếu là bom thì không thể di chuyển
-        if (objId[rx][ry - 1] == 0 && bombMatix[rx][ry - 1] != 2) {
+        if (objId[rx][ry - 1] != 2 && objId[rx][ry - 1] != 3 && bombMatix[rx][ry - 1] != 2) {
             y -= speed;
             ry--;
             isMoveSuccess = true;
@@ -40,7 +40,7 @@ public abstract class MovableEntity extends Entity implements Movable {
     @Override
     public boolean moveDown(Image downImage, int speed) {
         boolean isMoveSuccess = false;
-        if (objId[rx][ry + 1] == 0 && bombMatix[rx][ry + 1] != 2) {
+        if (objId[rx][ry + 1] != 2 && objId[rx][ry + 1] != 3 && bombMatix[rx][ry + 1] != 2) {
             y += speed;
             ry++;
             isMoveSuccess = true;
@@ -54,7 +54,7 @@ public abstract class MovableEntity extends Entity implements Movable {
     @Override
     public boolean moveLeft(Image leftImage, int speed) {
         boolean isMoveSuccess = false;
-        if (objId[rx - 1][ry] == 0 && bombMatix[rx - 1][ry] != 2) {
+        if (objId[rx - 1][ry] != 2 && objId[rx - 1][ry] != 3 && bombMatix[rx - 1][ry] != 2) {
             x -= speed;
             rx--;
             isMoveSuccess = true;
@@ -68,7 +68,7 @@ public abstract class MovableEntity extends Entity implements Movable {
     @Override
     public boolean moveRight(Image rightImage, int speed) {
         boolean isMoveSuccess = false;
-        if (objId[rx + 1][ry] == 0 && bombMatix[rx + 1][ry] != 2) {
+        if (objId[rx + 1][ry] != 2 && objId[rx + 1][ry] != 3 && bombMatix[rx + 1][ry] != 2) {
             x += speed;
             rx++;
             isMoveSuccess = true;

@@ -15,9 +15,9 @@ import javafx.scene.image.ImageView;
 import uet.oop.bomberman.entities.bomberman.Bomber;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.enemies.Enemy;
+import uet.oop.bomberman.entities.items.Item;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.entities.blocks.Bomb;
-import uet.oop.bomberman.LevelMap.LevelUp;
 import uet.oop.bomberman.Menu.Menu;
 import uet.oop.bomberman.entities.blocks.Portal;
 
@@ -39,6 +39,7 @@ public class BombermanGame extends Application {
     public static List<Entity> stillObjects = new ArrayList<>();
     public static List<Enemy> enemies = new ArrayList<>();
     public static List<Bomb> bombs = new ArrayList<>();
+    public static List<Item> items = new ArrayList<>();
 
     // cordinates of all objects in a simplify matrix
     // handle while rendering in Map.java
@@ -119,6 +120,8 @@ public class BombermanGame extends Application {
         enemies.removeIf(enemy -> !enemy.isAlive());
         bombs.forEach(Bomb::update);
         bombs.removeIf(Bomb::isExploded);
+        items.forEach(Item::update);
+        items.removeIf(Item::isPicked);
         portal.update();
     }
 
@@ -127,6 +130,7 @@ public class BombermanGame extends Application {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         stillObjects.forEach(g -> g.render(gc));
         entities.forEach(g -> g.render(gc));
+        items.forEach(item -> item.render(gc));
         bombs.forEach(bomb -> bomb.render(gc));
         bomberman.render(gc);
         enemies.forEach(enemy -> enemy.render(gc));
