@@ -2,11 +2,11 @@ package uet.oop.bomberman.entities.bomberman;
 
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
+import uet.oop.bomberman.Sound.Sound;
 import uet.oop.bomberman.entities.MovableEntity;
 import uet.oop.bomberman.entities.blocks.Bomb;
 import uet.oop.bomberman.entities.items.Item;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.Sound.Sound;
 
 import static uet.oop.bomberman.BombermanGame.*;
 
@@ -15,12 +15,14 @@ public class Bomber extends MovableEntity {
     private int animationTransform = 1;
     private int countTransform = 0;
     private long lastPutBomb = 0;
+    private int curBombRemain;
 
     public static final int DEFAULT_SPEED = 32;
 
     public Bomber(int rx, int ry, Image img, int animationTransform, boolean isAlive,
                   String direction) {
         super(rx, ry, img, isAlive, direction);
+        this.curBombRemain = 1;
     }
 
     public void move() {
@@ -63,9 +65,12 @@ public class Bomber extends MovableEntity {
                     break;
                 case 5:
                     System.out.println("An duoc flame item");
+                    Bomb.gainBombLevel();
                     break;
                 case 6:
                     System.out.println("An duoc bomb item");
+                    this.gainBombRemain();
+                    System.out.println("So bomb hien tai " + this.curBombRemain);
                     break;
             }
             for (Item item : items) {
@@ -78,15 +83,29 @@ public class Bomber extends MovableEntity {
 
 
     private void putBomb() {
-        long now = System.currentTimeMillis();
-        if (now - lastPutBomb > putBombPeriod) {
-            lastPutBomb = now;
-            // put bomb
+//        long now = System.currentTimeMillis();
+//        if (now - lastPutBomb > putBombPeriod) {
+//            lastPutBomb = now;
+//            // put bomb
+//            System.out.printf("x: %d, y: %d, rx: %d, ry: %d\n", this.x, this.y, this.rx, this.ry);
+//            Bomb bomb = new Bomb(this.rx, this.ry, Sprite.bomb.getFxImage(), false, false);
+//            new Sound("sound/put_bombs.wav", "putBomb");
+//            bombs.add(bomb);
+//        }
+        System.out.println("Truoc khi dat bom");
+        System.out.println("So bomb hien tai: " + this.curBombRemain);
+        if (curBombRemain > 0) {
+            this.lowerBombRemain();
+
+            System.out.println("Sau khi dat bom");
+            System.out.println("So bomb con lai: " + this.curBombRemain);
             System.out.printf("x: %d, y: %d, rx: %d, ry: %d\n", this.x, this.y, this.rx, this.ry);
+
             Bomb bomb = new Bomb(this.rx, this.ry, Sprite.bomb.getFxImage(), false, false);
             new Sound("sound/put_bombs.wav", "putBomb");
             bombs.add(bomb);
-        }
+
+        } else System.out.println("Tam thoi het bomb");
     }
 
 
@@ -128,5 +147,21 @@ public class Bomber extends MovableEntity {
     public void update() {
         countTransform++;
         killedByBomb();
+    }
+
+    public int getCurBombRemain() {
+        return curBombRemain;
+    }
+
+    public void setCurBombRemain(int curBombRemain) {
+        this.curBombRemain = curBombRemain;
+    }
+
+    public void gainBombRemain() {
+        curBombRemain++;
+    }
+
+    public void lowerBombRemain() {
+        curBombRemain--;
     }
 }

@@ -7,23 +7,27 @@ import uet.oop.bomberman.entities.items.FlameItem;
 import uet.oop.bomberman.entities.items.SpeedItem;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.Sound.Sound;
+
 import static uet.oop.bomberman.BombermanGame.*;
 
 public class Bomb extends Entity {
     private static final long bombLastTime = 2200;
     private static final long uiLastTime = 480;
+    private static final int MAX_BOMB_LEVEL = 3;
     private int rx;
     private int ry;
     private long bombStartTime;
     public boolean isExploded;
     private boolean isFinal;
+    private boolean ui;
     private int animationTransform = 1;
     private int countTransform = 0;
-    private boolean ui;
-    private Bomb left;
-    private Bomb right;
-    private Bomb up;
-    private Bomb down;
+
+    private static int curBombLevel = 1;
+    private Bomb[] left = new Bomb[MAX_BOMB_LEVEL];
+    private Bomb[] right = new Bomb[MAX_BOMB_LEVEL];
+    private Bomb[] up = new Bomb[MAX_BOMB_LEVEL];
+    private Bomb[] down = new Bomb[MAX_BOMB_LEVEL];
 
     public Bomb(int rx, int ry, Image img, boolean isExploded, boolean ui) {
         super(rx, ry, img);
@@ -41,76 +45,114 @@ public class Bomb extends Entity {
             if (animationTransform == 1) {
                 this.img = Sprite.bomb_exploded.getFxImage();
                 animationTransform = 2;
-                if (objId[rx - 1][ry] != 2) {
-                    this.left =
-                            new Bomb(rx - 1, ry, Sprite.explosion_horizontal_left_last.getFxImage(), false, true);
-                    bombs.add(left);
+
+                for (int i = 1; i <= Bomb.curBombLevel; i++) {
+                    if (objId[rx - i][ry] == 2) break;
+                    if (objId[rx - i][ry] != 2) {
+                        this.left[i - 1] =
+                                new Bomb(rx - i, ry, Sprite.explosion_horizontal_left_last.getFxImage(), false, true);
+                        bombs.add(left[i - 1]);
+                    }
+                    if (objId[rx - i][ry] == 3) break;
                 }
 
-                if (objId[rx + 1][ry] != 2) {
-                    this.right = new Bomb(rx + 1, ry, Sprite.explosion_horizontal_right_last.getFxImage(),
-                            false, true);
-                    bombs.add(right);
+                for (int i = 1; i <= Bomb.curBombLevel; i++) {
+                    if (objId[rx + i][ry] == 2) break;
+                    if (objId[rx + i][ry] != 2) {
+                        this.right[i - 1] = new Bomb(rx + i, ry, Sprite.explosion_horizontal_right_last.getFxImage(),
+                                false, true);
+                        bombs.add(right[i - 1]);
+                    }
+                    if (objId[rx + i][ry] == 3) break;
                 }
 
-                if (objId[rx][ry - 1] != 2) {
-                    this.up =
-                            new Bomb(rx, ry - 1, Sprite.explosion_vertical_top_last.getFxImage(), false, true);
-                    bombs.add(up);
+
+                for (int i = 1; i <= Bomb.curBombLevel; i++) {
+                    if (objId[rx][ry - i] == 2) break;
+                    if (objId[rx][ry - i] != 2) {
+                        this.up[i - 1] =
+                                new Bomb(rx, ry - i, Sprite.explosion_vertical_top_last.getFxImage(), false, true);
+                        bombs.add(up[i - 1]);
+                    }
+                    if (objId[rx][ry - i] == 3) break;
                 }
 
-                if (objId[rx][ry + 1] != 2) {
-                    this.down =
-                            new Bomb(rx, ry + 1, Sprite.explosion_vertical_down_last.getFxImage(), false, true);
-                    bombs.add(down);
+                for (int i = 1; i <= Bomb.curBombLevel; i++) {
+                    if (objId[rx][ry + i] == 2) break;
+                    if (objId[rx][ry + i] != 2) {
+                        this.down[i - 1] =
+                                new Bomb(rx, ry + i, Sprite.explosion_vertical_down_last.getFxImage(), false, true);
+                        bombs.add(down[i - 1]);
+                    }
+                    if (objId[rx][ry + i] == 3) break;
                 }
 
             } else if (animationTransform == 2) {
                 this.img = Sprite.bomb_exploded1.getFxImage();
                 animationTransform = 3;
-                if (this.left != null) {
-                    this.left.img = Sprite.explosion_horizontal_left_last1.getFxImage();
+                for (int i = 1; i <= Bomb.curBombLevel; i++) {
+                    if (this.left[i - 1] != null) {
+                        this.left[i - 1].img = Sprite.explosion_horizontal_left_last1.getFxImage();
+                    } else break;
                 }
-                if (this.right != null) {
-                    this.right.img = Sprite.explosion_horizontal_right_last1.getFxImage();
+
+                for (int i = 1; i <= Bomb.curBombLevel; i++) {
+                    if (this.right[i - 1] != null) {
+                        this.right[i - 1].img = Sprite.explosion_horizontal_right_last1.getFxImage();
+                    } else break;
                 }
-                if (this.up != null) {
-                    this.up.img = Sprite.explosion_vertical_top_last1.getFxImage();
+                for (int i = 1; i <= Bomb.curBombLevel; i++) {
+                    if (this.up[i - 1] != null) {
+                        this.up[i - 1].img = Sprite.explosion_vertical_top_last1.getFxImage();
+                    } else break;
                 }
-                if (this.down != null) {
-                    this.down.img = Sprite.explosion_vertical_down_last1.getFxImage();
+                for (int i = 1; i <= Bomb.curBombLevel; i++) {
+                    if (this.down[i - 1] != null) {
+                        this.down[i - 1].img = Sprite.explosion_vertical_down_last1.getFxImage();
+                    } else break;
                 }
-            new Sound("sound/bomb_explosion.wav", "explosion");} else if (animationTransform == 3) {
+                new Sound("sound/bomb_explosion.wav", "explosion");
+            } else if (animationTransform == 3) {
                 this.img = Sprite.bomb_exploded2.getFxImage();
                 this.isFinal = true;
                 animationTransform = 4;
-                if (this.left != null) {
-                    this.left.img = Sprite.explosion_horizontal_left_last2.getFxImage();
-                    this.left.isFinal = true;
-                    bombMatix[this.left.rx][this.left.ry] = 1;
-                    this.left.checkImpact();
+                for (int i = 1; i <= Bomb.curBombLevel; i++) {
+                    if (this.left[i - 1] != null) {
+                        this.left[i - 1].img = Sprite.explosion_horizontal_left_last2.getFxImage();
+                        this.left[i - 1].isFinal = true;
+                        bombMatix[this.left[i - 1].rx][this.left[i - 1].ry] = 1;
+                        this.left[i - 1].checkImpact();
+                    } else break;
                 }
-                if (this.right != null) {
-                    this.right.img = Sprite.explosion_horizontal_right_last2.getFxImage();
-                    this.right.isFinal = true;
-                    bombMatix[this.right.rx][this.right.ry] = 1;
-                    this.right.checkImpact();
+
+                for (int i = 1; i <= Bomb.curBombLevel; i++) {
+                    if (this.right[i - 1] != null) {
+                        this.right[i - 1].img = Sprite.explosion_horizontal_right_last2.getFxImage();
+                        this.right[i - 1].isFinal = true;
+                        bombMatix[this.right[i - 1].rx][this.right[i - 1].ry] = 1;
+                        this.right[i - 1].checkImpact();
+                    } else break;
                 }
-                if (this.up != null) {
-                    this.up.img = Sprite.explosion_vertical_top_last2.getFxImage();
-                    this.up.isFinal = true;
-                    bombMatix[this.up.rx][this.up.ry] = 1;
-                    this.up.checkImpact();
+                for (int i = 1; i <= Bomb.curBombLevel; i++) {
+                    if (this.up[i - 1] != null) {
+                        this.up[i - 1].img = Sprite.explosion_vertical_top_last2.getFxImage();
+                        this.up[i - 1].isFinal = true;
+                        bombMatix[this.up[i - 1].rx][this.up[i - 1].ry] = 1;
+                        this.up[i - 1].checkImpact();
+                    } else break;
                 }
-                if (this.down != null) {
-                    this.down.img = Sprite.explosion_vertical_down_last2.getFxImage();
-                    this.down.isFinal = true;
-                    bombMatix[this.down.rx][this.down.ry] = 1;
-                    this.down.checkImpact();
+                for (int i = 1; i <= Bomb.curBombLevel; i++) {
+                    if (this.down[i - 1] != null) {
+                        this.down[i - 1].img = Sprite.explosion_vertical_down_last2.getFxImage();
+                        this.down[i - 1].isFinal = true;
+                        bombMatix[this.down[i - 1].rx][this.down[i - 1].ry] = 1;
+                        this.down[i - 1].checkImpact();
+                    } else break;
                 }
             } else {
                 bombMatix[this.rx][this.ry] = 0;
                 this.isExploded = true;
+                bomberman.gainBombRemain();
             }
         }
     }
@@ -198,5 +240,25 @@ public class Bomb extends Entity {
 
     public void setFinal(boolean aFinal) {
         isFinal = aFinal;
+    }
+
+    public static int getCurBombLevel() {
+        return curBombLevel;
+    }
+
+    public static void setCurBombLevel(int curBombLevel) {
+        Bomb.curBombLevel = curBombLevel;
+    }
+
+    public static void gainBombLevel() {
+        if (curBombLevel < MAX_BOMB_LEVEL) {
+            curBombLevel++;
+        }
+    }
+
+    public static void lowerBombLevel() {
+        if (curBombLevel > 0) {
+            curBombLevel--;
+        }
     }
 }
