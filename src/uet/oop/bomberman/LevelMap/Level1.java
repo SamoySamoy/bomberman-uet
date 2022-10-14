@@ -6,6 +6,8 @@ import static uet.oop.bomberman.BombermanGame.*;
 import uet.oop.bomberman.graphics.Map;
 import uet.oop.bomberman.entities.enemies.*;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.entities.blocks.Bomb;
+import uet.oop.bomberman.entities.blocks.Bomb.*;
 
 
 public class Level1 {
@@ -15,6 +17,7 @@ public class Level1 {
     isOver = false;
     isLevelUp = false;
     isPause = false;
+    Bomb.curBombLevel = 1;
     enemies.clear();
     bombs.clear();
     new Map("res/levels/Level1.txt");

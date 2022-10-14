@@ -99,13 +99,15 @@ public class BombermanGame extends Application {
             @Override
             public void handle(long l) {
                 render();
-                if (!isOver) {
-                    enemies.forEach(Enemy::move);
-                    update();
-                    Menu.updateMenu();
-                } else {
-                    Image gameOver = new Image("images/over.png");
-                    author_view.setImage(gameOver);
+                if (!isPause) {
+                    if (!isOver) {
+                        enemies.forEach(Enemy::move);
+                        update();
+                        Menu.updateMenu();
+                    } else {
+                        Image gameOver = new Image("images/over.png");
+                        author_view.setImage(gameOver);
+                    }
                 }
             }
         };
