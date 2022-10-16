@@ -127,8 +127,8 @@ public class BombermanGame extends Application {
             bomberman.setCountToRun(0);
         }
 
-//        enemies.forEach(Enemy::update);
-//        enemies.removeIf(enemy -> !enemy.isAlive());
+        enemies.forEach(Enemy::update);
+        enemies.removeIf(enemy -> !enemy.isAlive());
         bombs.forEach(Bomb::update);
         bombs.removeIf(Bomb::isExploded);
         items.forEach(Item::update);
@@ -145,6 +145,6 @@ public class BombermanGame extends Application {
         items.forEach(item -> item.render(gc));
         bombs.forEach(bomb -> bomb.render(gc));
         bomberman.render(gc);
-//        enemies.forEach(enemy -> enemy.render(gc));
+        enemies.forEach(enemy -> enemy.render(gc));
     }
 }

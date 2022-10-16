@@ -44,23 +44,39 @@ public class Bomber extends MovableEntity {
             switch (moveDirection) {
                 case "up":
                     this.setDirection("up");
-                    this.setCount(Sprite.SCALED_SIZE / this.speed);
-                    this.checkRun();
+                    if (objId[rx][ry - 1] != 2 && objId[rx][ry - 1] != 3 && bombMatix[rx][ry - 1] != 2) {
+                        this.setCount(Sprite.SCALED_SIZE / this.speed);
+                        this.checkRun();
+                    } else {
+                        this.img = Sprite.player_up.getFxImage();
+                    }
                     break;
                 case "down":
                     this.setDirection("down");
-                    this.setCount(Sprite.SCALED_SIZE / this.speed);
-                    this.checkRun();
+                    if (objId[rx][ry + 1] != 2 && objId[rx][ry + 1] != 3 && bombMatix[rx][ry + 1] != 2) {
+                        this.setCount(Sprite.SCALED_SIZE / this.speed);
+                        this.checkRun();
+                    } else {
+                        this.img = Sprite.player_down.getFxImage();
+                    }
                     break;
                 case "left":
                     this.setDirection("left");
-                    this.setCount(Sprite.SCALED_SIZE / this.speed);
-                    this.checkRun();
+                    if (objId[rx - 1][ry] != 2 && objId[rx - 1][ry] != 3 && bombMatix[rx - 1][ry] != 2) {
+                        this.setCount(Sprite.SCALED_SIZE / this.speed);
+                        this.checkRun();
+                    } else {
+                        this.img = Sprite.player_left.getFxImage();
+                    }
                     break;
                 case "right":
                     this.setDirection("right");
-                    this.setCount(Sprite.SCALED_SIZE / this.speed);
-                    this.checkRun();
+                    if (objId[rx + 1][ry] != 2 && objId[rx + 1][ry] != 3 && bombMatix[rx + 1][ry] != 2) {
+                        this.setCount(Sprite.SCALED_SIZE / this.speed);
+                        this.checkRun();
+                    } else {
+                        this.img = Sprite.player_right.getFxImage();
+                    }
                     break;
             }
         }
@@ -68,6 +84,7 @@ public class Bomber extends MovableEntity {
 
     public void checkRun() {
         if (this.getCount() > 0) {
+            System.out.println("Checking running");
             this.setMoveDirection();
             this.setCount(this.getCount() - 1);
         }
@@ -84,9 +101,11 @@ public class Bomber extends MovableEntity {
                 this.setY(this.getY() + this.speed);
                 break;
             case "left":
+                leftStep();
                 this.setX(this.getX() - this.speed);
                 break;
             case "right":
+                rightStep();
                 this.setX(this.getX() + this.speed);
                 break;
         }
@@ -106,6 +125,9 @@ public class Bomber extends MovableEntity {
             } else {
                 this.setImage(Sprite.player_up.getFxImage());
                 ry--;
+                System.out.println(rx + " " + ry);
+                this.checkPickItem();
+                this.checkTele();
                 this.setSwap(1);
             }
         }
@@ -125,6 +147,9 @@ public class Bomber extends MovableEntity {
             } else {
                 this.setImage(Sprite.player_down.getFxImage());
                 ry++;
+                System.out.println(rx + " " + ry);
+                this.checkPickItem();
+                this.checkTele();
                 this.setSwap(1);
             }
         }
@@ -144,6 +169,9 @@ public class Bomber extends MovableEntity {
             } else {
                 this.setImage(Sprite.player_left.getFxImage());
                 rx--;
+                System.out.println(rx + " " + ry);
+                this.checkPickItem();
+                this.checkTele();
                 this.setSwap(1);
             }
         }
@@ -162,7 +190,10 @@ public class Bomber extends MovableEntity {
                 this.setSwap(4);
             } else {
                 this.setImage(Sprite.player_right.getFxImage());
-                ry++;
+                rx++;
+                System.out.println(rx + " " + ry);
+                this.checkPickItem();
+                this.checkTele();
                 this.setSwap(1);
             }
         }
@@ -232,10 +263,11 @@ public class Bomber extends MovableEntity {
                     }
                 }
             }
-            x = desX * 32;
-            y = desY * 32;
-            rx = desX;
-            ry = desY;
+            this.setRx(desX);
+            this.setRy(desY);
+            this.setX(desX * Sprite.SCALED_SIZE);
+            this.setY(desY * Sprite.SCALED_SIZE);
+            System.out.printf("rx:%d ry:%d x:%d y:%d\n", this.rx, this.ry, this.x, this.y);
         }
     }
 
@@ -292,10 +324,27 @@ public class Bomber extends MovableEntity {
         }
     }
 
+    public void reset() {
+        this.setAlive(true);
+        this.setAnimationTransform(1);
+        this.setCountTransform(0);
+        this.setLastPutBomb(0);
+        this.setRx(1);
+        this.setRy(1);
+        this.setX(32);
+        this.setY(32);
+        this.setDirection("right");
+        this.setImage(Sprite.player_right.getFxImage());
+        this.setCurBombRemain(1);
+        this.setCount(0);
+        this.setCountToRun(0);
+        this.setSwap(1);
+        this.setSpeed(Bomber.DEFAULT_SPEED);
+        Bomb.curBombLevel = 1;
+    }
+
     @Override
     public void update() {
-        this.checkPickItem();
-        this.checkTele();
         countTransform++;
         killedByBomb();
     }
@@ -346,5 +395,29 @@ public class Bomber extends MovableEntity {
 
     public void setSpeed(int speed) {
         this.speed = speed;
+    }
+
+    public int getAnimationTransform() {
+        return animationTransform;
+    }
+
+    public void setAnimationTransform(int animationTransform) {
+        this.animationTransform = animationTransform;
+    }
+
+    public int getCountTransform() {
+        return countTransform;
+    }
+
+    public void setCountTransform(int countTransform) {
+        this.countTransform = countTransform;
+    }
+
+    public long getLastPutBomb() {
+        return lastPutBomb;
+    }
+
+    public void setLastPutBomb(long lastPutBomb) {
+        this.lastPutBomb = lastPutBomb;
     }
 }
