@@ -2,6 +2,7 @@ package uet.oop.bomberman.entities.enemies;
 
 import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
+import static uet.oop.bomberman.graphics.Map.*;
 import uet.oop.bomberman.entities.enemies.PathFinding.AStar;
 import uet.oop.bomberman.entities.enemies.PathFinding.Node;
 import static uet.oop.bomberman.BombermanGame.*;
@@ -26,7 +27,7 @@ public class Intel extends Enemy {
         Node final_node = new Node(bomberman.getRy(), bomberman.getRx());
 
         int rows = HEIGHT;
-        int cols = WIDTH;
+        int cols = RWIDTH;
 
         AStar a_star = new AStar(rows, cols, initial_node, final_node);
 

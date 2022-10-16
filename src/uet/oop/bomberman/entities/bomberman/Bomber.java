@@ -7,6 +7,9 @@ import uet.oop.bomberman.entities.MovableEntity;
 import uet.oop.bomberman.entities.blocks.Bomb;
 import uet.oop.bomberman.entities.items.Item;
 import uet.oop.bomberman.graphics.Sprite;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import uet.oop.bomberman.graphics.Sprite;
 
 import static uet.oop.bomberman.BombermanGame.*;
 
@@ -16,16 +19,15 @@ public class Bomber extends MovableEntity {
   private int countTransform = 0;
   private long lastPutBomb = 0;
   private int curBombRemain;
-
   public static final int DEFAULT_SPEED = 32;
+  private static final int screenPosX = 10;
+  private static final int screenPosY = 5;
 
   public Bomber(int rx, int ry, Image img, int animationTransform, boolean isAlive,
       String direction) {
     super(rx, ry, img, isAlive, direction);
     this.curBombRemain = 1;
   }
-
-  public void move() {}
 
   // keyboard event
   public void handleEventPress(KeyEvent e) {
