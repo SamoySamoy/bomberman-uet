@@ -64,7 +64,7 @@ public class Sound extends JFrame {
 
   public static void updateSound() {
     if (!is_sound_title) {
-      new Sound("sound/title_screen.wav", "title");
+      new Sound("sound/Title.wav", "title");
       is_sound_title = true;
     }
     if (!bomberman.isAlive()) {
@@ -72,7 +72,7 @@ public class Sound extends JFrame {
        * title_screen.close(); bomb_explosion.close();
        */
       if (!is_sound_died) {
-        new Sound("sound/just_died.wav", "just_died");
+        new Sound("sound/GameOver.wav", "just_died");
         is_sound_died = true;
       }
     }
