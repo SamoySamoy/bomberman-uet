@@ -76,7 +76,6 @@ public class BombermanGame extends Application {
     canvas = new Canvas(Sprite.SCALED_SIZE * RWIDTH, Sprite.SCALED_SIZE * HEIGHT);
     canvas.setTranslateY(36);
     gc = canvas.getGraphicsContext2D();
-    gc.fillRect(WIDTH, WIDTH, HEIGHT, HEIGHT);
     Image author = new Image("images/background.jpg");
     author_view = new ImageView(author);
     author_view.setX(-400);
@@ -141,7 +140,7 @@ public class BombermanGame extends Application {
   public void moveCamera() {
     gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
     if (bomberman.getRx() > screenX) {
-      canvas.setTranslateX(-(bomberman.getRx() - screenX) * 10 + 10);
+      canvas.setTranslateX(-(bomberman.getRx() - screenX) * 25 + 50);
     }
   }
 
