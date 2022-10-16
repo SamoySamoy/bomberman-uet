@@ -13,7 +13,7 @@ import static uet.oop.bomberman.BombermanGame.*;
 public class Bomb extends Entity {
   private static final long bombLastTime = 2200;
   private static final long uiLastTime = 480;
-  private static final int MAX_BOMB_LEVEL = 3;
+  private static final int MAX_BOMB_LEVEL = 2;
   private int rx;
   private int ry;
   private long bombStartTime;
