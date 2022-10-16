@@ -31,7 +31,7 @@ public class Level1 {
     Enemy ballom1 = new Ballom(1, 5, Sprite.balloom_left3.getFxImage(), true, "left");
     Enemy oneal1 = new Oneal(7, 7, Sprite.oneal_left3.getFxImage(), true, "left");
     Enemy oneal2 = new Oneal(11, 1, Sprite.oneal_left3.getFxImage(), true, "left");
-
+    Enemy intel1 = new Intel(13, 12, Sprite.minvo_left3.getFxImage(), true, "left");
     // load authorView Scr
     Image transparent = new Image("images/transparent.png");
     author_view.setImage(transparent);
@@ -39,6 +39,7 @@ public class Level1 {
     enemies.add(ballom1);
     enemies.add(oneal1);
     enemies.add(oneal2);
+    enemies.add(intel1);
 
     for (Enemy enemy : enemies) {
       enemy.setAlive(true);
