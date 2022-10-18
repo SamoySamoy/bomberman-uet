@@ -29,6 +29,7 @@ public class BombermanGame extends Application {
   // screen size
   public static final int WIDTH = 25;
   public static final int HEIGHT = 15;
+  public static final int RWIDTH = 50;
 
   // javafx init
   private GraphicsContext gc;
@@ -44,21 +45,25 @@ public class BombermanGame extends Application {
 
   // cordinates of all objects in a simplify matrix
   // handle while rendering in Map.java
-  public static int[][] objId = new int[WIDTH][HEIGHT]; // Create new object id_object from main
-                                                        // file. ;
-  public static int[][] bombMatix = new int[WIDTH][HEIGHT]; // Create bomb id base on matrix
-  public static int[][] itemMatrix = new int[WIDTH][HEIGHT]; // Create item id base on matrix
+  public static int[][] objId = new int[RWIDTH][HEIGHT]; // Create new object id_object from main
+                                                         // file. ;
+  public static int[][] bombMatix = new int[RWIDTH][HEIGHT]; // Create bomb id base on matrix
+  public static int[][] itemMatrix = new int[RWIDTH][HEIGHT]; // Create item id base on matrix
   // first level
   public static int level = 1;
+
   // add main player start at (rx:1, ry:1) (coordinates in objId),
   // (x:1, y:1) (cordinates in screen size)
   public static Bomber bomberman =
       new Bomber(1, 1, Sprite.player_right.getFxImage(), 1, true, "right");
-  public static Entity portal = new Portal(WIDTH - 2, HEIGHT - 2, Sprite.portal.getFxImage());
+  public static Entity portal = new Portal(RWIDTH - 2, HEIGHT - 2, Sprite.portal.getFxImage());
   public static boolean isOver = false;
   public static boolean isStopMoving = false;// only bomberman, prevent press after being killed
   public static boolean isPause = false;
   public static boolean isLevelUp = false;
+  public static final int screenX = 10;
+  public static final int screenY = 5;
+
 
   public static void main(String[] args) {
     Application.launch(BombermanGame.class);
@@ -68,8 +73,8 @@ public class BombermanGame extends Application {
   @Override
   public void start(Stage stage) {
     // Create canvas
-    canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
-    canvas.setTranslateY(32);
+    canvas = new Canvas(Sprite.SCALED_SIZE * RWIDTH, Sprite.SCALED_SIZE * HEIGHT);
+    canvas.setTranslateY(36);
     gc = canvas.getGraphicsContext2D();
     Image author = new Image("images/background.jpg");
     author_view = new ImageView(author);
@@ -85,6 +90,8 @@ public class BombermanGame extends Application {
 
     // add scene to stage
     stage.setScene(scene);
+    stage.setWidth(WIDTH * 32 + 15);
+    stage.setHeight(HEIGHT * 32 + 74);
     stage.show();
     // keyboard events
     scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -130,9 +137,16 @@ public class BombermanGame extends Application {
     Sound.updateSound();
   }
 
+  public void moveCamera() {
+    gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    if (bomberman.getRx() > screenX) {
+      canvas.setTranslateX(-(bomberman.getRx() - screenX) * 25 + 50);
+    }
+  }
+
   // object render
   public void render() {
-    gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    moveCamera();
     stillObjects.forEach(g -> g.render(gc));
     entities.forEach(g -> g.render(gc));
     items.forEach(item -> item.render(gc));
@@ -140,4 +154,5 @@ public class BombermanGame extends Application {
     bomberman.render(gc);
     enemies.forEach(enemy -> enemy.render(gc));
   }
+
 }
