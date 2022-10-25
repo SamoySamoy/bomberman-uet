@@ -7,12 +7,11 @@ import uet.oop.bomberman.entities.blocks.Bomb;
 import static uet.oop.bomberman.BombermanGame.*;
 
 public abstract class Enemy extends MovableEntity {
-    protected static final long ENEMY_DELAY = 1000;
-    protected static final int DEFAULT_ENEMY_SPEED = 32;
-    protected long lastMoveTime = 0;
+    public static final int DEFAULT_ENEMY_SPEED = 4;
 
     public Enemy(int rx, int ry, Image img, boolean isALive, String direction) {
         super(rx, ry, img, isALive, direction);
+        this.speed = DEFAULT_ENEMY_SPEED;
     }
 
     public abstract void move();
@@ -41,13 +40,6 @@ public abstract class Enemy extends MovableEntity {
     public void update() {
         killedByBomb();
         killBomber();
-    }
-
-    public long getLastMoveTime() {
-        return lastMoveTime;
-    }
-
-    public void setLastMoveTime(long lastMoveTime) {
-        this.lastMoveTime = lastMoveTime;
+        move();
     }
 }

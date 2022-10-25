@@ -4,7 +4,6 @@ import javafx.scene.image.Image;
 
 import static uet.oop.bomberman.BombermanGame.*;
 
-import uet.oop.bomberman.entities.bomberman.Bomber;
 import uet.oop.bomberman.graphics.Map;
 import uet.oop.bomberman.entities.enemies.*;
 import uet.oop.bomberman.graphics.Sprite;
@@ -23,9 +22,9 @@ public class Level2 {
 
         bomberman.reset();
 
-        Enemy ballom1 = new Ballom(1, 5, Sprite.balloom_left3.getFxImage(), true, "left");
-        Enemy oneal1 = new Oneal(7, 7, Sprite.oneal_left3.getFxImage(), true, "left");
-        Enemy oneal2 = new Oneal(11, 1, Sprite.oneal_left3.getFxImage(), true, "left");
+        Enemy ballom1 = new Ballom(1, 5, Sprite.balloom_left_2.getFxImage(), true, "left");
+        Enemy oneal1 = new Oneal(7, 7, Sprite.oneal_left_2.getFxImage(), true, "left");
+        Enemy oneal2 = new Oneal(11, 1, Sprite.oneal_left_2.getFxImage(), true, "left");
 
         // load authorView Scr
         Image transparent = new Image("images/transparent.png");

@@ -118,11 +118,8 @@ public class BombermanGame extends Application {
                 render();
                 if (!isPause) {
                     if (!isOver) {
-                        enemies.forEach(Enemy::move);
                         update();
                         Menu.updateMenu();
-                        // trans.setTo(x)
-                        // trans.setTo(y)
                         camera.play();
                     } else {
                         Image gameOver = new Image("images/over.png");
@@ -147,6 +144,13 @@ public class BombermanGame extends Application {
         }
 
         enemies.forEach(Enemy::update);
+        for (Enemy enemy : enemies) {
+            enemy.setCountToRun(enemy.getCountToRun() + 1);
+            if (enemy.getCountToRun() == 8) {
+                enemy.checkRun();
+                enemy.setCountToRun(0);
+            }
+        }
         enemies.removeIf(enemy -> !enemy.isAlive());
 
         bombs.forEach(Bomb::update);
@@ -180,5 +184,4 @@ public class BombermanGame extends Application {
         bomberman.render(gc);
         enemies.forEach(enemy -> enemy.render(gc));
     }
-
 }
