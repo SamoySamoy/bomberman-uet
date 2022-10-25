@@ -82,9 +82,9 @@ public class Map {
                 token = 3; // 3 là gạch
                 entity = new Brick(j, i, Sprite.brick.getFxImage());
                 break;
-              case 7:
-                entity = new Tele(j, i, Sprite.tele.getFxImage());
-                break;
+//              case 7:
+//                entity = new Tele(j, i, Sprite.tele.getFxImage());
+//                break;
               default:
                 entity = new Grass(j, i, Sprite.grass.getFxImage());
             }

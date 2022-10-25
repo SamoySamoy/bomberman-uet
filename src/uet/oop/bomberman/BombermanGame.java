@@ -127,6 +127,11 @@ public class BombermanGame extends Application {
   public void update() {
     entities.forEach(Entity::update);
     bomberman.update();
+    bomberman.setCountToRun(bomberman.getCountToRun() + 1);
+    if (bomberman.getCountToRun() == 4) {
+      bomberman.checkRun();
+      bomberman.setCountToRun(0);
+    }
     enemies.forEach(Enemy::update);
     enemies.removeIf(enemy -> !enemy.isAlive());
     bombs.forEach(Bomb::update);
