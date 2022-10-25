@@ -26,15 +26,15 @@ public class Intel extends Enemy {
         Node final_node = new Node(bomberman.getRy(), bomberman.getRx());
 
         int rows = HEIGHT;
-        int cols = WIDTH;
+        int cols = RWIDTH;
 
         AStar a_star = new AStar(rows, cols, initial_node, final_node);
 
-        int[][] blocks_in_array = new int[WIDTH * HEIGHT][2];
+        int[][] blocks_in_array = new int[RWIDTH * HEIGHT][2];
         int count_block = 0;
 
         for (int i = 0; i < HEIGHT; i++) {
-          for (int j = 0; j < WIDTH; j++) {
+          for (int j = 0; j < RWIDTH; j++) {
             if (objId[j][i] != 0) {
               blocks_in_array[count_block][0] = i;
               blocks_in_array[count_block][1] = j;

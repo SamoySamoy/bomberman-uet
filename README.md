@@ -1,12 +1,4 @@
 # BOMBERMAN GAME - PROJECT OOP 
-
-<!-- TABLE OF CONTENTS -->
-# Table of contents:
-1. [Introduction](#Introduction)
-2. [Game](#Game)
-3. [UML-class-diagram](#UML-class-diagram)
-4. [Features](#Features)
-5. [Challenges](#Challenges)
 <!-- <details>
   <summary>Table of Contents</summary>
   <ol>
@@ -39,33 +31,11 @@
 |   1   | Cao Xuan Dung         | 21020290    |   21020290@vnu.edu.vn       |          [cxddcx271](https://github.com/cxddcx271)          | 
 |   2   | Tran Viet Dung        | 21020009    |   21020009@vnu.edu.vn       |          [SamoySamoy](https://github.com/SamoySamoy)        |
 |   3   | Cong Nghia Hieu       | 21020540    |   21020540@vnu.edu.vn       |          [congnghiahieu](https://github.com/congnghiahieu)  |      
-### Installation: 
 
-1. Open the terminal on your IDE
-2. Clone the repo
-   ```sh
-   git clone https://github.com/SamoySamoy/bomberman-uet
-   ```
-3. Check the file status
-   ```sh
-   git status
-   ```
-4. Change branch
-   ```js
-   git checkout 'branch_name'
-   ```
-   
 <!-- Game -->
 <br />
 
 ## 2. Game <a name="Game"></a>:
-### Technologies :
-
-- Language: [JAVA](https://www.java.com/en/)
-- Framework: [IntelliJ](https://www.jetbrains.com/idea/), [Visual Studio Code](https://code.visualstudio.com)
-- Intelligent: [A\* algorithms](https://www.geeksforgeeks.org/a-search-algorithm/)
-- Library: [JavaFx](https://openjfx.io)
-
 ## Description
 
 - ![](readme/player.png) *Bomber* is the main character of the game. Bomber can move in 4 directions left / right / up / down according to the control of the player. 

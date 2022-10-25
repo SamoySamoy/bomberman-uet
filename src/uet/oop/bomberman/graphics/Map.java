@@ -41,13 +41,13 @@ public class Map {
       // main file.
 
       while (ip.hasNextLine()) {
-        for (int i = 0; i < HEIGHT; ++i) {
+        for (int i = 0; i < HEIGHT; i++) {
           String lineTile = ip.nextLine(); // Input variable lineTile in string data type.
           StringTokenizer tokenTile = new StringTokenizer(lineTile); // Create object tokenTile from
           // class StringTokenizer in
           // library imported.
 
-          for (int j = 0; j < WIDTH; j++) {
+          for (int j = 0; j < RWIDTH; j++) {
             int token = Integer.parseInt(tokenTile.nextToken());
             Entity entity; // Create object entity from class Entity.
 
@@ -95,6 +95,7 @@ public class Map {
       }
       ip.close();
     } catch (IOException e) { // Catch exception
+      System.out.println("rendering error!!!");
       e.printStackTrace(); // printStackTrace(): Help to understand where the problem is actually
       // happening.
     }
