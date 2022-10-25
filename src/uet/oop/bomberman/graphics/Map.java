@@ -8,11 +8,6 @@ import uet.oop.bomberman.entities.blocks.Portal;
 import uet.oop.bomberman.entities.blocks.Wall;
 import uet.oop.bomberman.entities.blocks.Grass;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.items.BombItem;
-import uet.oop.bomberman.entities.items.FlameItem;
-import uet.oop.bomberman.entities.items.Item;
-import uet.oop.bomberman.entities.items.SpeedItem;
-import uet.oop.bomberman.entities.items.Tele;
 
 import static uet.oop.bomberman.BombermanGame.*;
 
@@ -41,13 +36,13 @@ public class Map {
       // main file.
 
       while (ip.hasNextLine()) {
-        for (int i = 0; i < HEIGHT; i++) {
+        for (int i = 0; i < SCREEN_HEIGHT; i++) {
           String lineTile = ip.nextLine(); // Input variable lineTile in string data type.
           StringTokenizer tokenTile = new StringTokenizer(lineTile); // Create object tokenTile from
           // class StringTokenizer in
           // library imported.
 
-          for (int j = 0; j < RWIDTH; j++) {
+          for (int j = 0; j < LEVEL_WIDTH; j++) {
             int token = Integer.parseInt(tokenTile.nextToken());
             Entity entity; // Create object entity from class Entity.
 

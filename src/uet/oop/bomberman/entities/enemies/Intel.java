@@ -1,7 +1,6 @@
 package uet.oop.bomberman.entities.enemies;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.entities.enemies.PathFinding.AStar;
 import uet.oop.bomberman.entities.enemies.PathFinding.Node;
 import static uet.oop.bomberman.BombermanGame.*;
@@ -25,16 +24,16 @@ public class Intel extends Enemy {
         Node initial_node = new Node(this.ry, this.rx);
         Node final_node = new Node(bomberman.getRy(), bomberman.getRx());
 
-        int rows = HEIGHT;
-        int cols = RWIDTH;
+        int rows = SCREEN_HEIGHT;
+        int cols = LEVEL_WIDTH;
 
         AStar a_star = new AStar(rows, cols, initial_node, final_node);
 
-        int[][] blocks_in_array = new int[RWIDTH * HEIGHT][2];
+        int[][] blocks_in_array = new int[LEVEL_WIDTH * SCREEN_HEIGHT][2];
         int count_block = 0;
 
-        for (int i = 0; i < HEIGHT; i++) {
-          for (int j = 0; j < RWIDTH; j++) {
+        for (int i = 0; i < SCREEN_HEIGHT; i++) {
+          for (int j = 0; j < LEVEL_WIDTH; j++) {
             if (objId[j][i] != 0) {
               blocks_in_array[count_block][0] = i;
               blocks_in_array[count_block][1] = j;

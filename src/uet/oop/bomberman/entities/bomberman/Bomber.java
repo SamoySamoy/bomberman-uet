@@ -11,7 +11,6 @@ import uet.oop.bomberman.graphics.Sprite;
 import static uet.oop.bomberman.BombermanGame.*;
 
 public class Bomber extends MovableEntity {
-    private static final long putBombPeriod = 2300;
     private int animationTransform = 1;
     private int countTransform = 0;
     private long lastPutBomb = 0;
@@ -127,7 +126,6 @@ public class Bomber extends MovableEntity {
                 ry--;
                 System.out.println(rx + " " + ry);
                 this.checkPickItem();
-//                this.checkTele();
                 this.setSwap(1);
             }
         }
@@ -149,7 +147,6 @@ public class Bomber extends MovableEntity {
                 ry++;
                 System.out.println(rx + " " + ry);
                 this.checkPickItem();
-//                this.checkTele();
                 this.setSwap(1);
             }
         }
@@ -171,7 +168,6 @@ public class Bomber extends MovableEntity {
                 rx--;
                 System.out.println(rx + " " + ry);
                 this.checkPickItem();
-//                this.checkTele();
                 this.setSwap(1);
             }
         }
@@ -193,7 +189,6 @@ public class Bomber extends MovableEntity {
                 rx++;
                 System.out.println(rx + " " + ry);
                 this.checkPickItem();
-//                this.checkTele();
                 this.setSwap(1);
             }
         }
@@ -249,27 +244,6 @@ public class Bomber extends MovableEntity {
             itemMatrix[this.rx][this.ry] = 0;
         }
     }
-
-//    private void checkTele() {
-//        if (objId[rx][ry] == 7) {
-//            int desX = 0;
-//            int desY = 0;
-//            for (int i = 0; i < WIDTH; i++) {
-//                for (int j = 0; j < HEIGHT; j++) {
-//                    if (i != rx && j != ry && objId[i][j] == 7) {
-//                        desX = i;
-//                        desY = j;
-//                        break;
-//                    }
-//                }
-//            }
-//            this.setRx(desX);
-//            this.setRy(desY);
-//            this.setX(desX * Sprite.SCALED_SIZE);
-//            this.setY(desY * Sprite.SCALED_SIZE);
-//            System.out.printf("rx:%d ry:%d x:%d y:%d\n", this.rx, this.ry, this.x, this.y);
-//        }
-//    }
 
     private void putBomb() {
         System.out.println("Truoc khi dat bom");
