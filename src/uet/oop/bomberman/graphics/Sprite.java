@@ -22,10 +22,11 @@ public class Sprite {
    * |--------------------------------------------------------------------------
    */
   public static Sprite grass = new Sprite(DEFAULT_SIZE, 6, 0, SpriteSheet.tiles, 16, 16);
-  public static Sprite grass2 = new Sprite(DEFAULT_SIZE, 8, 0, SpriteSheet.tiles3, 16, 16);
+  public static Sprite grass2 = new Sprite(DEFAULT_SIZE, 8, 0, SpriteSheet.tiles2, 16, 16);
   public static Sprite brick = new Sprite(DEFAULT_SIZE, 7, 0, SpriteSheet.tiles, 16, 16);
-  public static Sprite brick2 = new Sprite(DEFAULT_SIZE, 7, 1, SpriteSheet.tiles, 16, 16);
+  public static Sprite brick2 = new Sprite(DEFAULT_SIZE, 3, 4, SpriteSheet.tiles2, 16, 16);
   public static Sprite wall = new Sprite(DEFAULT_SIZE, 5, 0, SpriteSheet.tiles, 16, 16);
+  public static Sprite wall2 = new Sprite(DEFAULT_SIZE, 3, 2, SpriteSheet.tiles3, 16, 16);
   public static Sprite portal = new Sprite(DEFAULT_SIZE, 4, 0, SpriteSheet.tiles, 14, 14);
   /*
    * |-------------------------------------------------------------------------- | Bomber Sprites

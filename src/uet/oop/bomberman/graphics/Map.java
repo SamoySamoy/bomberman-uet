@@ -51,21 +51,14 @@ public class Map {
             // loop it passed.
             switch (token) {
               case 1:
-                entity = new Portal(j, i, Sprite.grass2.getFxImage()); // In case 1, set entity
-                // object equal to object
-                // portal with scaled size.
+                entity = new Portal(j, i, Sprite.grass2.getFxImage());
                 token = 0;
                 break;
               case 2:
-                entity = new Wall(j, i, Sprite.wall.getFxImage()); // In case 2, set entity object
-                // equal to object wall with
-                // scaled size.
+                entity = new Wall(j, i, Sprite.wall2.getFxImage());
                 break;
               case 3:
-                entity = new Brick(j, i, Sprite.brick2.getFxImage()); // In case 3, set entity
-                                                                      // object
-                // equal to object brick with
-                // scaled size.
+                entity = new Brick(j, i, Sprite.brick2.getFxImage());
                 break;
               case 4:
               case 5:
