@@ -28,160 +28,166 @@ import java.util.*;
 
 public class BombermanGame extends Application {
 
-    // screen size
-    public static final int SCREEN_WIDTH = 25;
-    public static final int SCREEN_HEIGHT = 15;
+  // screen size
+  public static final int SCREEN_WIDTH = 25;
+  public static final int SCREEN_HEIGHT = 15;
 
-    public static final int SCREEN_WIDTH_PIXELS = SCREEN_WIDTH * Sprite.SCALED_SIZE;
-    public static final int SCREEN_HEIGHT_PIXELS = SCREEN_HEIGHT * Sprite.SCALED_SIZE;
-    public static final int LEVEL_WIDTH = 50;
-    public static final int LEVEL_HEIGHT = 15;
+  public static final int SCREEN_WIDTH_PIXELS = SCREEN_WIDTH * Sprite.SCALED_SIZE;
+  public static final int SCREEN_HEIGHT_PIXELS = SCREEN_HEIGHT * Sprite.SCALED_SIZE;
+  public static final int LEVEL_WIDTH = 50;
+  public static final int LEVEL_HEIGHT = 15;
 
-    public static final int LEVEL_WIDTH_PIXELS = LEVEL_WIDTH * Sprite.SCALED_SIZE;
-    public static final int LEVEL_HEIGHT_PIXELS = LEVEL_HEIGHT * Sprite.SCALED_SIZE;
-    // javafx init
-    private GraphicsContext gc;
-    private Canvas canvas;
-    public static ImageView author_view;
+  public static final int LEVEL_WIDTH_PIXELS = LEVEL_WIDTH * Sprite.SCALED_SIZE;
+  public static final int LEVEL_HEIGHT_PIXELS = LEVEL_HEIGHT * Sprite.SCALED_SIZE;
+  // javafx init
+  private GraphicsContext gc;
+  private Canvas canvas;
+  public static ImageView author_view;
 
-    // game objects
-    public static List<Entity> entities = new ArrayList<>();
-    public static List<Entity> stillObjects = new ArrayList<>();
-    public static List<Enemy> enemies = new ArrayList<>();
-    public static List<Bomb> bombs = new ArrayList<>();
-    public static List<Item> items = new ArrayList<>();
+  // game objects
+  public static List<Entity> entities = new ArrayList<>();
+  public static List<Entity> stillObjects = new ArrayList<>();
+  public static List<Enemy> enemies = new ArrayList<>();
+  public static List<Bomb> bombs = new ArrayList<>();
+  public static List<Item> items = new ArrayList<>();
 
-    // cordinates of all objects in a simplify matrix
-    // handle while rendering in Map.java
-    public static int[][] objId = new int[LEVEL_WIDTH][SCREEN_HEIGHT]; // Create new object id_object from main
-    // file. ;
-    public static int[][] bombMatix = new int[LEVEL_WIDTH][SCREEN_HEIGHT]; // Create bomb id base on matrix
-    public static int[][] itemMatrix = new int[LEVEL_WIDTH][SCREEN_HEIGHT]; // Create item id base on matrix
-    // first level
-    public static int level = 1;
+  // cordinates of all objects in a simplify matrix
+  // handle while rendering in Map.java
+  public static int[][] objId = new int[LEVEL_WIDTH][SCREEN_HEIGHT]; // Create new object id_object
+                                                                     // from main
+  // file. ;
+  public static int[][] bombMatix = new int[LEVEL_WIDTH][SCREEN_HEIGHT]; // Create bomb id base on
+                                                                         // matrix
+  public static int[][] itemMatrix = new int[LEVEL_WIDTH][SCREEN_HEIGHT]; // Create item id base on
+                                                                          // matrix
+  // first level
+  public static int level = 1;
 
-    // add main player start at (rx:1, ry:1) (coordinates in objId),
-    // (x:1, y:1) (cordinates in screen size)
-    public static Bomber bomberman =
-            new Bomber(1, 1, Sprite.player_right.getFxImage(), 1, true, "right");
-    public static Entity portal = new Portal(LEVEL_WIDTH - 2, SCREEN_HEIGHT - 2, Sprite.portal.getFxImage());
-    public static boolean isOver = false;
-    public static boolean isStopMoving = false;// only bomberman, prevent press after being killed
-    public static boolean isPause = false;
-    public static boolean isLevelUp = false;
+  // add main player start at (rx:1, ry:1) (coordinates in objId),
+  // (x:1, y:1) (cordinates in screen size)
+  public static Bomber bomberman =
+      new Bomber(1, 1, Sprite.player_right.getFxImage(), 1, true, "right");
+  public static Entity portal =
+      new Portal(LEVEL_WIDTH - 2, SCREEN_HEIGHT - 2, Sprite.portal.getFxImage());
+  public static boolean isOver = false;
+  public static boolean isStopMoving = false;// only bomberman, prevent press after being killed
+  public static boolean isPause = false;
+  public static boolean isLevelUp = false;
 
-    private static final TranslateTransition camera = new TranslateTransition();
+  private static final TranslateTransition camera = new TranslateTransition();
 
-    public static void main(String[] args) {
-        Application.launch(BombermanGame.class);
-    }
+  public static void main(String[] args) {
+    Application.launch(BombermanGame.class);
+  }
 
-    // game init
-    @Override
-    public void start(Stage stage) {
-        // Create canvas
-        canvas = new Canvas(Sprite.SCALED_SIZE * LEVEL_WIDTH, Sprite.SCALED_SIZE * SCREEN_HEIGHT);
-        canvas.setTranslateY(36);
-        gc = canvas.getGraphicsContext2D();
-        camera.setDuration(Duration.millis(200));
-        camera.setNode(canvas);
-        Image author = new Image("images/background.jpg");
-        author_view = new ImageView(author);
-        author_view.setX(-400);
-        author_view.setY(-208);
-        author_view.setScaleX(0.5);
-        author_view.setScaleY(0.5);
-        Group root = new Group();
-        Menu.createMenu(root);
-        root.getChildren().add(canvas);
-        root.getChildren().add(author_view);
-        Scene scene = new Scene(root);
+  // game init
+  @Override
+  public void start(Stage stage) {
+    // Create canvas
+    canvas = new Canvas(Sprite.SCALED_SIZE * LEVEL_WIDTH, Sprite.SCALED_SIZE * SCREEN_HEIGHT);
+    canvas.setTranslateY(36);
+    gc = canvas.getGraphicsContext2D();
+    camera.setDuration(Duration.millis(200));
+    camera.setNode(canvas);
+    Image author = new Image("images/background.jpg");
+    author_view = new ImageView(author);
+    author_view.setX(-400);
+    author_view.setY(-208);
+    author_view.setScaleX(0.5);
+    author_view.setScaleY(0.5);
+    Group root = new Group();
+    Menu.createMenu(root);
+    root.getChildren().add(canvas);
+    root.getChildren().add(author_view);
+    Scene scene = new Scene(root);
 
-        // add scene to stage
-        stage.setScene(scene);
-        stage.setWidth(SCREEN_WIDTH * 32 + 15);
-        stage.setHeight(SCREEN_HEIGHT * 32 + 74);
-        stage.show();
-        // keyboard events
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (!isStopMoving)
-                    bomberman.handleEventPress(keyEvent);
-            }
-        });
+    // add scene to stage
+    stage.setScene(scene);
+    stage.setWidth(SCREEN_WIDTH * 32 + 15);
+    stage.setHeight(SCREEN_HEIGHT * 32 + 74);
+    stage.show();
+    // keyboard events
+    scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+      @Override
+      public void handle(KeyEvent keyEvent) {
+        if (!isStopMoving)
+          bomberman.handleEventPress(keyEvent);
+      }
+    });
 
-        // game loop
-        AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long l) {
-                render();
-                if (!isPause) {
-                    if (!isOver) {
-                        update();
-                        Menu.updateMenu();
-                        camera.play();
-                    } else {
-                        Image gameOver = new Image("images/over.png");
-                        author_view.setImage(gameOver);
-                    }
-                }
-            }
-        };
-        timer.start();
-        bomberman.setAlive(false);
-    }
-
-    // stage update
-    public void update() {
-        entities.forEach(Entity::update);
-
-        bomberman.update();
-        bomberman.setCountToRun(bomberman.getCountToRun() + 1);
-        if (bomberman.getCountToRun() == 4) {
-            bomberman.checkRun();
-            bomberman.setCountToRun(0);
+    // game loop
+    AnimationTimer timer = new AnimationTimer() {
+      @Override
+      public void handle(long l) {
+        render();
+        if (!isPause) {
+          if (!isOver) {
+            update();
+            Menu.updateMenu();
+            camera.play();
+          } else {
+            Image gameOver = new Image("images/over.png");
+            author_view.setImage(gameOver);
+          }
         }
+      }
+    };
+    timer.start();
+    bomberman.setAlive(false);
+  }
 
-        enemies.forEach(Enemy::update);
-        for (Enemy enemy : enemies) {
-            enemy.setCountToRun(enemy.getCountToRun() + 1);
-            if (enemy.getCountToRun() == 8) {
-                enemy.checkRun();
-                enemy.setCountToRun(0);
-            }
-        }
-        enemies.removeIf(enemy -> !enemy.isAlive());
+  // stage update
+  public void update() {
+    entities.forEach(Entity::update);
 
-        bombs.forEach(Bomb::update);
-        bombs.removeIf(Bomb::isExploded);
-
-        items.forEach(Item::update);
-        items.removeIf(Item::isPicked);
-
-        portal.update();
-
-        Sound.updateSound();
+    bomberman.update();
+    bomberman.setCountToRun(bomberman.getCountToRun() + 1);
+    if (bomberman.getCountToRun() == 4) {
+      bomberman.checkRun();
+      bomberman.setCountToRun(0);
     }
 
-    public void moveCamera() {
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        int cameraX = bomberman.getX() - (SCREEN_WIDTH_PIXELS - Sprite.SCALED_SIZE) / 2;
-        if (cameraX < 0) cameraX = 0;
-        if (cameraX + SCREEN_WIDTH_PIXELS > LEVEL_WIDTH_PIXELS) cameraX = SCREEN_WIDTH_PIXELS;
-        camera.setToX(-cameraX);
-
-        // set camera to y
+    enemies.forEach(Enemy::update);
+    for (Enemy enemy : enemies) {
+      enemy.setCountToRun(enemy.getCountToRun() + 1);
+      if (enemy.getCountToRun() == 8) {
+        enemy.checkRun();
+        enemy.setCountToRun(0);
+      }
     }
+    enemies.removeIf(enemy -> !enemy.isAlive());
 
-    // object render
-    public void render() {
-        moveCamera();
-        stillObjects.forEach(g -> g.render(gc));
-        entities.forEach(g -> g.render(gc));
-        items.forEach(item -> item.render(gc));
-        bombs.forEach(bomb -> bomb.render(gc));
-        bomberman.render(gc);
-        enemies.forEach(enemy -> enemy.render(gc));
-    }
+    bombs.forEach(Bomb::update);
+    bombs.removeIf(Bomb::isExploded);
+
+    items.forEach(Item::update);
+    items.removeIf(Item::isPicked);
+
+    portal.update();
+
+    Sound.updateSound();
+  }
+
+  public void moveCamera() {
+    gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    int cameraX = bomberman.getX() - (SCREEN_WIDTH_PIXELS - Sprite.SCALED_SIZE) / 2;
+    if (cameraX < 0)
+      cameraX = 0;
+    if (cameraX + SCREEN_WIDTH_PIXELS > LEVEL_WIDTH_PIXELS)
+      cameraX = SCREEN_WIDTH_PIXELS;
+    camera.setToX(-cameraX);
+
+    // set camera to y
+  }
+
+  // object render
+  public void render() {
+    moveCamera();
+    stillObjects.forEach(g -> g.render(gc));
+    entities.forEach(g -> g.render(gc));
+    items.forEach(item -> item.render(gc));
+    bombs.forEach(bomb -> bomb.render(gc));
+    bomberman.render(gc);
+    enemies.forEach(enemy -> enemy.render(gc));
+  }
 }

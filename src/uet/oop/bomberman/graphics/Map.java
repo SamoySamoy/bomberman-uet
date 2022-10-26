@@ -51,7 +51,7 @@ public class Map {
             // loop it passed.
             switch (token) {
               case 1:
-                entity = new Portal(j, i, Sprite.grass.getFxImage()); // In case 1, set entity
+                entity = new Portal(j, i, Sprite.grass2.getFxImage()); // In case 1, set entity
                 // object equal to object
                 // portal with scaled size.
                 token = 0;
@@ -62,7 +62,8 @@ public class Map {
                 // scaled size.
                 break;
               case 3:
-                entity = new Brick(j, i, Sprite.brick.getFxImage()); // In case 3, set entity object
+                entity = new Brick(j, i, Sprite.brick2.getFxImage()); // In case 3, set entity
+                                                                      // object
                 // equal to object brick with
                 // scaled size.
                 break;
@@ -75,13 +76,13 @@ public class Map {
                 // thay thể ở trong hàm checkImpact() của bomb
                 itemMatrix[j][i] = token;
                 token = 3; // 3 là gạch
-                entity = new Brick(j, i, Sprite.brick.getFxImage());
+                entity = new Brick(j, i, Sprite.brick2.getFxImage());
                 break;
-//              case 7:
-//                entity = new Tele(j, i, Sprite.tele.getFxImage());
-//                break;
+              // case 7:
+              // entity = new Tele(j, i, Sprite.tele.getFxImage());
+              // break;
               default:
-                entity = new Grass(j, i, Sprite.grass.getFxImage());
+                entity = new Grass(j, i, Sprite.grass2.getFxImage());
             }
             objId[j][i] = token; //
             stillObjects.add(entity); //
