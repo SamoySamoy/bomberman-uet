@@ -28,7 +28,7 @@ public class Sprite {
   public static Sprite wall = new Sprite(DEFAULT_SIZE, 5, 0, SpriteSheet.tiles, 16, 16);
   public static Sprite wall2 = new Sprite(DEFAULT_SIZE, 3, 2, SpriteSheet.tiles3, 16, 16);
   public static Sprite portal = new Sprite(DEFAULT_SIZE, 9, 1, SpriteSheet.tiles3, 14, 14);
-  /*
+  /* 
    * |-------------------------------------------------------------------------- | Bomber Sprites
    * |--------------------------------------------------------------------------
    */
