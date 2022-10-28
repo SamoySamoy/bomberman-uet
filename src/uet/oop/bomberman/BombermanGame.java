@@ -142,7 +142,7 @@ public class BombermanGame extends Application {
 
     bomberman.update();
     bomberman.setCountToRun(bomberman.getCountToRun() + 1);
-    if (bomberman.getCountToRun() == 4) {
+    if (bomberman.getCountToRun() == 2) {
       bomberman.checkRun();
       bomberman.setCountToRun(0);
     }
@@ -150,7 +150,7 @@ public class BombermanGame extends Application {
     enemies.forEach(Enemy::update);
     for (Enemy enemy : enemies) {
       enemy.setCountToRun(enemy.getCountToRun() + 1);
-      if (enemy.getCountToRun() == 8) {
+      if (enemy.getCountToRun() == 4) {
         enemy.checkRun();
         enemy.setCountToRun(0);
       }

@@ -33,8 +33,8 @@ public class Level1 {
     author_view.setImage(transparent);
 
     enemies.add(ballom1);
-    /* enemies.add(oneal1);
+    enemies.add(oneal1);
     enemies.add(oneal2);
-    enemies.add(minvo1); */
+    enemies.add(minvo1);
   }
 }

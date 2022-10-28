@@ -35,7 +35,7 @@ public class Minvo extends Enemy {
 
     @Override
     public void move() {
-        if (isAlive && isAvailToTakeNewSteps()) {
+        if (isAvailToTakeNewSteps()) {
             Node initial_node = new Node(this.ry, this.rx);
             Node final_node = new Node(bomberman.getRy(), bomberman.getRx());
 

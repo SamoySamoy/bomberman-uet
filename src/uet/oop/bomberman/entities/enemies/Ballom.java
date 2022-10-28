@@ -7,7 +7,6 @@ import java.util.Random;
 
 public class Ballom extends Enemy {
     private static final Random random = new Random();
-    private long lastMoveTime = 0;
     private int lastRandomMove = -1;
 
     public Ballom(int rx, int ry, Image img, boolean isALive, String direction) {
@@ -32,34 +31,30 @@ public class Ballom extends Enemy {
 
     @Override
     public void move() {
-        long temp = System.currentTimeMillis();
-        if (temp - lastMoveTime >= 3000 && this.isAlive) {
-            lastMoveTime = temp;
-            if (isAvailToTakeNewSteps()) {
-                System.out.println("Avail to take new steps");
-                System.out.println("Speed: " + this.speed);
-                int randomDirection;
-                do {
-                    randomDirection = random.nextInt(4);
-                } while (randomDirection == lastRandomMove);
-                lastRandomMove = randomDirection;
+        if (isAvailToTakeNewSteps()) {
+            System.out.println("Avail to take new steps");
+            System.out.println("Speed: " + this.speed);
+            int randomDirection;
+            do {
+                randomDirection = random.nextInt(4);
+            } while (randomDirection == lastRandomMove);
+            lastRandomMove = randomDirection;
 
-                switch (randomDirection) {
-                    case 0:
-                        this.setMove("up");
-                        break;
-                    case 1:
-                        this.setMove("down");
-                        break;
-                    case 2:
-                        this.setMove("left");
-                        break;
-                    case 3:
-                        this.setMove("right");
-                        break;
-                }
-
+            switch (randomDirection) {
+                case 0:
+                    this.setMove("up");
+                    break;
+                case 1:
+                    this.setMove("down");
+                    break;
+                case 2:
+                    this.setMove("left");
+                    break;
+                case 3:
+                    this.setMove("right");
+                    break;
             }
+
         }
     }
 

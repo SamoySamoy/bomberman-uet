@@ -21,8 +21,8 @@ public abstract class MovableEntity extends Entity {
 
     // move stats
     protected int speed;
-    protected int steps;
-    protected int countToRun;
+    protected int steps; // 8 7 6
+    protected int countToRun; // 1 2
     // max number of frames each character has
     protected static final int MAX_NUM_FRAMES = 4;
     protected static final int DEFAULT_SPEED = 4;
@@ -93,7 +93,7 @@ public abstract class MovableEntity extends Entity {
 
     public void checkRun() {
         if (this.getSteps() > 0) {
-            this.setMoveDirection();
+            this.setMoveDirection(); // handle di chuyen
             this.setSteps(this.getSteps() - 1);
         }
     }
@@ -101,8 +101,8 @@ public abstract class MovableEntity extends Entity {
     protected void setMoveDirection() {
         switch (this.direction) {
             case "up":
-                upStep();
-                this.setY(this.getY() - this.speed);
+                upStep(); // Animation  + rx,ry
+                this.setY(this.getY() - this.speed); // di chuyen y
                 break;
             case "down":
                 downStep();
@@ -121,7 +121,7 @@ public abstract class MovableEntity extends Entity {
 
     protected void upStep() {
         System.out.println("Up step");
-        if (this.getY() % this.speed == 0) {
+        if (this.getY() % this.speed == 0) { // vd speed: 8: 0 8 16 24 32 4 3 2 1 0
             if (this.getSteps() % MAX_NUM_FRAMES == 0) {
                 this.setImage(this.upImg[0]);
             } else if (this.getSteps() % MAX_NUM_FRAMES == 3) {
