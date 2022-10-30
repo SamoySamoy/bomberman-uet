@@ -10,15 +10,16 @@ public class Portal extends Entity {
     super(x, y, img);
   }
 
-  public static void checkLevelUp() {
+  public static void checkPortal() {
     if (enemies.size() == 0 && !isLevelUp) {
       stillObjects.add(portal);
       LevelUp.checkLevelUp();
+      System.out.println(level);
     }
   }
 
   @Override
   public void update() {
-    checkLevelUp();
+    checkPortal();
   }
 }

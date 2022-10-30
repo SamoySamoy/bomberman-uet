@@ -10,7 +10,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
 import static uet.oop.bomberman.BombermanGame.*;
-
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.LevelMap.Level1;
 
 
@@ -22,7 +22,7 @@ public class Menu {
   public static Image pauseGame, playGame;
 
   public static void createMenu(Group root) { // Create a menu
-    level = new Text("Level: 1");
+    level = new Text("Level: " + String.valueOf(BombermanGame.level));
     level.setFont(Font.font("Arial", FontWeight.BOLD, 14));
     level.setFill(Color.WHITE);
     level.setX(416);
