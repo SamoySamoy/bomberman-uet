@@ -23,12 +23,18 @@ public class Sprite {
    */
   public static Sprite grass = new Sprite(DEFAULT_SIZE, 6, 0, SpriteSheet.tiles, 16, 16);
   public static Sprite grass2 = new Sprite(DEFAULT_SIZE, 8, 0, SpriteSheet.tiles2, 16, 16);
+  public static Sprite grass3 = new Sprite(DEFAULT_SIZE, 0, 0, SpriteSheet.tiles4, 16, 16);
+  public static Sprite grass4 = new Sprite(DEFAULT_SIZE, 2, 1, SpriteSheet.tiles5, 16, 16);
   public static Sprite brick = new Sprite(DEFAULT_SIZE, 7, 0, SpriteSheet.tiles, 16, 16);
   public static Sprite brick2 = new Sprite(DEFAULT_SIZE, 3, 4, SpriteSheet.tiles2, 16, 16);
+  public static Sprite brick3 = new Sprite(DEFAULT_SIZE, 4, 3, SpriteSheet.tiles4, 16, 16);
+  public static Sprite brick4 = new Sprite(DEFAULT_SIZE, 3, 2, SpriteSheet.tiles5, 16, 16);
   public static Sprite wall = new Sprite(DEFAULT_SIZE, 5, 0, SpriteSheet.tiles, 16, 16);
   public static Sprite wall2 = new Sprite(DEFAULT_SIZE, 3, 2, SpriteSheet.tiles3, 16, 16);
+  public static Sprite wall3 = new Sprite(DEFAULT_SIZE, 0, 1, SpriteSheet.tiles4, 16, 16);
+  public static Sprite wall4 = new Sprite(DEFAULT_SIZE, 3, 2, SpriteSheet.tiles6, 16, 16);
   public static Sprite portal = new Sprite(DEFAULT_SIZE, 9, 1, SpriteSheet.tiles3, 14, 14);
-  /* 
+  /*
    * |-------------------------------------------------------------------------- | Bomber Sprites
    * |--------------------------------------------------------------------------
    */

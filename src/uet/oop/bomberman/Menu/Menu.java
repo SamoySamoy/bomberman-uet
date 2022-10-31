@@ -12,6 +12,8 @@ import javafx.scene.text.Text;
 import static uet.oop.bomberman.BombermanGame.*;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.LevelMap.Level1;
+import uet.oop.bomberman.LevelMap.Level2;
+import uet.oop.bomberman.LevelMap.Level3;
 
 
 public class Menu {
@@ -22,7 +24,13 @@ public class Menu {
   public static Image pauseGame, playGame;
 
   public static void createMenu(Group root) { // Create a menu
-    level = new Text("Level: " + String.valueOf(BombermanGame.level));
+    if (BombermanGame.level == 1) {
+      level = new Text("Level: 1");
+    } else if (BombermanGame.level == 2) {
+      level = new Text("Level: 2");
+    } else {
+      level = new Text("Level: 3");
+    }
     level.setFont(Font.font("Arial", FontWeight.BOLD, 14));
     level.setFill(Color.WHITE);
     level.setX(416);
@@ -60,8 +68,17 @@ public class Menu {
       if (bomberman.isAlive()) {
         isPause = !isPause;
       } else {
-        new Level1();
-        isOver = false;
+        if (BombermanGame.level == 1) {
+          new Level1();
+          isOver = false;
+        } else if (BombermanGame.level == 2) {
+          new Level2();
+          isOver = false;
+        } else if (BombermanGame.level == 3) {
+          new Level3();
+          isOver = false;
+        }
+
       }
       updateMenu();
     });

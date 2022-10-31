@@ -6,6 +6,7 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.blocks.Brick;
 import uet.oop.bomberman.entities.blocks.Portal;
 import uet.oop.bomberman.entities.blocks.Wall;
+import uet.oop.bomberman.entities.bomberman.Bomber;
 import uet.oop.bomberman.entities.blocks.Grass;
 import uet.oop.bomberman.BombermanGame;
 
@@ -51,14 +52,44 @@ public class Map {
             // loop it passed.
             switch (token) {
               case 1:
-                entity = new Portal(j, i, Sprite.grass2.getFxImage());
+                if (BombermanGame.level == 1) {
+                  entity = new Portal(j, i, Sprite.grass2.getFxImage());
+                  stillObjects.add(entity);
+                } else if (BombermanGame.level == 2) {
+                  entity = new Portal(j, i, Sprite.grass3.getFxImage());
+                  stillObjects.add(entity);
+                } else {
+                  entity = new Portal(j, i, Sprite.grass4.getFxImage());
+                  stillObjects.add(entity);
+                }
                 token = 0;
                 break;
               case 2:
-                entity = new Wall(j, i, Sprite.wall2.getFxImage());
+                if (BombermanGame.level == 1) {
+                  entity = new Wall(j, i, Sprite.wall2.getFxImage());
+                  stillObjects.add(entity);
+
+                } else if (BombermanGame.level == 2) {
+                  entity = new Wall(j, i, Sprite.wall3.getFxImage());
+                  stillObjects.add(entity);
+
+                } else {
+                  entity = new Wall(j, i, Sprite.wall4.getFxImage());
+                  stillObjects.add(entity);
+                }
                 break;
               case 3:
-                entity = new Brick(j, i, Sprite.brick2.getFxImage());
+                if (BombermanGame.level == 1) {
+                  entity = new Brick(j, i, Sprite.brick2.getFxImage());
+                  stillObjects.add(entity);
+
+                } else if (BombermanGame.level == 2) {
+                  entity = new Brick(j, i, Sprite.brick3.getFxImage());
+                  stillObjects.add(entity);
+                } else {
+                  entity = new Brick(j, i, Sprite.brick4.getFxImage());
+                  stillObjects.add(entity);
+                }
                 break;
               case 4:
               case 5:
@@ -69,16 +100,32 @@ public class Map {
                 // thay thể ở trong hàm checkImpact() của bomb
                 itemMatrix[j][i] = token;
                 token = 3; // 3 là gạch
-                entity = new Brick(j, i, Sprite.brick2.getFxImage());
+                if (BombermanGame.level == 1) {
+                  entity = new Brick(j, i, Sprite.brick2.getFxImage());
+                  stillObjects.add(entity);
+
+                } else if (BombermanGame.level == 2) {
+                  entity = new Brick(j, i, Sprite.brick3.getFxImage());
+                  stillObjects.add(entity);
+                } else {
+                  entity = new Brick(j, i, Sprite.brick4.getFxImage());
+                  stillObjects.add(entity);
+                }
                 break;
-              // case 7:
-              // entity = new Tele(j, i, Sprite.tele.getFxImage());
-              // break;
               default:
-                entity = new Grass(j, i, Sprite.grass2.getFxImage());
+                if (BombermanGame.level == 1) {
+                  entity = new Grass(j, i, Sprite.grass2.getFxImage());
+                  stillObjects.add(entity);
+                } else if (BombermanGame.level == 2) {
+                  entity = new Grass(j, i, Sprite.grass3.getFxImage());
+                  stillObjects.add(entity);
+                } else {
+                  entity = new Grass(j, i, Sprite.grass4.getFxImage());
+                  stillObjects.add(entity);
+                }
+
             }
             objId[j][i] = token; //
-            stillObjects.add(entity); //
           }
         }
       }

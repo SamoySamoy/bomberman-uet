@@ -6,6 +6,7 @@ import uet.oop.bomberman.entities.items.BombItem;
 import uet.oop.bomberman.entities.items.FlameItem;
 import uet.oop.bomberman.entities.items.SpeedItem;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.Sound.Sound;
 
 import static uet.oop.bomberman.BombermanGame.*;
@@ -323,7 +324,13 @@ public class Bomb extends Entity {
               items.add(new BombItem(this.rx, this.ry, Sprite.powerup_bombs.getFxImage()));
               break;
           }
-          stillObjects.set(i, new Grass(this.rx, this.ry, Sprite.grass2.getFxImage()));
+          if (BombermanGame.level == 1) {
+            stillObjects.set(i, new Grass(this.rx, this.ry, Sprite.grass2.getFxImage()));
+          } else if (BombermanGame.level == 2) {
+            stillObjects.set(i, new Grass(this.rx, this.ry, Sprite.grass3.getFxImage()));
+          } else {
+            stillObjects.set(i, new Grass(this.rx, this.ry, Sprite.grass4.getFxImage()));
+          }
           objId[this.rx][this.ry] = itemMatrix[this.rx][this.ry];
           System.out.println("Replace success");
         }
