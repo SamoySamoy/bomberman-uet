@@ -1,4 +1,4 @@
 package uet.oop.bomberman.sound;
 
-public class SoundManager {
+public class    SoundManager {
 }
