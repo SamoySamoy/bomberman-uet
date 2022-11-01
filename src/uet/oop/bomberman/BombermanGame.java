@@ -61,7 +61,11 @@ public class BombermanGame extends Application {
     public static int[][] itemMatrix = new int[LEVEL_WIDTH][LEVEL_HEIGHT]; // Create item id base on
     // matrix
     // first level
-    public static int level = 1;
+    public static int currentLevel = 1;
+
+    // The time and bomb limit, each level has different time and bomb limit
+    public static int bomb_number;
+    public static int time_number;
 
     // add main player start at (rx:1, ry:1) (coordinates in objId),
     // (x:1, y:1) (cordinates in screen size)
@@ -75,6 +79,8 @@ public class BombermanGame extends Application {
     public static boolean isLevelUp = false;
 
     private static final TranslateTransition camera = new TranslateTransition();
+
+    private long lastSecond;
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
@@ -110,7 +116,7 @@ public class BombermanGame extends Application {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
-                if (!isStopMoving)
+                if (!isStopMoving && !isPause)
                     bomberman.handleEventPress(keyEvent);
             }
         });
@@ -123,6 +129,7 @@ public class BombermanGame extends Application {
                 if (!isPause) {
                     if (!isOver) {
                         update();
+                        time();
                         Menu.updateMenu();
                         camera.play();
                     } else {
@@ -133,7 +140,10 @@ public class BombermanGame extends Application {
             }
         };
         timer.start();
+
         bomberman.setAlive(false);
+
+        lastSecond = System.currentTimeMillis();
     }
 
     // stage update
@@ -142,7 +152,7 @@ public class BombermanGame extends Application {
 
         bomberman.update();
         bomberman.setCountToRun(bomberman.getCountToRun() + 1);
-        if (bomberman.getCountToRun() == bomberman.getWaitNextStep()) {
+        if (bomberman.getCountToRun() == Bomber.BOMBER_WAIT_NEXT_STEP) {
             bomberman.checkRun();
             bomberman.setCountToRun(0);
         }
@@ -150,7 +160,7 @@ public class BombermanGame extends Application {
         enemies.forEach(Enemy::update);
         for (Enemy enemy : enemies) {
             enemy.setCountToRun(enemy.getCountToRun() + 1);
-            if (enemy.getCountToRun() == enemy.getWaitNextStep()) {
+            if (enemy.getCountToRun() == Enemy.ENEMY_WAIT_NEXT_STEP) {
                 enemy.checkRun();
                 enemy.setCountToRun(0);
             }
@@ -166,6 +176,22 @@ public class BombermanGame extends Application {
         portal.update();
 
         Sound.updateSound();
+    }
+
+    public void time() {
+        long now = System.currentTimeMillis();
+        if (now - lastSecond > 1000) {
+            lastSecond = now;
+
+            if (bomberman.isAlive() && time_number > 0) {
+                time_number--;
+                Menu.time.setText("Time " + time_number);
+
+                if (time_number <= 0) {
+
+                }
+            }
+        }
     }
 
     public void moveCamera() {

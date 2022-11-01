@@ -12,6 +12,8 @@ public abstract class Enemy extends MovableEntity {
     public static final long DEFAULT_DELAY_TIME = 1000;
     public static final int DEFAULT_ENEMY_SPEED = 8;
 
+    public static final int ENEMY_WAIT_NEXT_STEP = 4;
+
     public Enemy(int rx, int ry, Image img, boolean isALive, String direction) {
         super(rx, ry, img, isALive, direction);
         this.speed = DEFAULT_ENEMY_SPEED;

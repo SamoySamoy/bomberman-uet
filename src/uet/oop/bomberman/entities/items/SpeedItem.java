@@ -1,10 +1,10 @@
 package uet.oop.bomberman.entities.items;
 
-import javafx.scene.image.Image;
+import uet.oop.bomberman.graphics.Sprite;
 
 public class SpeedItem extends Item {
-    public SpeedItem(int rx, int ry, Image img) {
-        super(rx, ry, img);
+    public SpeedItem(int rx, int ry) {
+        super(rx, ry, Sprite.powerup_speed.getFxImage());
     }
 
     @Override

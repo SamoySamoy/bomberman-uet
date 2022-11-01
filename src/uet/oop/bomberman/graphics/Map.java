@@ -6,7 +6,6 @@ import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.blocks.Brick;
 import uet.oop.bomberman.entities.blocks.Portal;
 import uet.oop.bomberman.entities.blocks.Wall;
-import uet.oop.bomberman.entities.bomberman.Bomber;
 import uet.oop.bomberman.entities.blocks.Grass;
 import uet.oop.bomberman.BombermanGame;
 
@@ -33,7 +32,7 @@ public class Map {
             // StringTokenizer in library imported.
 
             // parseInt(): Method that parses the string argument and returns a primitive int.
-            BombermanGame.level = Integer.parseInt(tokens.nextToken()); // To refer to variable level in
+            BombermanGame.currentLevel = Integer.parseInt(tokens.nextToken()); // To refer to variable level in
             // main file.
 
             while (ip.hasNextLine()) {
@@ -52,10 +51,10 @@ public class Map {
                         // loop it passed.
                         switch (token) {
                             case 1:
-                                if (BombermanGame.level == 1) {
+                                if (BombermanGame.currentLevel == 1) {
                                     entity = new Portal(j, i, Sprite.grass2.getFxImage());
                                     stillObjects.add(entity);
-                                } else if (BombermanGame.level == 2) {
+                                } else if (BombermanGame.currentLevel == 2) {
                                     entity = new Portal(j, i, Sprite.grass3.getFxImage());
                                     stillObjects.add(entity);
                                 } else {
@@ -65,11 +64,11 @@ public class Map {
                                 token = 0;
                                 break;
                             case 2:
-                                if (BombermanGame.level == 1) {
+                                if (BombermanGame.currentLevel == 1) {
                                     entity = new Wall(j, i, Sprite.wall2.getFxImage());
                                     stillObjects.add(entity);
 
-                                } else if (BombermanGame.level == 2) {
+                                } else if (BombermanGame.currentLevel == 2) {
                                     entity = new Wall(j, i, Sprite.wall3.getFxImage());
                                     stillObjects.add(entity);
 
@@ -79,11 +78,11 @@ public class Map {
                                 }
                                 break;
                             case 3:
-                                if (BombermanGame.level == 1) {
+                                if (BombermanGame.currentLevel == 1) {
                                     entity = new Brick(j, i, Sprite.brick2.getFxImage());
                                     stillObjects.add(entity);
 
-                                } else if (BombermanGame.level == 2) {
+                                } else if (BombermanGame.currentLevel == 2) {
                                     entity = new Brick(j, i, Sprite.brick3.getFxImage());
                                     stillObjects.add(entity);
                                 } else {
@@ -94,17 +93,19 @@ public class Map {
                             case 4:
                             case 5:
                             case 6:
-                                // 4 5 6 lần lượt là Speed, Flame, Bomb item
+                            case 7:
+                            case 8:
+                                // 4 5 6 7 8 lần lượt là Speed, Flame, Bomb item, Bomb limit item, Time limit item
                                 // khi mới bắt đầu sẽ load gạch
                                 // Gạch bị bom phá sẽ thay Gạch bằng các item tương ứng
                                 // thay thể ở trong hàm checkImpact() của bomb
                                 itemMatrix[j][i] = token;
                                 token = 3; // 3 là gạch
-                                if (BombermanGame.level == 1) {
+                                if (BombermanGame.currentLevel == 1) {
                                     entity = new Brick(j, i, Sprite.brick2.getFxImage());
                                     stillObjects.add(entity);
 
-                                } else if (BombermanGame.level == 2) {
+                                } else if (BombermanGame.currentLevel == 2) {
                                     entity = new Brick(j, i, Sprite.brick3.getFxImage());
                                     stillObjects.add(entity);
                                 } else {
@@ -113,10 +114,10 @@ public class Map {
                                 }
                                 break;
                             default:
-                                if (BombermanGame.level == 1) {
+                                if (BombermanGame.currentLevel == 1) {
                                     entity = new Grass(j, i, Sprite.grass2.getFxImage());
                                     stillObjects.add(entity);
-                                } else if (BombermanGame.level == 2) {
+                                } else if (BombermanGame.currentLevel == 2) {
                                     entity = new Grass(j, i, Sprite.grass3.getFxImage());
                                     stillObjects.add(entity);
                                 } else {
