@@ -12,7 +12,7 @@ public class Portal extends Entity {
 
   public static void checkPortal() {
     if (enemies.size() == 0 && !isLevelUp) {
-      stillObjects.add(portal);
+      stillObjects.add(portal1);
       LevelUp.checkLevelUp();
       System.out.println(level);
     }

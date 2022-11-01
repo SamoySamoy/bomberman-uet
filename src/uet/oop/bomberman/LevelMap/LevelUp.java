@@ -29,7 +29,7 @@ public class LevelUp {
     }
 
     public static void checkLevelUp() {
-        if (bomberman.getX() == portal.getX() && bomberman.getY() == portal.getY()) {
+        if (bomberman.getX() == portal1.getX() && bomberman.getY() == portal1.getY()) {
             if (level == 1) {
                 new Level2();
             } else if (level == 2) {

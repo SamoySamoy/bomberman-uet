@@ -18,8 +18,8 @@ public class Bomber extends MovableEntity {
 
   public static final int BOMBER_DEFAULT_SPEED = 8;
   public static final int BOMBER_HIGH_SPEED = 16;
-  public static int BOMBER_WAIT_NEXT_STEP = 4;
-  public static final int BOMBER_WAIT_NEXT_STEP_FAST = 2;
+  public static int BOMBER_WAIT_NEXT_STEP = 3;
+  public static final int BOMBER_WAIT_NEXT_STEP_FAST = 1;
 
   public Bomber(int rx, int ry, Image img, int deadAnimation, boolean isAlive, String direction) {
     super(rx, ry, img, isAlive, direction);
@@ -157,7 +157,7 @@ public class Bomber extends MovableEntity {
     isStopMoving = true;
     if (!this.isAlive) {
       // transform from dead1 state to dead3 state
-      if (countTransform % 25 == 0) {
+      if (countTransform % 15 == 0) {
         if (deadAnimation == 1) {
           this.img = Sprite.player_dead.getFxImage();
           deadAnimation = 2;
