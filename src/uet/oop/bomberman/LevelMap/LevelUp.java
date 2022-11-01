@@ -1,10 +1,10 @@
 package uet.oop.bomberman.LevelMap;
 
-import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.Menu.Menu;
 import uet.oop.bomberman.entities.blocks.Bomb;
 
 import static uet.oop.bomberman.BombermanGame.*;
+
+import uet.oop.bomberman.BombermanGame;
 
 public class LevelUp {
     public static void clearLevel() {
@@ -30,23 +30,16 @@ public class LevelUp {
         bomberman.reset();
     }
 
-    public static void setBombAndTime(int bombLimit, int timeLimit) {
-        // Set time and bomb limit
-        BombermanGame.bomb_number = bombLimit;
-        BombermanGame.time_number = timeLimit;
-        Menu.bomb.setText("Bomb " + bomb_number);
-        Menu.time.setText("Time " + time_number);
-        // reset level text
-        Menu.level.setText("Level " + currentLevel);
-    }
-
     public static void checkLevelUp() {
-        if (bomberman.getX() == portal1.getX() && bomberman.getY() == portal1.getY()) {
-            if (currentLevel == 1) {
+        if (currentLevel == 1) {
+            if (bomberman.getX() == portal1.getX() && bomberman.getY() == portal1.getY()) {
                 new Level2();
-            } else if (currentLevel == 2) {
+            }
+        } else if (currentLevel == 2) {
+            if (bomberman.getX() == portal2.getX() && bomberman.getY() == portal2.getY()) {
                 new Level3();
             }
         }
+
     }
 }
