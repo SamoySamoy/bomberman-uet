@@ -152,7 +152,6 @@ public class Bomber extends MovableEntity {
         Bomber.BOMBER_WAIT_NEXT_STEP = Bomber.BOMBER_WAIT_NEXT_STEP_NORMAL;
     }
 
-
     @Override
     public void killedByBomb() {
         for (Bomb bomb : bombs) {

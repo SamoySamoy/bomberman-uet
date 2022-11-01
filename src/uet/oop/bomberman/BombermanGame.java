@@ -28,28 +28,31 @@ import java.util.*;
 
 public class BombermanGame extends Application {
 
-  // screen size
-  public static final int SCREEN_WIDTH = 25;
-  public static final int SCREEN_HEIGHT = 15;
+    // screen size
+    public static final int SCREEN_WIDTH = 25;
+    public static final int SCREEN_HEIGHT = 15;
 
-  public static final int SCREEN_WIDTH_PIXELS = SCREEN_WIDTH * Sprite.SCALED_SIZE;
-  public static final int SCREEN_HEIGHT_PIXELS = SCREEN_HEIGHT * Sprite.SCALED_SIZE;
-  public static final int LEVEL_WIDTH = 50;
-  public static final int LEVEL_HEIGHT = 15;
+    public static final int SCREEN_WIDTH_PIXELS = SCREEN_WIDTH * Sprite.SCALED_SIZE;
+    public static final int SCREEN_HEIGHT_PIXELS = SCREEN_HEIGHT * Sprite.SCALED_SIZE;
+    public static final int LEVEL_WIDTH = 50;
+    public static final int LEVEL_HEIGHT = 15;
 
-  public static final int LEVEL_WIDTH_PIXELS = LEVEL_WIDTH * Sprite.SCALED_SIZE;
-  public static final int LEVEL_HEIGHT_PIXELS = LEVEL_HEIGHT * Sprite.SCALED_SIZE;
-  // javafx init
-  private GraphicsContext gc;
-  private Canvas canvas;
-  public static ImageView author_view;
+    public static final int LEVEL_WIDTH_PIXELS = LEVEL_WIDTH * Sprite.SCALED_SIZE;
+    public static final int LEVEL_HEIGHT_PIXELS = LEVEL_HEIGHT * Sprite.SCALED_SIZE;
+    // javafx init
+    private GraphicsContext gc;
+    private Canvas canvas;
 
-  // game objects
-  public static List<Entity> entities = new ArrayList<>();
-  public static List<Entity> stillObjects = new ArrayList<>();
-  public static List<Enemy> enemies = new ArrayList<>();
-  public static List<Bomb> bombs = new ArrayList<>();
-  public static List<Item> items = new ArrayList<>();
+    // For time counter
+    private long lastSecond;
+    public static ImageView author_view;
+
+    // game objects
+    public static List<Entity> entities = new ArrayList<>();
+    public static List<Entity> stillObjects = new ArrayList<>();
+    public static List<Enemy> enemies = new ArrayList<>();
+    public static List<Bomb> bombs = new ArrayList<>();
+    public static List<Item> items = new ArrayList<>();
 
     // cordinates of all objects in a simplify matrix
     // handle while rendering in Map.java
@@ -67,45 +70,44 @@ public class BombermanGame extends Application {
     public static int bomb_number;
     public static int time_number;
 
-  // add main player start at (rx:1, ry:1) (coordinates in objId),
-  // (x:1, y:1) (cordinates in screen size)
-  public static Bomber bomberman =
-      new Bomber(1, 1, Sprite.player_right.getFxImage(), 1, true, "right");
-  public static Entity portal1 = new Portal(42, 7, Sprite.portal.getFxImage());
-  public static Entity portal2 = new Portal(16, 7, Sprite.portal.getFxImage());
-  public static boolean isOver = false;
-  public static boolean isStopMoving = false;// only bomberman, prevent press after being killed
-  public static boolean isPause = false;
-  public static boolean isLevelUp = false;
+    // add main player start at (rx:1, ry:1) (coordinates in objId),
+    // (x:1, y:1) (cordinates in screen size)
+    public static Bomber bomberman =
+            new Bomber(1, 1, Sprite.player_right.getFxImage(), 1, true, "right");
+    public static Entity portal1 = new Portal(42, 7, Sprite.portal.getFxImage());
+    public static Entity portal2 = new Portal(16, 7, Sprite.portal.getFxImage());
+    public static boolean isOver = false;
+    public static boolean isStopMoving = false;// only bomberman, prevent press after being killed
+    public static boolean isPause = false;
+    public static boolean isLevelUp = false;
 
-  private static final TranslateTransition camera = new TranslateTransition();
-
-    private long lastSecond;
+    // camera smooth translate
+    private static final TranslateTransition camera = new TranslateTransition();
 
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
     }
 
-  // game init
-  @Override
-  public void start(Stage stage) {
-    // Create canvas
-    canvas = new Canvas(Sprite.SCALED_SIZE * LEVEL_WIDTH, Sprite.SCALED_SIZE * SCREEN_HEIGHT);
-    canvas.setTranslateY(36);
-    gc = canvas.getGraphicsContext2D();
-    camera.setDuration(Duration.millis(200));
-    camera.setNode(canvas);
-    Image author = new Image("images/background.jpg");
-    author_view = new ImageView(author);
-    author_view.setX(-400);
-    author_view.setY(-208);
-    author_view.setScaleX(0.5);
-    author_view.setScaleY(0.5);
-    Group root = new Group();
-    Menu.createMenu(root);
-    root.getChildren().add(canvas);
-    root.getChildren().add(author_view);
-    Scene scene = new Scene(root);
+    // game init
+    @Override
+    public void start(Stage stage) {
+        // Create canvas
+        canvas = new Canvas(Sprite.SCALED_SIZE * LEVEL_WIDTH, Sprite.SCALED_SIZE * SCREEN_HEIGHT);
+        canvas.setTranslateY(36);
+        gc = canvas.getGraphicsContext2D();
+        camera.setDuration(Duration.millis(200));
+        camera.setNode(canvas);
+        Image author = new Image("images/background.jpg");
+        author_view = new ImageView(author);
+        author_view.setX(-400);
+        author_view.setY(-208);
+        author_view.setScaleX(0.5);
+        author_view.setScaleY(0.5);
+        Group root = new Group();
+        Menu.createMenu(root);
+        root.getChildren().add(canvas);
+        root.getChildren().add(author_view);
+        Scene scene = new Scene(root);
 
         // add scene to stage
         stage.setScene(scene);
@@ -167,17 +169,17 @@ public class BombermanGame extends Application {
         }
         enemies.removeIf(enemy -> !enemy.isAlive());
 
-    bombs.forEach(Bomb::update);
-    bombs.removeIf(Bomb::isExploded);
+        bombs.forEach(Bomb::update);
+        bombs.removeIf(Bomb::isExploded);
 
-    items.forEach(Item::update);
-    items.removeIf(Item::isPicked);
+        items.forEach(Item::update);
+        items.removeIf(Item::isPicked);
 
-    portal1.update();
-    portal2.update();
+        portal1.update();
+        portal2.update();
 
-    Sound.updateSound();
-  }
+        Sound.updateSound();
+    }
 
     public void time() {
         long now = System.currentTimeMillis();
@@ -195,6 +197,7 @@ public class BombermanGame extends Application {
         }
     }
 
+    // Handle camera
     public void moveCamera() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         int cameraX = bomberman.getX() - (SCREEN_WIDTH_PIXELS - Sprite.SCALED_SIZE) / 2;
@@ -204,17 +207,17 @@ public class BombermanGame extends Application {
             cameraX = SCREEN_WIDTH_PIXELS;
         camera.setToX(-cameraX);
 
-    // set camera to y
-  }
+        // set camera to y
+    }
 
-  // object render
-  public void render() {
-    moveCamera();
-    stillObjects.forEach(g -> g.render(gc));
-    entities.forEach(g -> g.render(gc));
-    items.forEach(item -> item.render(gc));
-    bombs.forEach(bomb -> bomb.render(gc));
-    bomberman.render(gc);
-    enemies.forEach(enemy -> enemy.render(gc));
-  }
+    // object render
+    public void render() {
+        moveCamera();
+        stillObjects.forEach(g -> g.render(gc));
+        entities.forEach(g -> g.render(gc));
+        items.forEach(item -> item.render(gc));
+        bombs.forEach(bomb -> bomb.render(gc));
+        bomberman.render(gc);
+        enemies.forEach(enemy -> enemy.render(gc));
+    }
 }

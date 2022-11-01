@@ -5,7 +5,6 @@ import uet.oop.bomberman.entities.Entity;
 
 import static uet.oop.bomberman.BombermanGame.*;
 
-import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.LevelMap.LevelUp;
 
 public class Portal extends Entity {

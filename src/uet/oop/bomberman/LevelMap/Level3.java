@@ -7,16 +7,17 @@ import static uet.oop.bomberman.BombermanGame.*;
 import uet.oop.bomberman.graphics.Map;
 import uet.oop.bomberman.entities.enemies.*;
 import uet.oop.bomberman.graphics.Sprite;
-import uet.oop.bomberman.entities.blocks.Bomb;
-
 
 public class Level3 {
     public Level3() {
+        // clear level
         LevelUp.clearLevel();
         new Map("res/levels/Level3.txt");
 
-        LevelUp.setBombAndTime(40, 300);
+        // set bomb and time limit
+        LevelUp.setBombAndTime(50, 250);
 
+        // set and add enemies
         Enemy ballom1 = new Ballom(1, 5, Sprite.balloom_left.getFxImage(), true, "left");
         Enemy oneal1 = new Oneal(7, 7, Sprite.oneal_left.getFxImage(), true, "left");
         Enemy oneal2 = new Oneal(11, 1, Sprite.oneal_left.getFxImage(), true, "left");
