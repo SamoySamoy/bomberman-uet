@@ -32,8 +32,6 @@ public class Ballom extends Enemy {
     @Override
     public void move() {
         if (isAvailToTakeNewSteps()) {
-            System.out.println("Avail to take new steps");
-            System.out.println("Speed: " + this.speed);
             int randomDirection;
             do {
                 randomDirection = random.nextInt(4);

@@ -30,7 +30,6 @@ public class Oneal extends Enemy {
     @Override
     public void move() {
         if (isAvailToTakeNewSteps()) {
-            System.out.println("Avail to take new steps");
 
             // Return lại chỗ tọa độ X để tránh việc di chuyển được 1 cả tọa độ X lẫn Y trong 1 lần
             // Nếu di chuyển cả X và Y trong 1 lần thì sẽ bị di chuyển chéo
