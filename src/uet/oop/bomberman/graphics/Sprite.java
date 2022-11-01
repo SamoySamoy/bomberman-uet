@@ -2,6 +2,8 @@ package uet.oop.bomberman.graphics;
 
 import javafx.scene.image.*;
 
+import java.util.Arrays;
+
 /**
  * Lưu trữ thông tin các pixel của 1 sprite (hình ảnh game)
  */
@@ -223,9 +225,7 @@ public class Sprite {
     }
 
     private void setColor(int color) {
-        for (int i = 0; i < _pixels.length; i++) {
-            _pixels[i] = color;
-        }
+        Arrays.fill(_pixels, color);
     }
 
     private void load() {

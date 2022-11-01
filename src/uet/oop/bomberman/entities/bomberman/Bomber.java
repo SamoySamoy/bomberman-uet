@@ -2,7 +2,6 @@ package uet.oop.bomberman.entities.bomberman;
 
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
-import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.Menu.Menu;
 import uet.oop.bomberman.Sound.Sound;
 import uet.oop.bomberman.entities.MovableEntity;
@@ -171,7 +170,7 @@ public class Bomber extends MovableEntity {
         isStopMoving = true;
         if (!this.isAlive) {
             // transform from dead1 state to dead3 state
-            if (countTransform % 25 == 0) {
+            if (countTransform % 15 == 0) {
                 if (deadAnimation == 1) {
                     this.img = Sprite.player_dead.getFxImage();
                     deadAnimation = 2;
