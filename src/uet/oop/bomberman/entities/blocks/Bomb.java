@@ -343,6 +343,15 @@ public class Bomb extends Entity {
         }
     }
 
+    public static Bomb getBomb(int bombRx, int bombRy) {
+        for (Bomb bomb : bombs) {
+            if (bomb.getRx() == bombRx && bomb.getRy() == bombRy) {
+                return bomb;
+            }
+        }
+        return null;
+    }
+
     public int getRx() {
         return rx;
     }
