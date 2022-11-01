@@ -61,7 +61,7 @@ public class BombermanGame extends Application {
   public static int[][] itemMatrix = new int[LEVEL_WIDTH][LEVEL_HEIGHT]; // Create item id base on
   // matrix
   // first level
-  public static int level = 1;
+  public static int level = 2;
 
   // add main player start at (rx:1, ry:1) (coordinates in objId),
   // (x:1, y:1) (cordinates in screen size)
