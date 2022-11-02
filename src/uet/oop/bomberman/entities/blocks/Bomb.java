@@ -403,6 +403,14 @@ public class Bomb extends Entity {
     this.isRaw = isRaw;
   }
 
+  public boolean isUi() {
+    return ui;
+  }
+
+  public void setUi(boolean ui) {
+    this.ui = ui;
+  }
+
   public static int getCurBombLevel() {
     return curBombLevel;
   }

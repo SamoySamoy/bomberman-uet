@@ -86,7 +86,7 @@ public class Kondoria extends Minvo {
     // KT an bom
     if (bombMatix[this.rx - 1][this.ry] == 2) {
       Bomb curBomb = Bomb.getBomb(this.rx - 1, this.ry);
-      if (curBomb != null && !curBomb.isExploded() && curBomb.isRaw() == true) {
+      if (curBomb != null && !curBomb.isExploded() && curBomb.isRaw() == true && curBomb.isUi() == false) {
         System.out.println("Pacman eat bomb");
         bombs.remove(curBomb);
         bombMatix[this.rx - 1][this.ry] = 0;
@@ -95,7 +95,7 @@ public class Kondoria extends Minvo {
     }
     if (bombMatix[this.rx + 1][this.ry] == 2) {
       Bomb curBomb = Bomb.getBomb(this.rx + 1, this.ry);
-      if (curBomb != null && !curBomb.isExploded() && curBomb.isRaw() == true) {
+      if (curBomb != null && !curBomb.isExploded() && curBomb.isRaw() == true && curBomb.isUi() == false) {
         System.out.println("Pacman eat bomb");
         bombs.remove(curBomb);
         bombMatix[this.rx + 1][this.ry] = 0;
@@ -104,7 +104,7 @@ public class Kondoria extends Minvo {
     }
     if (bombMatix[this.rx][this.ry - 1] == 2) {
       Bomb curBomb = Bomb.getBomb(this.rx, this.ry - 1);
-      if (curBomb != null && !curBomb.isExploded() && curBomb.isRaw() == true) {
+      if (curBomb != null && !curBomb.isExploded() && curBomb.isRaw() == true && curBomb.isUi() == false) {
         System.out.println("Pacman eat bomb");
         bombs.remove(curBomb);
         bombMatix[this.rx][this.ry - 1] = 0;
@@ -113,7 +113,7 @@ public class Kondoria extends Minvo {
     }
     if (bombMatix[this.rx][this.ry + 1] == 2) {
       Bomb curBomb = Bomb.getBomb(this.rx, this.ry + 1);
-      if (curBomb != null && !curBomb.isExploded() && curBomb.isRaw() == true) {
+      if (curBomb != null && !curBomb.isExploded() && curBomb.isRaw() == true && curBomb.isUi() == false) {
         System.out.println("Pacman eat bomb");
         bombs.remove(curBomb);
         bombMatix[this.rx][this.ry + 1] = 0;
