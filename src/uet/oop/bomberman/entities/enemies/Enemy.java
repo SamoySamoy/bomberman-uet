@@ -14,12 +14,12 @@ public abstract class Enemy extends MovableEntity {
 
   public static final int ENEMY_WAIT_NEXT_STEP = 4;
 
-    public Enemy(int rx, int ry, Image img, boolean isALive, String direction) {
-        super(rx, ry, img, isALive, direction);
-        this.speed = DEFAULT_ENEMY_SPEED;
-        this.lastMoveTime = 0;
-        this.delayTime = DEFAULT_DELAY_TIME;
-    }
+  public Enemy(int rx, int ry, Image img, boolean isALive, String direction) {
+    super(rx, ry, img, isALive, direction);
+    this.speed = DEFAULT_ENEMY_SPEED;
+    this.lastMoveTime = 0;
+    this.delayTime = DEFAULT_DELAY_TIME;
+  }
 
   public abstract void move();
 

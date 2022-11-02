@@ -29,7 +29,7 @@ public class Level1 {
 //        Enemy minvo2 = new Minvo(20, 6, Sprite.minvo_left.getFxImage(), true, "left");
 
         Enemy kondoria1 = new Kondoria(2, 7, Sprite.kondoria_left.getFxImage(), true, "left");
-        Enemy kondoria2 = new Kondoria(11, 1, Sprite.kondoria_left.getFxImage(), true, "left");
+        Enemy kondoria2 = new Kondoria(6, 1, Sprite.kondoria_left.getFxImage(), true, "left");
         Enemy kondoria3 = new Kondoria(42, 11, Sprite.kondoria_left.getFxImage(), true, "left");
         Enemy kondoria4 = new Kondoria(44, 3, Sprite.kondoria_left.getFxImage(), true, "left");
         Enemy kondoria5 = new Kondoria(41, 5, Sprite.kondoria_left.getFxImage(), true, "left");
