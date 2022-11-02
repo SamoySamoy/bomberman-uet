@@ -2,32 +2,35 @@ package uet.oop.bomberman.Control;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.Control;
+import javafx.scene.control.SkinBase;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class GameButton extends Button {
-    private final String FONT_PATH = "/uet/oop/bomberman/kenvector_future.ttf";
-    private final String BUTTON_PRESSED_STYLE = "-fx-background-color: transparent; -fx-background-image: url('/uet/oop/bomberman/yellow_button_pressed.png');";
-    private final String BUTTON_FREE_STYLE = "-fx-background-color: transparent; -fx-background-image: url('/uet/oop/bomberman/yellow_button.png');";
+
 
     public GameButton(String text) {
+        setStyle("-fx-background-color: yellow");
+        setStyle("-fx-background-image: url('/uet/oop/bomberman/images/yellow_button.png')");
+        setBackground(getBackground());
         setText(text);
         setButtonFont();
         setPrefWidth(190);
         setPrefHeight(49);
-        setStyle(BUTTON_FREE_STYLE);
-        initializeButtonListeners();
+        initialiseButtonListeners();
 
     }
 
     private void setButtonFont() {
         try {
-            setFont(Font.loadFont(new FileInputStream(FONT_PATH), 25));
+            setFont(Font.loadFont(new FileInputStream("src/main/resources/uet/oop/bomberman/images/kenvector_future.ttf"), 25));
         } catch (FileNotFoundException e) {
             setFont(Font.font("Verdana", 25));
             System.out.println("Font not found or could not be loaded. Using default \"Verdana\"");
@@ -35,29 +38,28 @@ public class GameButton extends Button {
     }
 
     private void setButtonPressedStyle() {
-        setStyle(BUTTON_PRESSED_STYLE);
-        setPrefHeight(45);
+        setStyle("-fx-background-color: yellow");
+        setStyle("-fx-background-image: url('/uet/oop/bomberman/images/yellow_button_pressed.png')");
+        setPrefHeight(49);
         setLayoutY(getLayoutY() + 4);
 
     }
 
     private void setButtonReleasedStyle() {
-        setStyle(BUTTON_FREE_STYLE);
+        setStyle("-fx-background-color: yellow");
+        setStyle("-fx-background-image: url('/uet/oop/bomberman/images/yellow_button.png')");
         setPrefHeight(49);
         setLayoutY(getLayoutY() - 4);
 
     }
 
-    private void initializeButtonListeners() {
-
+    private void initialiseButtonListeners() {
         setOnMousePressed(new EventHandler<MouseEvent>() {
-
             @Override
             public void handle(MouseEvent event) {
-                if(event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getButton().equals(MouseButton.PRIMARY)) {
                     setButtonPressedStyle();
                 }
-
             }
         });
 
@@ -65,30 +67,23 @@ public class GameButton extends Button {
 
             @Override
             public void handle(MouseEvent event) {
-                if(event.getButton().equals(MouseButton.PRIMARY)) {
+                if (event.getButton().equals(MouseButton.PRIMARY)) {
                     setButtonReleasedStyle();
                 }
-
             }
+
         });
-
         setOnMouseEntered(new EventHandler<MouseEvent>() {
-
             @Override
             public void handle(MouseEvent event) {
-                setEffect(new DropShadow());
-
+                setEffect(new DropShadow(50, Color.YELLOW));
             }
         });
-
         setOnMouseExited(new EventHandler<MouseEvent>() {
-
             @Override
             public void handle(MouseEvent event) {
                 setEffect(null);
-
             }
         });
     }
-
 }
