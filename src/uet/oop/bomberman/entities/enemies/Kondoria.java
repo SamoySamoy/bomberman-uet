@@ -3,6 +3,7 @@ package uet.oop.bomberman.entities.enemies;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.blocks.Bomb;
 import uet.oop.bomberman.graphics.Sprite;
+import uet.oop.bomberman.Sound.Sound;
 
 import static uet.oop.bomberman.BombermanGame.*;
 
@@ -86,42 +87,50 @@ public class Kondoria extends Minvo {
     // KT an bom
     if (bombMatix[this.rx - 1][this.ry] == 2) {
       Bomb curBomb = Bomb.getBomb(this.rx - 1, this.ry);
-      if (curBomb != null && !curBomb.isExploded() && curBomb.isRaw() == true && curBomb.isUi() == false) {
+      if (curBomb != null && !curBomb.isExploded() && curBomb.isRaw() == true
+          && curBomb.isUi() == false) {
         System.out.println("Pacman eat bomb");
         bombs.remove(curBomb);
+        new Sound("sound/eat.wav", "eat");
         bombMatix[this.rx - 1][this.ry] = 0;
         bomberman.gainBombRemain();
       }
     }
     if (bombMatix[this.rx + 1][this.ry] == 2) {
       Bomb curBomb = Bomb.getBomb(this.rx + 1, this.ry);
-      if (curBomb != null && !curBomb.isExploded() && curBomb.isRaw() == true && curBomb.isUi() == false) {
+      if (curBomb != null && !curBomb.isExploded() && curBomb.isRaw() == true
+          && curBomb.isUi() == false) {
         System.out.println("Pacman eat bomb");
         bombs.remove(curBomb);
+        new Sound("sound/eat.wav", "eat");
         bombMatix[this.rx + 1][this.ry] = 0;
         bomberman.gainBombRemain();
       }
     }
     if (bombMatix[this.rx][this.ry - 1] == 2) {
       Bomb curBomb = Bomb.getBomb(this.rx, this.ry - 1);
-      if (curBomb != null && !curBomb.isExploded() && curBomb.isRaw() == true && curBomb.isUi() == false) {
+      if (curBomb != null && !curBomb.isExploded() && curBomb.isRaw() == true
+          && curBomb.isUi() == false) {
         System.out.println("Pacman eat bomb");
         bombs.remove(curBomb);
+        new Sound("sound/eat.wav", "eat");
         bombMatix[this.rx][this.ry - 1] = 0;
         bomberman.gainBombRemain();
       }
     }
     if (bombMatix[this.rx][this.ry + 1] == 2) {
       Bomb curBomb = Bomb.getBomb(this.rx, this.ry + 1);
-      if (curBomb != null && !curBomb.isExploded() && curBomb.isRaw() == true && curBomb.isUi() == false) {
+      if (curBomb != null && !curBomb.isExploded() && curBomb.isRaw() == true
+          && curBomb.isUi() == false) {
         System.out.println("Pacman eat bomb");
         bombs.remove(curBomb);
+        new Sound("sound/eat.wav", "eat");
         bombMatix[this.rx][this.ry + 1] = 0;
         bomberman.gainBombRemain();
       }
     }
   }
-  
+
   @Override
   public void update() {
     super.update();
