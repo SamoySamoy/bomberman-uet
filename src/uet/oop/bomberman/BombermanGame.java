@@ -76,6 +76,7 @@ public class BombermanGame extends Application {
       new Bomber(1, 1, Sprite.player_right.getFxImage(), 1, true, "right");
   public static Entity portal1 = new Portal(42, 7, Sprite.portal.getFxImage());
   public static Entity portal2 = new Portal(16, 7, Sprite.portal.getFxImage());
+  public static Entity portal3 = new Portal(16, 3, Sprite.portal.getFxImage());
   public static boolean isOver = false;
   public static boolean isStopMoving = false;// only bomberman, prevent press after being killed
   public static boolean isPause = false;
@@ -177,7 +178,7 @@ public class BombermanGame extends Application {
 
     portal1.update();
     portal2.update();
-
+    portal3.update();
     Sound.updateSound();
   }
 

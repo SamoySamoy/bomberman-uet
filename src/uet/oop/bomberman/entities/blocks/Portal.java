@@ -22,6 +22,10 @@ public class Portal extends Entity {
         stillObjects.add(portal2);
         LevelUp.checkLevelUp();
         System.out.println(currentLevel);
+      } else {
+        Image completed = new Image("images/background.jpg");
+        author_view.setImage(completed);
+        System.out.println(currentLevel);
       }
     }
   }
