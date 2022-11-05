@@ -72,9 +72,17 @@ public class Sound extends JFrame {
       new Sound("sound/bg.wav", "title");
       is_sound_title = true;
     }
-    /*
-     * if (!bomberman.isAlive() && is_sound_title == true) { if (!is_sound_died) { new
-     * Sound("sound/GameOver.wav", "just_died"); is_sound_died = true; } }
-     */
+    if (isOver == true) {
+      if (!bomberman.isAlive()) {
+        title_screen.close();
+        is_sound_title = false;
+        if (!is_sound_died) {
+          new Sound("sound/just_died.wav", "just_died");
+          is_sound_died = true;
+        }
+      }
+    }
+
+
   }
 }

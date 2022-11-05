@@ -63,8 +63,7 @@ public class BombermanGame extends Application {
   // matrix
   public static int[][] itemMatrix = new int[LEVEL_WIDTH][LEVEL_HEIGHT]; // Create item id base on
   // matrix
-  // first level
-  public static int currentLevel = 3;
+  public static int currentLevel = 1;
 
   // The time and bomb limit, each level has different time and bomb limit
   public static int bomb_number;
