@@ -47,6 +47,8 @@ public class Menu {
     public List<GameButton> menuButtons;
     public List<GameButton> helpButtonList;
     public List<GameButton> musicButtonList;
+
+    private Sound sound;
     public static Text level, bomb, time;
     // limit is 120 seconds
     public static Image pauseGame, playGame;
@@ -77,45 +79,7 @@ public class Menu {
         helpSubScene = new GameSubScene();
         musicSubScene = new GameSubScene();
 
-        createMusicSubScene();
         createHelpSubScene();
-    }
-
-    private void createMusicSubScene() {
-        musicSubScene = new GameSubScene();
-        mainPane.getChildren().add(musicSubScene);
-
-        Slider slider = new Slider();
-        slider.setPrefSize(570,400);
-        slider.setLayoutX(45);
-        slider.setLayoutY(70);
-        slider.setMin(0);
-        slider.setMax(100);
-        slider.setValue(50);
-        slider.setShowTickLabels(true);
-        slider.setShowTickMarks(true);
-
-        InfoLabel label = new InfoLabel("VOLUME");
-        label.setLayoutX(220);
-        label.setLayoutY(70);
-        label.setFont(Font.font(FONT_PATH, 30));
-
-        //URL soundURL = getClass().getResource("/sound/bg.wav");
-        Sound sound = new Sound("sound/bg.wav", "title");
-
-        slider.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                label.setText("VOLUME = " + (int)slider.getValue());
-                sound.currentVolume = (int)slider.getValue();
-                /*if (sound.currentVolume == -40) {
-                    sound.currentVolume = - 80;
-                }
-                sound.fc.setValue(sound.currentVolume);*/
-            }
-        });
-
-        musicSubScene.getPane().getChildren().addAll(label, slider);
     }
 
     private void createHelpSubScene() {
@@ -156,7 +120,6 @@ public class Menu {
 
     private void createButtons() {
         createStartButton();
-        createMusicButton();
         createHelpButton();
         createExitButton();
     }
@@ -177,15 +140,11 @@ public class Menu {
         addMenuButtons(startButton);
         startButton.setOnAction(event -> {
             mainStage.hide();
+            // clear()
+            //sound.stop();
             GameMenu gameViewManager = new GameMenu();
             gameViewManager.createNewGame(mainStage);
         });
-    }
-
-    private void createMusicButton() {
-        GameButton musicButton = new GameButton("Music");
-        addMenuButtons(musicButton);
-        musicButton.setOnAction(event -> showSubScene(musicSubScene));
     }
 
     private void createHelpButton() {
