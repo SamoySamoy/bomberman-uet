@@ -18,7 +18,6 @@ import uet.oop.bomberman.LevelMap.Level3;
 
 
 public class Menu {
-  private static ImageView statusGame;
   public static Text level, bomb, time;
   // limit is 120 seconds
   public static Image pauseGame, playGame;
@@ -69,8 +68,14 @@ public class Menu {
           new Level2();
           isOver = false;
         } else if (BombermanGame.currentLevel == 3) {
-          new Level3();
-          isOver = false;
+          if (BombermanGame.end == false) {
+            new Level3();
+            isOver = false;
+          } else {
+            new Level1();
+            isOver = false;
+          }
+
         }
 
       }

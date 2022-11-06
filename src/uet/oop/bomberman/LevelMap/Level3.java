@@ -27,13 +27,13 @@ public class Level3 {
         Enemy oneal1 = new Oneal(29, 11, Sprite.oneal_left.getFxImage(), true, "left");
         Enemy oneal2 = new Oneal(32, 13, Sprite.oneal_left.getFxImage(), true, "left");
 
-        enemies.add(ballom1);
+        /* enemies.add(ballom1);
         enemies.add(ballom2);
         enemies.add(ballom3);
         enemies.add(kondo1);
         enemies.add(minvo1);
         enemies.add(minvo2);
-        enemies.add(oneal1);
+        enemies.add(oneal1); */
         enemies.add(oneal2);
 
         // load authorView Scr
