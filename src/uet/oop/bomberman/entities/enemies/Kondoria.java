@@ -29,22 +29,24 @@ public class Kondoria extends Minvo {
         rightImg[2] = Sprite.kondoria_right_2.getFxImage();
     }
 
-    // set lai move de co the di chuyen qua bomb
+    // Override setMove function so that Kondoria can't be blocked
     @Override
     protected void setMove(String moveDrirection, int moveRx, int moveRy, Image img) {
         this.setDirection(moveDrirection);
-        // Kiem tra va cham voi tuong (2) gach (3) bom(2)
+        // Check collision with wall-2 brick-2 bomb in bomb marix-2
         if (objId[moveRx][moveRy] != 2 && objId[moveRx][moveRy] != 3) {
-            // Set so buoc phai di chuyen
+            // Set number of steps to completely move to new block
             this.setSteps(Sprite.SCALED_SIZE / this.speed);
             this.setCountToRun(0);
+            // Start run
             this.checkRun();
         } else {
+            // If can not move just set img
             this.setImg(img);
         }
     }
 
-    // KT an bom
+    // Check can eat bomb
     private void checkEatBomb() {
         // Up
         checkBomb(this.getRx(), this.getRy() - 1);
@@ -61,10 +63,12 @@ public class Kondoria extends Minvo {
             Bomb curBomb = Bomb.getBomb(bombRx, bombRy);
             if (curBomb != null && !curBomb.isExploded() && curBomb.isRaw()
                 && !curBomb.isUi()) {
+                // Remove bomb from bomb list and bomb matrix
                 bombs.remove(curBomb);
-                new Sound("sound/eat.wav", "eat");
                 bombMatix[bombRx][bombRy] = 0;
                 bomberman.gainBombRemain();
+                // Add sound
+                new Sound("sound/eat.wav", "eat");
             }
         }
     }

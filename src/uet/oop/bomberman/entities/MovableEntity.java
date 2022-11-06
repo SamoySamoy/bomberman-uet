@@ -18,7 +18,7 @@ public abstract class MovableEntity extends Entity {
     // move stats
     protected int speed;
     protected int steps;
-    protected int countToRun;
+    protected int countToRun; // Time between 2 steps
     public static final int DEFAULT_SPEED = 4;
     // max number of frames each character has
     public static final int MAX_NUM_FRAMES = 4;
@@ -32,6 +32,7 @@ public abstract class MovableEntity extends Entity {
         this.speed = DEFAULT_SPEED;
     }
 
+    // Check if character finsh all steps and stay in a block
     protected boolean isAvailToTakeNewSteps() {
         return this.getX() % Sprite.SCALED_SIZE == 0 && this.getY() % Sprite.SCALED_SIZE == 0;
     }
@@ -59,19 +60,21 @@ public abstract class MovableEntity extends Entity {
 
     protected void setMove(String moveDrirection, int moveRx, int moveRy, Image img) {
         this.setDirection(moveDrirection);
-        // Kiem tra va cham voi tuong (2) gach (3) bom(2)
+        // Check collision with wall-2 brick-2 bomb in bomb marix-2
         if (objId[moveRx][moveRy] != 2 && objId[moveRx][moveRy] != 3 && bombMatix[moveRx][moveRy] != 2) {
-            // Set so buoc phai di chuyen
+            // Set number of steps to completely move to new block
             this.setSteps(Sprite.SCALED_SIZE / this.speed);
             this.setCountToRun(0);
+            // start run
             this.checkRun();
         } else {
+            // If can not move just set img
             this.setImg(img);
         }
     }
 
     public void checkRun() {
-        // Kiem tra xem con phai di bao nhieu buoc
+        // If there are remain steps, move. If not stop
         if (this.getSteps() > 0) {
             this.setMoveDirection();
             this.setSteps(this.getSteps() - 1);
@@ -81,19 +84,19 @@ public abstract class MovableEntity extends Entity {
     protected void setMoveDirection() {
         switch (this.direction) {
             case "up":
-                this.upStep(); // handle animation va tang rx hoac ry khi hoan thanh
+                this.upStep(); // handle animation and gain rx or ry whenever finish
                 this.setY(this.getY() - this.speed);
                 break;
             case "down":
-                this.downStep(); // handle animation va tang rx hoac ry khi hoan thanh
+                this.downStep(); // handle animation and gain rx or ry whenever finish
                 this.setY(this.getY() + this.speed);
                 break;
             case "left":
-                this.leftStep(); // handle animation va tang rx hoac ry khi hoan thanh
+                this.leftStep(); // handle animation and gain rx or ry whenever finish
                 this.setX(this.getX() - this.speed);
                 break;
             case "right":
-                this.rightStep(); // handle animation va tang rx hoac ry khi hoan thanh
+                this.rightStep(); // handle animation and gain rx or ry whenever finish
                 this.setX(this.getX() + this.speed);
                 break;
         }
@@ -102,7 +105,6 @@ public abstract class MovableEntity extends Entity {
     protected void upStep() {
         this.yAxisStep("up", this.upImg);
     }
-
 
     protected void downStep() {
         this.yAxisStep("down", this.downImg);
@@ -116,6 +118,7 @@ public abstract class MovableEntity extends Entity {
         this.xAxisStep("right", this.rightImg);
     }
 
+    // For up and down step
     protected void yAxisStep(String moveDirection, Image[] img) {
         if (this.getY() % this.speed == 0) {
             if (this.getSteps() % MAX_NUM_FRAMES == 0) {
@@ -132,6 +135,7 @@ public abstract class MovableEntity extends Entity {
         }
     }
 
+    // For left and right step
     protected void xAxisStep(String moveDirection, Image[] img) {
         if (this.getX() % this.speed == 0) {
             if (this.getSteps() % MAX_NUM_FRAMES == 0) {

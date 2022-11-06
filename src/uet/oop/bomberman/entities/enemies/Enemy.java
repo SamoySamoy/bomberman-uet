@@ -7,13 +7,18 @@ import uet.oop.bomberman.entities.blocks.Bomb;
 import static uet.oop.bomberman.BombermanGame.*;
 
 public abstract class Enemy extends MovableEntity {
+    // Enemy move time stats
     protected long lastMoveTime;
     protected long delayTime;
+
+    // Move delay time for each kind of enemy
     public static final long DEFAULT_DELAY_TIME = 1000;
     public static final long BALLOM_DELAY_TIME = 1200;
     public static final long ONEAL_DELAY_TIME = 700;
     public static final long MINVO_DELAY_TIME = 800;
     public static final long KONDORIA_DELAY_TIME = 1000;
+
+    // Enemy speed stats
     public static final int DEFAULT_ENEMY_SPEED = 8;
     public static final int ENEMY_WAIT_NEXT_STEP = 4;
 
@@ -24,6 +29,7 @@ public abstract class Enemy extends MovableEntity {
         this.speed = DEFAULT_ENEMY_SPEED;
     }
 
+    // Each enemy has different movement
     public abstract void move();
 
     public void killBomber() {
@@ -45,8 +51,6 @@ public abstract class Enemy extends MovableEntity {
             }
         }
     }
-
-    public abstract void destroyed();
 
     @Override
     public void update() {

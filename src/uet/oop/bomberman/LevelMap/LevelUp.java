@@ -6,6 +6,7 @@ import uet.oop.bomberman.entities.blocks.Bomb;
 import static uet.oop.bomberman.BombermanGame.*;
 
 public class LevelUp {
+    // Clear level when new game, restart game
     public static void clearLevel() {
         // clean and clear stage
         isStopMoving = false;
@@ -44,6 +45,7 @@ public class LevelUp {
         Menu.level.setText("Level " + currentLevel);
     }
 
+    // Hanle level up when bomber get into level up portal
     public static void checkLevelUp() {
         if (currentLevel == 1) {
             if (bomberman.getX() == portal1.getX() && bomberman.getY() == portal1.getY()) {

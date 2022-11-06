@@ -34,6 +34,8 @@ public class BombermanGame extends Application {
 
     public static final int SCREEN_WIDTH_PIXELS = SCREEN_WIDTH * Sprite.SCALED_SIZE;
     public static final int SCREEN_HEIGHT_PIXELS = SCREEN_HEIGHT * Sprite.SCALED_SIZE;
+
+    // Level size
     public static final int LEVEL_WIDTH = 50;
     public static final int LEVEL_HEIGHT = 15;
 
@@ -56,23 +58,22 @@ public class BombermanGame extends Application {
 
     // cordinates of all objects in a simplify matrix
     // handle while rendering in Map.java
-    public static int[][] objId = new int[LEVEL_WIDTH][LEVEL_HEIGHT]; // Create new object id_object
-    // from main
-    // file. ;
-    public static int[][] bombMatix = new int[LEVEL_WIDTH][LEVEL_HEIGHT]; // Create bomb id base on
-    // matrix
-    public static int[][] itemMatrix = new int[LEVEL_WIDTH][LEVEL_HEIGHT]; // Create item id base on
-    // matrix
+    // Create new object id_object;
+    public static int[][] objId = new int[LEVEL_WIDTH][LEVEL_HEIGHT];
+    // Create bomb id base on matrix
+    public static int[][] bombMatix = new int[LEVEL_WIDTH][LEVEL_HEIGHT];
+    // Create item id base on matrix
+    public static int[][] itemMatrix = new int[LEVEL_WIDTH][LEVEL_HEIGHT];
+    // Store game's current level, start at level 1
     public static int currentLevel = 1;
-
     // The time and bomb limit, each level has different time and bomb limit
     public static int bomb_number;
     public static int time_number;
-
     // add main player start at (rx:1, ry:1) (coordinates in objId),
     // (x:1, y:1) (cordinates in screen size)
     public static Bomber bomberman =
             new Bomber(1, 1, Sprite.player_right.getFxImage(), true, "right");
+    // Specify next level's portal in each level
     public static Entity portal1 = new Portal(42, 7, Sprite.portal.getFxImage());
     public static Entity portal2 = new Portal(16, 7, Sprite.portal.getFxImage());
     public static Entity portal3 = new Portal(16, 3, Sprite.portal.getFxImage());
@@ -80,7 +81,6 @@ public class BombermanGame extends Application {
     public static boolean isStopMoving = false;// only bomberman, prevent press after being killed
     public static boolean isPause = false;
     public static boolean isLevelUp = false;
-
     // camera smooth translate
     private static final TranslateTransition camera = new TranslateTransition();
 
@@ -130,9 +130,13 @@ public class BombermanGame extends Application {
                 render();
                 if (!isPause) {
                     if (!isOver) {
+                        // Update all game obj
                         update();
+                        // Time counter, each level has different time limit
                         time();
+                        // Update menu stats
                         Menu.updateMenu();
+                        // Move camera
                         camera.play();
                     } else {
                         Image gameOver = new Image("images/over.png");
@@ -141,6 +145,7 @@ public class BombermanGame extends Application {
                 }
             }
         };
+
         timer.start();
 
         bomberman.setAlive(false);
@@ -150,9 +155,11 @@ public class BombermanGame extends Application {
 
     // stage update
     public void update() {
+        // entities like: brick, wall,...
         entities.forEach(Entity::update);
 
         bomberman.update();
+        // Count time between 2 steps
         bomberman.setCountToRun(bomberman.getCountToRun() + 1);
         if (bomberman.getCountToRun() == Bomber.BOMBER_WAIT_NEXT_STEP) {
             bomberman.checkRun();
@@ -161,6 +168,7 @@ public class BombermanGame extends Application {
 
         enemies.forEach(Enemy::update);
         for (Enemy enemy : enemies) {
+            // Count time between 2 steps
             enemy.setCountToRun(enemy.getCountToRun() + 1);
             if (enemy.getCountToRun() == Enemy.ENEMY_WAIT_NEXT_STEP) {
                 enemy.checkRun();
@@ -169,6 +177,7 @@ public class BombermanGame extends Application {
         }
         enemies.removeIf(enemy -> !enemy.isAlive());
 
+        // Update bomb list
         for (int i = 0; i < bombs.size(); i++) {
             if (bombs.get(i) != null) {
                 bombs.get(i).update();
@@ -184,6 +193,7 @@ public class BombermanGame extends Application {
         Sound.updateSound();
     }
 
+    // Handle counting time for each game level
     public void time() {
         long now = System.currentTimeMillis();
         if (now - lastSecond > 1000) {
@@ -192,6 +202,7 @@ public class BombermanGame extends Application {
             if (bomberman.isAlive() && time_number > 0) {
                 time_number--;
                 Menu.time.setText("Time " + time_number);
+                // If out of time, game over
                 if (time_number <= 0) {
                     bomberman.setAlive(false);
                     isOver = true;
@@ -204,6 +215,7 @@ public class BombermanGame extends Application {
     public void moveCamera() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         int cameraX = bomberman.getX() - (SCREEN_WIDTH_PIXELS - Sprite.SCALED_SIZE) / 2;
+        // Check if camera move through game border
         if (cameraX < 0)
             cameraX = 0;
         if (cameraX + SCREEN_WIDTH_PIXELS > LEVEL_WIDTH_PIXELS)

@@ -30,15 +30,18 @@ public class Ballom extends Enemy {
         rightImg[2] = Sprite.balloom_right_2.getFxImage();
     }
 
+    // Ballom move randomly
     @Override
     public void move() {
         if (isAvailToTakeNewSteps()) {
+            // Generate random step that different from previous step
             int randomDirection;
             do {
                 randomDirection = random.nextInt(4);
             } while (randomDirection == this.getLastRandomMove());
             this.setLastRandomMove(randomDirection);
 
+            // Move
             switch (randomDirection) {
                 case 0:
                     this.setMove("up");
@@ -54,11 +57,6 @@ public class Ballom extends Enemy {
                     break;
             }
         }
-    }
-
-    @Override
-    public void destroyed() {
-
     }
 
     public int getLastRandomMove() {

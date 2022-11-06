@@ -27,18 +27,16 @@ public class Oneal extends Enemy {
         rightImg[2] = Sprite.oneal_right_2.getFxImage();
     }
 
+    // Oneal follow bomber base on X and Y cordinate of bomber
     @Override
     public void move() {
         if (isAvailToTakeNewSteps()) {
-            // Return lại chỗ tọa độ X để tránh việc di chuyển được 1 cả tọa độ X lẫn Y trong 1 lần
-            // Nếu di chuyển cả X và Y trong 1 lần thì sẽ bị di chuyển chéo
+            // Avoid move in X axis and Y axis at the same time as well as move diagonally
 
             if (bomberman.getX() < this.getX()) {
-                // Nếu di chuyển bên trái thành công thì dừng
                 this.setMove("left");
                 return;
             } else if (bomberman.getX() > this.getX()) {
-                // Nếu di chuyển bên phải thành công thì dừng
                 this.setMove("right");
                 return;
             }
@@ -50,10 +48,5 @@ public class Oneal extends Enemy {
                 this.setMove("up");
             }
         }
-    }
-
-    @Override
-    public void destroyed() {
-
     }
 }

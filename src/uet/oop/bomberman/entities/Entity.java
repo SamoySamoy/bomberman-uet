@@ -13,11 +13,11 @@ public abstract class Entity {
     protected int rx;
     // Y cordinate in matrix
     protected int ry;
-    // Hình ảnh của vật thể
+    // Entity's image
     protected Image img;
 
-    // Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
     public Entity(int rx, int ry, Image img) {
+        // Convert x,y in matrix to x,y in canvas
         this.x = rx * Sprite.SCALED_SIZE;
         this.y = ry * Sprite.SCALED_SIZE;
         this.rx = rx;

@@ -11,13 +11,15 @@ import uet.oop.bomberman.graphics.Sprite;
 import static uet.oop.bomberman.BombermanGame.*;
 
 public class Bomber extends MovableEntity {
+    // Animation when bomber dead
     private int deadAnimation;
     private int countDeadTransform;
+    // Bomb stats
     private long lastPutBomb;
     private int curBombRemain;
+    // Bomber speed stats
     public static int BOMBER_WAIT_NEXT_STEP;
     public static final int BOMBER_DEFAULT_SPEED = 8;
-
     public static final int BOMBER_WAIT_NEXT_STEP_NORMAL = 4;
     public static final int BOMBER_WAIT_NEXT_STEP_FAST = 2;
 
@@ -27,7 +29,7 @@ public class Bomber extends MovableEntity {
         this.deadAnimation = 1;
         this.countDeadTransform = 0;
         this.lastPutBomb = 0;
-        this.setSpeedState();
+        this.setNormalSpeedState();
         // Set img
         upImg[0] = Sprite.player_up.getFxImage();
         upImg[1] = Sprite.player_up_1.getFxImage();
@@ -100,10 +102,11 @@ public class Bomber extends MovableEntity {
         }
     }
 
+    // Check if bomber pick up item
     private void checkPickItem() {
         if (itemMatrix[this.rx][this.ry] != 0) {
             // Set item effect
-            // Note: 4 5 6 7 8 lần lượt là Speed, Flame, Bomb item, Bomb limit item, Time limit item
+            // Note: 4 5 6 7 8 are Speed, Flame, Bomb item, Bomb limit item, Time limit item respectively
             switch (itemMatrix[this.rx][this.ry]) {
                 case 4: // High speed item
                     Bomber.BOMBER_WAIT_NEXT_STEP = Bomber.BOMBER_WAIT_NEXT_STEP_FAST;
@@ -137,14 +140,14 @@ public class Bomber extends MovableEntity {
             // decrease bomb_number remain in bag
             bomb_number--;
             Menu.bomb.setText("Bomb " + bomb_number);
-
+            // Set new bomb
             Bomb bomb = new Bomb(this.rx, this.ry, Sprite.bomb.getFxImage(), false, false);
             new Sound("sound/put_bombs.wav", "putBomb");
             bombs.add(bomb);
         }
     }
 
-    private void setSpeedState() {
+    private void setNormalSpeedState() {
         this.speed = Bomber.BOMBER_DEFAULT_SPEED;
         Bomber.BOMBER_WAIT_NEXT_STEP = Bomber.BOMBER_WAIT_NEXT_STEP_NORMAL;
     }
@@ -183,6 +186,7 @@ public class Bomber extends MovableEntity {
         }
     }
 
+    // new level, new game, restart game bomber reset
     public void reset() {
         this.setAlive(true);
         this.setDeadAnimation(1);
@@ -197,7 +201,7 @@ public class Bomber extends MovableEntity {
         this.setCurBombRemain(1);
         this.setSteps(0);
         this.setCountToRun(0);
-        this.setSpeedState();
+        this.setNormalSpeedState();
         Bomb.curBombLevel = 1;
     }
 

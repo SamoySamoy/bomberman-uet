@@ -10,18 +10,20 @@ import uet.oop.bomberman.Sound.Sound;
 import static uet.oop.bomberman.BombermanGame.*;
 
 public class Bomb extends Entity {
-    private static final long bombLastTime = 2200;
-    private static final long uiLastTime = 480;
+    // bomb stats
+    private static final long bombLastTime = 2200; // For middle bomb
+    private static final long uiLastTime = 480; // For bomb in 4 direction
     private static final int MAX_BOMB_LEVEL = 2;
     private long bombStartTime;
     private boolean isExploded;
     private boolean isFinal;
-    private boolean isRaw;
-    private boolean ui;
+    private boolean isRaw; // Check if is middle bomb
+    private boolean ui; // Check if is bomb in 4 direction
+    // For animation
     private int animationTransform = 1;
     private int countTransform = 0;
-
-    public static int curBombLevel = 1;
+    public static int curBombLevel = 1; // Current level of bomb power
+    // Bomb images for 4 direction
     private final Bomb[] left = new Bomb[MAX_BOMB_LEVEL];
     private final Bomb[] right = new Bomb[MAX_BOMB_LEVEL];
     private final Bomb[] up = new Bomb[MAX_BOMB_LEVEL];
@@ -34,6 +36,7 @@ public class Bomb extends Entity {
         this.bombStartTime = System.currentTimeMillis();
         this.isFinal = false;
         this.isRaw = true;
+        // If is middle bomb mark 2 in bomb matrix, otherwise mark as 3
         bombMatix[this.rx][this.ry] = 2;
     }
 
@@ -76,14 +79,14 @@ public class Bomb extends Entity {
         }
     }
 
+    // Check bomb destroy brick-3
     private void checkImpact() {
-        // Brick 3
         if (this.isFinal && this.ui && objId[this.rx][this.ry] == 3) {
             for (int i = 0; i < stillObjects.size(); i++) {
                 Entity block = stillObjects.get(i);
                 if (block.getX() / Sprite.SCALED_SIZE == this.rx
                     && block.getY() / Sprite.SCALED_SIZE == this.ry) {
-                    // Note: 4 5 6 7 8 is Speed, Flame, Bomb item, Bomb limit item, Time limit item
+                    // Note: 4 5 6 7 8 are Speed, Flame, Bomb item, Bomb limit item, Time limit item respectively
                     switch (itemMatrix[this.rx][this.ry]) {
                         case 4:
                             items.add(new SpeedItem(this.rx, this.ry));

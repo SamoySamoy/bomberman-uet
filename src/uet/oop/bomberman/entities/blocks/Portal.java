@@ -12,6 +12,7 @@ public class Portal extends Entity {
         super(x, y, img);
     }
 
+    // Handle open portal when enemies cleared
     public static void checkPortal() {
         if (enemies.size() == 0 && !isLevelUp) {
             if (currentLevel == 1) {

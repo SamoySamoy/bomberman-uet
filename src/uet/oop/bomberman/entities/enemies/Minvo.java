@@ -1,8 +1,8 @@
 package uet.oop.bomberman.entities.enemies;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.enemies.PathFinding.AStar;
-import uet.oop.bomberman.entities.enemies.PathFinding.Node;
+import uet.oop.bomberman.entities.enemies.pathFinding.AStar;
+import uet.oop.bomberman.entities.enemies.pathFinding.Node;
 import uet.oop.bomberman.graphics.Sprite;
 
 import static uet.oop.bomberman.BombermanGame.*;
@@ -31,6 +31,7 @@ public class Minvo extends Enemy {
         rightImg[2] = Sprite.minvo_right_2.getFxImage();
     }
 
+    // Minvo move base on a* path finding algorithms which implemented in pathFinding package
     @Override
     public void move() {
         if (isAvailToTakeNewSteps()) {
@@ -72,12 +73,4 @@ public class Minvo extends Enemy {
             }
         }
     }
-
-
-    @Override
-    public void destroyed() {
-
-    }
 }
-
-
