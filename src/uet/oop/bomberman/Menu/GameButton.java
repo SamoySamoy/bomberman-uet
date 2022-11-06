@@ -16,20 +16,20 @@ public class GameButton extends Button {
 
     public GameButton(String text) {
         setStyle("-fx-background-color: transparent");
-        setStyle("-fx-background-image: url('/Demo/yellow_button.png')");
+        //setStyle("-fx-background-image: url('/Demo/yellow_button.png')");
         setBackground(getBackground());
         setText(text);
         setButtonFont();
-        setPrefWidth(200);
-        setPrefHeight(50);
+        setPrefWidth(180);
+        setPrefHeight(30);
         initialiseButtonListeners();
     }
 
     private void setButtonFont() {
         try {
-            setFont(Font.loadFont(new FileInputStream(FONT_PATH), 25));
+            setFont(Font.loadFont(new FileInputStream(FONT_PATH), 20));
         } catch (FileNotFoundException e) {
-            setFont(Font.font("Verdana", 25));
+            setFont(Font.font("Verdana", 20));
             System.out.println("Font not found or could not be loaded. Using default \"Verdana\"");
         }
 
@@ -37,50 +37,32 @@ public class GameButton extends Button {
 
     private void setButtonPressedStyle() {
         setStyle("-fx-background-color: transparent");
-        setStyle("-fx-background-image: url('/Demo/yellow_button_pressed.png')");
-        setPrefHeight(50);
+        //setStyle("-fx-background-image: url('/Demo/yellow_button_pressed.png')");
+        setPrefHeight(30);
         setLayoutY(getLayoutY() + 4);
 
     }
 
     private void setButtonReleasedStyle() {
         setStyle("-fx-background-color: transparent");
-        setStyle("-fx-background-image: url('/Demo/yellow_button.png')");
-        setPrefHeight(50);
+        //setStyle("-fx-background-image: url('/Demo/yellow_button.png')");
+        setPrefHeight(30);
         setLayoutY(getLayoutY() - 4);
     }
 
     private void initialiseButtonListeners() {
-        setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.getButton().equals(MouseButton.PRIMARY)) {
-                    setButtonPressedStyle();
-                }
+        setOnMousePressed(event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                setButtonPressedStyle();
             }
         });
 
-        setOnMouseReleased(new EventHandler<MouseEvent>() {
-
-            @Override
-            public void handle(MouseEvent event) {
-                if (event.getButton().equals(MouseButton.PRIMARY)) {
-                    setButtonReleasedStyle();
-                }
-            }
-
-        });
-        setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                setEffect(new DropShadow(50, Color.YELLOW));
+        setOnMouseReleased(event -> {
+            if (event.getButton().equals(MouseButton.PRIMARY)) {
+                setButtonReleasedStyle();
             }
         });
-        setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                setEffect(null);
-            }
-        });
+            setOnMouseEntered(event -> setEffect(new DropShadow(20, Color.YELLOW)));
+        setOnMouseExited(event -> setEffect(null));
     }
 }

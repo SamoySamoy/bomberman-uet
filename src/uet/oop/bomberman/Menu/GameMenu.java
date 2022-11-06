@@ -4,11 +4,14 @@ import java.util.Random;
 
 import javafx.animation.AnimationTimer;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -98,8 +101,15 @@ public class GameMenu {
         gameStage.setHeight(SCREEN_HEIGHT * 32 + 74);
         gameStage.setOnCloseRequest(x -> {
             x.consume();
-            gameStage.close();
-            menuStage.show();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Logout");
+            alert.setHeaderText("You're about to logout!");
+            alert.setContentText("Do you want to save before exiting?");
+
+            if (alert.showAndWait().get() == ButtonType.OK){
+                System.out.println("You successfully logged out");
+                Platform.exit();
+            }
         });
     }
 
@@ -152,7 +162,6 @@ public class GameMenu {
                     new Level3();
                     isOver = false;
                 }
-
             }
             updateMenu();
         });

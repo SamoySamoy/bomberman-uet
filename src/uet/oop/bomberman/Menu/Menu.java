@@ -1,52 +1,35 @@
 package uet.oop.bomberman.Menu;
 
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Slider;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import uet.oop.bomberman.Sound.Sound;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import static uet.oop.bomberman.BombermanGame.*;
+
 public class Menu {
-    public final static String FONT_PATH = "res/Demo/kenvector_future.ttf";
-    private static final int HEIGHT = 768;
-    private static final int WIDTH = 1024;
-    private static final double MENU_BUTTON_START_X = 100;
-    private static final double MENU_BUTTON_START_Y = 150;
+    private static final int HEIGHT = SCREEN_HEIGHT * 32 + 74;
+    private static final int WIDTH = SCREEN_WIDTH * 32 + 15;
+    private static final double MENU_BUTTON_START_X = 50;
+    private static final double MENU_BUTTON_START_Y = 270;
 
     AnchorPane mainPane;
     private Scene mainScene;
     private Stage mainStage;
     private GameSubScene helpSubScene;
-    private GameSubScene musicSubScene;
-
-    private GameSubScene sceneToHide;
 
     public List<GameButton> menuButtons;
     public List<GameButton> helpButtonList;
-    public List<GameButton> musicButtonList;
 
     private Sound sound;
     public static Text level, bomb, time;
@@ -56,7 +39,6 @@ public class Menu {
     public Menu() {
         menuButtons = new ArrayList<>();
         helpButtonList = new ArrayList<>();
-        musicButtonList = new ArrayList<>();
         mainPane = new AnchorPane();
         mainScene = new Scene(mainPane, WIDTH, HEIGHT);
         mainStage = new Stage();
@@ -68,17 +50,13 @@ public class Menu {
     }
 
     private void showSubScene(GameSubScene subScene) {
-        if (sceneToHide != null) {
-            sceneToHide.moveSubScene();
+        if (subScene != null) {
+            subScene.moveSubScene();
         }
-        subScene.moveSubScene();
-        sceneToHide = subScene;
     }
 
     private void createSubScenes() {
         helpSubScene = new GameSubScene();
-        musicSubScene = new GameSubScene();
-
         createHelpSubScene();
     }
 
@@ -86,10 +64,10 @@ public class Menu {
         helpSubScene = new GameSubScene();
         mainPane.getChildren().add(helpSubScene);
         GridPane helpGrid = new GridPane();
-        helpGrid.setLayoutX(50);
-        helpGrid.setLayoutY(10);
-        helpGrid.setHgap(20);
-        helpGrid.setVgap(20);
+        helpGrid.setLayoutX(1);
+        helpGrid.setLayoutY(1);
+        helpGrid.setHgap(1);
+        helpGrid.setVgap(1);
 
         GameButton upButton = new GameButton("W");
         addHelpButtons(upButton);
@@ -113,15 +91,14 @@ public class Menu {
 
     private void addHelpButtons(GameButton button) {
         helpButtonList.add(button);
-        button.setLayoutX(10);
-        button.setLayoutY(10 + helpButtonList.size() * 10);
+        button.setLayoutX(1);
+        button.setLayoutY(helpButtonList.size() * 2);
         helpSubScene.getPane().getChildren().add(button);
     }
 
     private void createButtons() {
         createStartButton();
         createHelpButton();
-        createExitButton();
     }
 
     public Stage getMainStage() {
@@ -130,7 +107,7 @@ public class Menu {
 
     private void addMenuButtons(GameButton button) {
         button.setLayoutX(MENU_BUTTON_START_X);
-        button.setLayoutY(MENU_BUTTON_START_Y + menuButtons.size() * 120);
+        button.setLayoutY(MENU_BUTTON_START_Y + menuButtons.size() * 90);
         menuButtons.add(button);
         mainPane.getChildren().add(button);
     }
@@ -140,8 +117,6 @@ public class Menu {
         addMenuButtons(startButton);
         startButton.setOnAction(event -> {
             mainStage.hide();
-            // clear()
-            //sound.stop();
             GameMenu gameViewManager = new GameMenu();
             gameViewManager.createNewGame(mainStage);
         });
@@ -153,37 +128,20 @@ public class Menu {
         helpButton.setOnAction(event -> showSubScene(helpSubScene));
     }
 
-    private void createExitButton() {
-        GameButton exitButton = new GameButton("Exit");
-        addMenuButtons(exitButton);
-        exitButton.setOnAction(event -> {
-            event.consume();
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Logout");
-            alert.setHeaderText("You're about to logout!");
-            alert.setContentText("Do you want to save before exiting?");
-
-            if (alert.showAndWait().get() == ButtonType.OK){
-                System.out.println("You successfully logged out");
-                Platform.exit();
-            }
-        });
-    }
-
     private void createBackground() {
         Image bgImage = new Image(getClass().getResourceAsStream("/Demo/DemoBackground.gif"),
                 256, 256, false, true);
         BackgroundImage bg = new BackgroundImage(bgImage, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
-                BackgroundPosition.DEFAULT, new BackgroundSize(1024, 800, false, false, false, false));
+                BackgroundPosition.DEFAULT, new BackgroundSize(WIDTH, HEIGHT, false, false, false, false));
         mainPane.setBackground(new Background(bg));
     }
 
     private void createLogo() {
         Image logoImage = new Image(getClass().getResourceAsStream("/Demo/logo3.png"),
-                500, 100, false, false);
+                320, 100, false, false);
         ImageView logo = new ImageView(logoImage);
-        logo.setLayoutX(400);
-        logo.setLayoutY(50);
+        logo.setLayoutX(10);
+        logo.setLayoutY(100);
         logo.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent e) {

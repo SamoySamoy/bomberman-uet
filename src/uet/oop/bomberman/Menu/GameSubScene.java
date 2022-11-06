@@ -15,16 +15,16 @@ public class GameSubScene extends SubScene {
     private boolean isHidden = true;
 
     public GameSubScene() {
-        super(new AnchorPane(), 650, 530);
-        prefWidth(650);
-        prefHeight(530);
-        BackgroundImage image = new BackgroundImage(new Image(BG_IMAGE, 650, 530, false, true),
+        super(new AnchorPane(), 500, 460);
+        prefWidth(500);
+        prefHeight(460);
+        BackgroundImage image = new BackgroundImage(new Image(BG_IMAGE, 500, 460, false, true),
                 BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, null);
         AnchorPane root2 = (AnchorPane) this.getRoot();
         root2.setBackground(new Background(image));
 
-        setLayoutX(1024);
-        setLayoutY(180);
+        setLayoutX(815);
+        setLayoutY(60);
     }
 
     public void moveSubScene() {
@@ -32,7 +32,7 @@ public class GameSubScene extends SubScene {
         transition.setDuration(Duration.seconds(0.5));
         transition.setNode(this);
         if(isHidden) {
-            transition.setToX(-676);
+            transition.setToX(-510);
             isHidden = false;
         } else {
             transition.setToX(0);
@@ -40,6 +40,7 @@ public class GameSubScene extends SubScene {
         }
         transition.play();
     }
+
     public AnchorPane getPane() {
         return (AnchorPane) this.getRoot();
     }
