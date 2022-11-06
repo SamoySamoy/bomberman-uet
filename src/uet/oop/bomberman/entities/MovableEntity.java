@@ -7,10 +7,7 @@ import static uet.oop.bomberman.BombermanGame.bombMatix;
 import static uet.oop.bomberman.BombermanGame.objId;
 
 public abstract class MovableEntity extends Entity {
-    // cordinates of all objects in a simplify matrix
-    protected int rx;
-    protected int ry;
-    // Hướng di chuyển
+    // moving direction
     protected String direction;
     protected boolean isAlive;
     // character img
@@ -18,21 +15,16 @@ public abstract class MovableEntity extends Entity {
     protected Image[] downImg = new Image[3];
     protected Image[] leftImg = new Image[3];
     protected Image[] rightImg = new Image[3];
-
     // move stats
     protected int speed;
     protected int steps;
-    protected int countToRun;
+    protected int countToRun; // Time between 2 steps
     public static final int DEFAULT_SPEED = 4;
-
     // max number of frames each character has
     public static final int MAX_NUM_FRAMES = 4;
 
-
     public MovableEntity(int rx, int ry, Image img, boolean isAlive, String direction) {
         super(rx, ry, img);
-        this.rx = rx;
-        this.ry = ry;
         this.direction = direction;
         this.isAlive = isAlive;
         this.steps = 0;
@@ -40,6 +32,7 @@ public abstract class MovableEntity extends Entity {
         this.speed = DEFAULT_SPEED;
     }
 
+    // Check if character finsh all steps and stay in a block
     protected boolean isAvailToTakeNewSteps() {
         return this.getX() % Sprite.SCALED_SIZE == 0 && this.getY() % Sprite.SCALED_SIZE == 0;
     }
@@ -47,62 +40,41 @@ public abstract class MovableEntity extends Entity {
     public abstract void move();
 
     protected void setMove(String moveDirection) {
-        if (this.getX() % Sprite.SCALED_SIZE == 0 && this.getY() % Sprite.SCALED_SIZE == 0) {
+        if (this.isAvailToTakeNewSteps()) {
             switch (moveDirection) {
                 case "up":
-                    this.setDirection("up");
-                    // Kiem tra va cham voi tuong (2) gach (3) bom(2)
-                    if (objId[rx][ry - 1] != 2 && objId[rx][ry - 1] != 3 && bombMatix[rx][ry - 1] != 2) {
-                        // Set so buoc phai di chuyen
-                        this.setSteps(Sprite.SCALED_SIZE / this.speed);
-                        this.setCountToRun(0);
-                        this.checkRun();
-                    } else {
-                        this.img = this.upImg[0];
-                    }
+                    this.setMove("up", this.getRx(), this.getRy() - 1, this.upImg[0]);
                     break;
                 case "down":
-                    this.setDirection("down");
-                    // Kiem tra va cham voi tuong (2) gach (3) bom(2)
-                    if (objId[rx][ry + 1] != 2 && objId[rx][ry + 1] != 3 && bombMatix[rx][ry + 1] != 2) {
-                        // Set so buoc phai di chuyen
-                        this.setSteps(Sprite.SCALED_SIZE / this.speed);
-                        this.setCountToRun(0);
-                        this.checkRun();
-                    } else {
-                        this.img = this.downImg[0];
-                    }
+                    this.setMove("down", this.getRx(), this.getRy() + 1, this.downImg[0]);
                     break;
                 case "left":
-                    this.setDirection("left");
-                    // Kiem tra va cham voi tuong (2) gach (3) bom(2)
-                    if (objId[rx - 1][ry] != 2 && objId[rx - 1][ry] != 3 && bombMatix[rx - 1][ry] != 2) {
-                        // Set so buoc phai di chuyen
-                        this.setSteps(Sprite.SCALED_SIZE / this.speed);
-                        this.setCountToRun(0);
-                        this.checkRun();
-                    } else {
-                        this.img = this.leftImg[0];
-                    }
+                    this.setMove("left", this.getRx() - 1, this.getRy(), this.leftImg[0]);
                     break;
                 case "right":
-                    this.setDirection("right");
-                    // Kiem tra va cham voi tuong (2) gach (3) bom(2)
-                    if (objId[rx + 1][ry] != 2 && objId[rx + 1][ry] != 3 && bombMatix[rx + 1][ry] != 2) {
-                        // Set so buoc phai di chuyen
-                        this.setSteps(Sprite.SCALED_SIZE / this.speed);
-                        this.setCountToRun(0);
-                        this.checkRun();
-                    } else {
-                        this.img = this.rightImg[0];
-                    }
+                    this.setMove("right", this.getRx() + 1, this.getRy(), this.rightImg[0]);
                     break;
             }
         }
     }
 
+    protected void setMove(String moveDrirection, int moveRx, int moveRy, Image img) {
+        this.setDirection(moveDrirection);
+        // Check collision with wall-2 brick-2 bomb in bomb marix-2
+        if (objId[moveRx][moveRy] != 2 && objId[moveRx][moveRy] != 3 && bombMatix[moveRx][moveRy] != 2) {
+            // Set number of steps to completely move to new block
+            this.setSteps(Sprite.SCALED_SIZE / this.speed);
+            this.setCountToRun(0);
+            // start run
+            this.checkRun();
+        } else {
+            // If can not move just set img
+            this.setImg(img);
+        }
+    }
+
     public void checkRun() {
-        // Kiem tra xem con phai di bao nhieu buoc
+        // If there are remain steps, move. If not stop
         if (this.getSteps() > 0) {
             this.setMoveDirection();
             this.setSteps(this.getSteps() - 1);
@@ -112,107 +84,76 @@ public abstract class MovableEntity extends Entity {
     protected void setMoveDirection() {
         switch (this.direction) {
             case "up":
-                upStep(); // handle animation va tang rx hoac ry khi hoan thanh
+                this.upStep(); // handle animation and gain rx or ry whenever finish
                 this.setY(this.getY() - this.speed);
                 break;
             case "down":
-                downStep(); // handle animation va tang rx hoac ry khi hoan thanh
+                this.downStep(); // handle animation and gain rx or ry whenever finish
                 this.setY(this.getY() + this.speed);
                 break;
             case "left":
-                leftStep(); // handle animation va tang rx hoac ry khi hoan thanh
+                this.leftStep(); // handle animation and gain rx or ry whenever finish
                 this.setX(this.getX() - this.speed);
                 break;
             case "right":
-                rightStep(); // handle animation va tang rx hoac ry khi hoan thanh
+                this.rightStep(); // handle animation and gain rx or ry whenever finish
                 this.setX(this.getX() + this.speed);
                 break;
         }
     }
 
     protected void upStep() {
-        if (this.getY() % this.speed == 0) {
-            if (this.getSteps() % MAX_NUM_FRAMES == 0) {
-                this.setImage(this.upImg[0]);
-            } else if (this.getSteps() % MAX_NUM_FRAMES == 3) {
-                this.setImage(this.upImg[1]);
-            } else if (this.getSteps() % MAX_NUM_FRAMES == 2) {
-                this.setImage(this.upImg[2]);
-            } else if (this.getSteps() % MAX_NUM_FRAMES == 1) {
-                this.setImage(this.upImg[0]);
-                this.ry--;
-                System.out.println(rx + " " + ry);
-            }
-        }
+        this.yAxisStep("up", this.upImg);
     }
 
-
     protected void downStep() {
-        if (this.getY() % this.speed == 0) {
-            if (this.getSteps() % MAX_NUM_FRAMES == 0) {
-                this.setImage(this.downImg[0]);
-            } else if (this.getSteps() % MAX_NUM_FRAMES == 3) {
-                this.setImage(this.downImg[1]);
-            } else if (this.getSteps() % MAX_NUM_FRAMES == 2) {
-                this.setImage(this.downImg[2]);
-            } else if (this.getSteps() % MAX_NUM_FRAMES == 1) {
-                this.setImage(this.downImg[0]);
-                this.ry++;
-                System.out.println(rx + " " + ry);
-            }
-        }
+        this.yAxisStep("down", this.downImg);
     }
 
     protected void leftStep() {
-        if (this.getX() % this.speed == 0) {
+        this.xAxisStep("left", this.leftImg);
+    }
+
+    protected void rightStep() {
+        this.xAxisStep("right", this.rightImg);
+    }
+
+    // For up and down step
+    protected void yAxisStep(String moveDirection, Image[] img) {
+        if (this.getY() % this.speed == 0) {
             if (this.getSteps() % MAX_NUM_FRAMES == 0) {
-                this.setImage(this.leftImg[0]);
+                this.setImage(img[0]);
             } else if (this.getSteps() % MAX_NUM_FRAMES == 3) {
-                this.setImage(this.leftImg[1]);
+                this.setImage(img[1]);
             } else if (this.getSteps() % MAX_NUM_FRAMES == 2) {
-                this.setImage(this.leftImg[2]);
+                this.setImage(img[2]);
             } else if (this.getSteps() % MAX_NUM_FRAMES == 1) {
-                this.setImage(this.leftImg[0]);
-                this.rx--;
-                System.out.println(rx + " " + ry);
+                this.setImage(img[0]);
+                if (moveDirection.equals("up")) this.ry--;
+                else this.ry++;
             }
         }
     }
 
-    protected void rightStep() {
+    // For left and right step
+    protected void xAxisStep(String moveDirection, Image[] img) {
         if (this.getX() % this.speed == 0) {
             if (this.getSteps() % MAX_NUM_FRAMES == 0) {
-                this.setImage(this.rightImg[0]);
+                this.setImage(img[0]);
             } else if (this.getSteps() % MAX_NUM_FRAMES == 3) {
-                this.setImage(this.rightImg[1]);
+                this.setImage(img[1]);
             } else if (this.getSteps() % MAX_NUM_FRAMES == 2) {
-                this.setImage(this.rightImg[2]);
+                this.setImage(img[2]);
             } else if (this.getSteps() % MAX_NUM_FRAMES == 1) {
-                this.setImage(this.rightImg[0]);
-                this.rx++;
-                System.out.println(rx + " " + ry);
+                this.setImage(img[0]);
+                if (moveDirection.equals("left")) this.rx--;
+                else this.rx++;
             }
         }
     }
 
 
     public abstract void killedByBomb();
-
-    public int getRx() {
-        return rx;
-    }
-
-    public void setRx(int rx) {
-        this.rx = rx;
-    }
-
-    public int getRy() {
-        return ry;
-    }
-
-    public void setRy(int ry) {
-        this.ry = ry;
-    }
 
     public String getDirection() {
         return direction;

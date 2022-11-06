@@ -6,7 +6,6 @@ import javafx.animation.AnimationTimer;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -29,7 +28,6 @@ import uet.oop.bomberman.LevelMap.Level2;
 import uet.oop.bomberman.LevelMap.Level3;
 import uet.oop.bomberman.Sound.Sound;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.MovableEntity;
 import uet.oop.bomberman.entities.blocks.Bomb;
 import uet.oop.bomberman.entities.bomberman.Bomber;
 import uet.oop.bomberman.entities.enemies.Enemy;
@@ -51,7 +49,7 @@ public class GameMenu {
     private static Stage menuStage;
     // camera smooth translate
     private static final TranslateTransition camera = new TranslateTransition();
-    private static ImageView statusGame;
+    public static ImageView statusGame;
     private static final int GAME_WIDTH = 600;
     private static final int GAME_HEIGHT = 700;
     Random randomPosGen;
@@ -106,7 +104,7 @@ public class GameMenu {
             alert.setHeaderText("You're about to logout!");
             alert.setContentText("Do you want to save before exiting?");
 
-            if (alert.showAndWait().get() == ButtonType.OK){
+            if (alert.showAndWait().get() == ButtonType.OK) {
                 System.out.println("You successfully logged out");
                 Platform.exit();
             }
@@ -182,8 +180,8 @@ public class GameMenu {
     }
 
     public void createNewGame(Stage menuStage) {
-        this.menuStage = menuStage;
-        this.menuStage.hide();
+        GameMenu.menuStage = menuStage;
+        GameMenu.menuStage.hide();
         createGameLoop();
         gameStage.show();
     }
@@ -195,9 +193,13 @@ public class GameMenu {
                 render();
                 if (!isPause) {
                     if (!isOver) {
+                        // Update all game obj
                         update();
+                        // Time counter, each level has different time limit
                         time();
+                        // Update menu stats
                         updateMenu();
+                        // Move camera
                         camera.play();
                     } else {
                         Image gameOver = new Image("images/over.png");
@@ -213,9 +215,11 @@ public class GameMenu {
 
     // stage update
     public void update() {
+        // entities like: brick, wall,...
         entities.forEach(Entity::update);
 
         bomberman.update();
+        // Count time between 2 steps
         bomberman.setCountToRun(bomberman.getCountToRun() + 1);
         if (bomberman.getCountToRun() == Bomber.BOMBER_WAIT_NEXT_STEP) {
             bomberman.checkRun();
@@ -224,6 +228,7 @@ public class GameMenu {
 
         enemies.forEach(Enemy::update);
         for (Enemy enemy : enemies) {
+            // Count time between 2 steps
             enemy.setCountToRun(enemy.getCountToRun() + 1);
             if (enemy.getCountToRun() == Enemy.ENEMY_WAIT_NEXT_STEP) {
                 enemy.checkRun();
@@ -232,11 +237,15 @@ public class GameMenu {
         }
         enemies.removeIf(enemy -> !enemy.isAlive());
 
-        bombs.forEach(Bomb::update);
+        // Update bomb list
+        for (int i = 0; i < bombs.size(); i++) {
+            if (bombs.get(i) != null) {
+                bombs.get(i).update();
+            }
+        }
         bombs.removeIf(Bomb::isExploded);
 
         items.forEach(Item::update);
-        items.removeIf(Item::isPicked);
 
         portal1.update();
         portal2.update();
@@ -252,6 +261,7 @@ public class GameMenu {
             if (bomberman.isAlive() && time_number > 0) {
                 time_number--;
                 Menu.time.setText("Time " + time_number);
+                // If out of time, game over
                 if (time_number <= 0) {
                     bomberman.setAlive(false);
                     isOver = true;
@@ -264,13 +274,12 @@ public class GameMenu {
     public void moveCamera() {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
         int cameraX = bomberman.getX() - (SCREEN_WIDTH_PIXELS - Sprite.SCALED_SIZE) / 2;
+        // Check if camera move through game border
         if (cameraX < 0)
             cameraX = 0;
         if (cameraX + SCREEN_WIDTH_PIXELS > LEVEL_WIDTH_PIXELS)
             cameraX = SCREEN_WIDTH_PIXELS;
         camera.setToX(-cameraX);
-
-        // set camera to y
     }
 
     // object render

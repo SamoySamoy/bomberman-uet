@@ -8,132 +8,74 @@ import uet.oop.bomberman.Sound.Sound;
 import static uet.oop.bomberman.BombermanGame.*;
 
 public class Kondoria extends Minvo {
-  public Kondoria(int rx, int ry, Image img, boolean isALive, String direction) {
-    super(rx, ry, img, isALive, direction);
-    upImg[0] = Sprite.kondoria_left.getFxImage();
-    upImg[1] = Sprite.kondoria_left_1.getFxImage();
-    upImg[2] = Sprite.kondoria_left_2.getFxImage();
+    public Kondoria(int rx, int ry, Image img, boolean isALive, String direction) {
+        super(rx, ry, img, isALive, direction);
+        this.delayTime = KONDORIA_DELAY_TIME;
+        // Set img
+        upImg[0] = Sprite.kondoria_left.getFxImage();
+        upImg[1] = Sprite.kondoria_left_1.getFxImage();
+        upImg[2] = Sprite.kondoria_left_2.getFxImage();
 
-    downImg[0] = Sprite.kondoria_right.getFxImage();
-    downImg[1] = Sprite.kondoria_right_1.getFxImage();
-    downImg[2] = Sprite.kondoria_right_2.getFxImage();
+        downImg[0] = Sprite.kondoria_right.getFxImage();
+        downImg[1] = Sprite.kondoria_right_1.getFxImage();
+        downImg[2] = Sprite.kondoria_right_2.getFxImage();
 
-    leftImg[0] = Sprite.kondoria_left.getFxImage();
-    leftImg[1] = Sprite.kondoria_left_1.getFxImage();
-    leftImg[2] = Sprite.kondoria_left_2.getFxImage();
+        leftImg[0] = Sprite.kondoria_left.getFxImage();
+        leftImg[1] = Sprite.kondoria_left_1.getFxImage();
+        leftImg[2] = Sprite.kondoria_left_2.getFxImage();
 
-    rightImg[0] = Sprite.kondoria_right.getFxImage();
-    rightImg[1] = Sprite.kondoria_right_1.getFxImage();
-    rightImg[2] = Sprite.kondoria_right_2.getFxImage();
-  }
+        rightImg[0] = Sprite.kondoria_right.getFxImage();
+        rightImg[1] = Sprite.kondoria_right_1.getFxImage();
+        rightImg[2] = Sprite.kondoria_right_2.getFxImage();
+    }
 
-  // set lai move de co the di chuyen qua bomb
-  protected void setMove(String moveDirection) {
-    if (this.getX() % Sprite.SCALED_SIZE == 0 && this.getY() % Sprite.SCALED_SIZE == 0) {
-      switch (moveDirection) {
-        case "up":
-          this.setDirection("up");
-          // Kiem tra va cham voi tuong (2) gach (3) bom(2)
-          if (objId[rx][ry - 1] != 2 && objId[rx][ry - 1] != 3) {
-            // Set so buoc phai di chuyen
+    // Override setMove function so that Kondoria can't be blocked
+    @Override
+    protected void setMove(String moveDrirection, int moveRx, int moveRy, Image img) {
+        this.setDirection(moveDrirection);
+        // Check collision with wall-2 brick-2 bomb in bomb marix-2
+        if (objId[moveRx][moveRy] != 2 && objId[moveRx][moveRy] != 3) {
+            // Set number of steps to completely move to new block
             this.setSteps(Sprite.SCALED_SIZE / this.speed);
             this.setCountToRun(0);
+            // Start run
             this.checkRun();
-          } else {
-            this.img = this.upImg[0];
-          }
-          break;
-        case "down":
-          this.setDirection("down");
-          // Kiem tra va cham voi tuong (2) gach (3) bom(2)
-          if (objId[rx][ry + 1] != 2 && objId[rx][ry + 1] != 3) {
-            // Set so buoc phai di chuyen
-            this.setSteps(Sprite.SCALED_SIZE / this.speed);
-            this.setCountToRun(0);
-            this.checkRun();
-          } else {
-            this.img = this.downImg[0];
-          }
-          break;
-        case "left":
-          this.setDirection("left");
-          // Kiem tra va cham voi tuong (2) gach (3) bom(2)
-          if (objId[rx - 1][ry] != 2 && objId[rx - 1][ry] != 3) {
-            // Set so buoc phai di chuyen
-            this.setSteps(Sprite.SCALED_SIZE / this.speed);
-            this.setCountToRun(0);
-            this.checkRun();
-          } else {
-            this.img = this.leftImg[0];
-          }
-          break;
-        case "right":
-          this.setDirection("right");
-          // Kiem tra va cham voi tuong (2) gach (3) bom(2)
-          if (objId[rx + 1][ry] != 2 && objId[rx + 1][ry] != 3) {
-            // Set so buoc phai di chuyen
-            this.setSteps(Sprite.SCALED_SIZE / this.speed);
-            this.setCountToRun(0);
-            this.checkRun();
-          } else {
-            this.img = this.rightImg[0];
-          }
-          break;
-      }
+        } else {
+            // If can not move just set img
+            this.setImg(img);
+        }
     }
-  }
 
-  private void checkEatBomb() {
-    // KT an bom
-    if (bombMatix[this.rx - 1][this.ry] == 2) {
-      Bomb curBomb = Bomb.getBomb(this.rx - 1, this.ry);
-      if (curBomb != null && !curBomb.isExploded() && curBomb.isRaw() == true
-          && curBomb.isUi() == false) {
-        System.out.println("Pacman eat bomb");
-        bombs.remove(curBomb);
-        new Sound("sound/eat.wav", "eat");
-        bombMatix[this.rx - 1][this.ry] = 0;
-        bomberman.gainBombRemain();
-      }
+    // Check can eat bomb
+    private void checkEatBomb() {
+        // Up
+        checkBomb(this.getRx(), this.getRy() - 1);
+        // Down
+        checkBomb(this.getRx(), this.getRy() + 1);
+        // Left
+        checkBomb(this.getRx() - 1, this.getRy());
+        // Right
+        checkBomb(this.getRx() + 1, this.getRy());
     }
-    if (bombMatix[this.rx + 1][this.ry] == 2) {
-      Bomb curBomb = Bomb.getBomb(this.rx + 1, this.ry);
-      if (curBomb != null && !curBomb.isExploded() && curBomb.isRaw() == true
-          && curBomb.isUi() == false) {
-        System.out.println("Pacman eat bomb");
-        bombs.remove(curBomb);
-        new Sound("sound/eat.wav", "eat");
-        bombMatix[this.rx + 1][this.ry] = 0;
-        bomberman.gainBombRemain();
-      }
-    }
-    if (bombMatix[this.rx][this.ry - 1] == 2) {
-      Bomb curBomb = Bomb.getBomb(this.rx, this.ry - 1);
-      if (curBomb != null && !curBomb.isExploded() && curBomb.isRaw() == true
-          && curBomb.isUi() == false) {
-        System.out.println("Pacman eat bomb");
-        bombs.remove(curBomb);
-        new Sound("sound/eat.wav", "eat");
-        bombMatix[this.rx][this.ry - 1] = 0;
-        bomberman.gainBombRemain();
-      }
-    }
-    if (bombMatix[this.rx][this.ry + 1] == 2) {
-      Bomb curBomb = Bomb.getBomb(this.rx, this.ry + 1);
-      if (curBomb != null && !curBomb.isExploded() && curBomb.isRaw() == true
-          && curBomb.isUi() == false) {
-        System.out.println("Pacman eat bomb");
-        bombs.remove(curBomb);
-        new Sound("sound/eat.wav", "eat");
-        bombMatix[this.rx][this.ry + 1] = 0;
-        bomberman.gainBombRemain();
-      }
-    }
-  }
 
-  @Override
-  public void update() {
-    super.update();
-    checkEatBomb();
-  }
+    private void checkBomb(int bombRx, int bombRy) {
+        if (bombMatix[bombRx][bombRy] == 2) {
+            Bomb curBomb = Bomb.getBomb(bombRx, bombRy);
+            if (curBomb != null && !curBomb.isExploded() && curBomb.isRaw()
+                && !curBomb.isUi()) {
+                // Remove bomb from bomb list and bomb matrix
+                bombs.remove(curBomb);
+                bombMatix[bombRx][bombRy] = 0;
+                bomberman.gainBombRemain();
+                // Add sound
+                new Sound("sound/eat.wav", "eat");
+            }
+        }
+    }
+
+    @Override
+    public void update() {
+        super.update();
+        this.checkEatBomb();
+    }
 }

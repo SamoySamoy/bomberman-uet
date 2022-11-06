@@ -5,7 +5,7 @@ import javafx.scene.image.*;
 import java.util.Arrays;
 
 /**
- * Lưu trữ thông tin các pixel của 1 sprite (hình ảnh game)
+ * Store game's sprites (Game images)
  */
 public class Sprite {
 
@@ -264,6 +264,7 @@ public class Sprite {
         return _pixels[i];
     }
 
+    // Return game image after clear background
     public Image getFxImage() {
         WritableImage wr = new WritableImage(SIZE, SIZE);
         PixelWriter pw = wr.getPixelWriter();
@@ -280,6 +281,7 @@ public class Sprite {
         return resample(input, SCALED_SIZE / DEFAULT_SIZE);
     }
 
+    // Scale up game's sprites form 16px to 32px
     private Image resample(Image input, int scaleFactor) {
         final int W = (int) input.getWidth();
         final int H = (int) input.getHeight();

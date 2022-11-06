@@ -6,9 +6,9 @@ import uet.oop.bomberman.graphics.Sprite;
 import static uet.oop.bomberman.BombermanGame.bomberman;
 
 public class Oneal extends Enemy {
-
     public Oneal(int rx, int ry, Image img, boolean isALive, String direction) {
         super(rx, ry, img, isALive, direction);
+        this.delayTime = ONEAL_DELAY_TIME;
         // Set img
         upImg[0] = Sprite.oneal_left.getFxImage();
         upImg[1] = Sprite.oneal_left_1.getFxImage();
@@ -27,36 +27,26 @@ public class Oneal extends Enemy {
         rightImg[2] = Sprite.oneal_right_2.getFxImage();
     }
 
+    // Oneal follow bomber base on X and Y cordinate of bomber
     @Override
     public void move() {
         if (isAvailToTakeNewSteps()) {
+            // Avoid move in X axis and Y axis at the same time as well as move diagonally
 
-            // Return lại chỗ tọa độ X để tránh việc di chuyển được 1 cả tọa độ X lẫn Y trong 1 lần
-            // Nếu di chuyển cả X và Y trong 1 lần thì sẽ bị di chuyển chéo
-            // Phải đảm bảo enemy phải di chuyển được, không bị hiện tượng đứng im
-
-            if (bomberman.getX() < this.x) {
-                // Nếu di chuyển bên trái thành công thì dừng
+            if (bomberman.getX() < this.getX()) {
                 this.setMove("left");
                 return;
-            } else if (bomberman.getX() > this.x) {
-                // Nếu di chuyển bên phải thành công thì dừng
+            } else if (bomberman.getX() > this.getX()) {
                 this.setMove("right");
                 return;
             }
 
             // If enemy x = bomber x
-            if (bomberman.getY() > this.y) {
+            if (bomberman.getY() > this.getY()) {
                 this.setMove("down");
-            } else if (bomberman.getY() < this.y) {
+            } else if (bomberman.getY() < this.getY()) {
                 this.setMove("up");
             }
         }
-    }
-
-
-    @Override
-    public void destroyed() {
-
     }
 }

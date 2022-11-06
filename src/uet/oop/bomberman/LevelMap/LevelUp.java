@@ -2,10 +2,15 @@ package uet.oop.bomberman.LevelMap;
 
 import uet.oop.bomberman.Menu.Menu;
 import uet.oop.bomberman.entities.blocks.Bomb;
+import javafx.scene.image.Image;
 
 import static uet.oop.bomberman.BombermanGame.*;
+import static uet.oop.bomberman.Menu.GameMenu.statusGame;
+
+import uet.oop.bomberman.BombermanGame;
 
 public class LevelUp {
+    // Clear level when new game, restart game
     public static void clearLevel() {
         // clean and clear stage
         isStopMoving = false;
@@ -44,6 +49,7 @@ public class LevelUp {
         Menu.level.setText("Level " + currentLevel);
     }
 
+    // Hanle level up when bomber get into level up portal
     public static void checkLevelUp() {
         if (currentLevel == 1) {
             if (bomberman.getX() == portal1.getX() && bomberman.getY() == portal1.getY()) {
@@ -52,6 +58,15 @@ public class LevelUp {
         } else if (currentLevel == 2) {
             if (bomberman.getX() == portal2.getX() && bomberman.getY() == portal2.getY()) {
                 new Level3();
+            }
+        } else if (currentLevel == 3) {
+            if (bomberman.getX() == portal3.getX() && bomberman.getY() == portal3.getY()) {
+                Image newGame = new Image("images/start.png");
+                statusGame.setImage(newGame);
+                Image author = new Image("images/background.jpg");
+                author_view.setImage(author);
+                bomberman.setAlive(false);
+                BombermanGame.end = true;
             }
         }
 
