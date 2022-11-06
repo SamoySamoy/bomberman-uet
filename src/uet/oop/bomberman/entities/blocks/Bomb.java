@@ -6,8 +6,9 @@ import uet.oop.bomberman.entities.items.*;
 import uet.oop.bomberman.graphics.Sprite;
 import uet.oop.bomberman.BombermanGame;
 import uet.oop.bomberman.Sound.Sound;
-
 import static uet.oop.bomberman.BombermanGame.*;
+
+import java.lang.Iterable;
 
 public class Bomb extends Entity {
     // bomb stats
