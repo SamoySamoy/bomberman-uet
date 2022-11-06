@@ -24,6 +24,8 @@ public class Menu {
     public static Text level, bomb, time;
     // limit is 120 seconds
     public static Image pauseGame, playGame;
+    private static boolean isHelpShow = false;
+    public static Pane pane = new Pane();
 
     public static void createMenu(Group root) { // Create a menu
         level = new Text("Level");
@@ -57,13 +59,11 @@ public class Menu {
         helpGame.setScaleX(0.5);
         helpGame.setScaleY(0.5);
 
-
-        Pane pane = new Pane();
+        // Pane
         pane.getChildren().addAll(level, bomb, time, statusGame, helpGame);
         pane.setMinSize(800, 32);
         pane.setMaxSize(800, 480);
         pane.setStyle("-fx-background-color: #353535");
-
         root.getChildren().add(pane);
 
         playGame = new Image("images/pause.png");
@@ -73,6 +73,9 @@ public class Menu {
             if (bomberman.isAlive()) {
                 isPause = !isPause;
             } else {
+                if (pane.getChildren().contains(helpGame)) {
+                    pane.getChildren().remove(helpGame);
+                }
                 if (BombermanGame.currentLevel == 1) {
                     new Level1();
                     isOver = false;
@@ -88,9 +91,19 @@ public class Menu {
             updateMenu();
         });
 
-        helpGame.setOnMouseClicked(mouseEvent -> {
-          Image helpScene = new Image("images/HelpMenu.png");
-          author_view.setImage(helpScene);
+        helpGame.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent mouseEvent) {
+                if (!isHelpShow) {
+                    Image helpScene = new Image("images/HelpMenu.png");
+                    author_view.setImage(helpScene);
+                    isHelpShow = true;
+                } else {
+                    Image author = new Image("images/background.jpg");
+                    author_view.setImage(author);
+                    isHelpShow = false;
+                }
+            }
         });
 
     }
