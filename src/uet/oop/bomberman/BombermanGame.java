@@ -169,7 +169,11 @@ public class BombermanGame extends Application {
         }
         enemies.removeIf(enemy -> !enemy.isAlive());
 
-        bombs.forEach(Bomb::update);
+        for (int i = 0; i < bombs.size(); i++) {
+            if (bombs.get(i) != null) {
+                bombs.get(i).update();
+            }
+        }
         bombs.removeIf(Bomb::isExploded);
 
         items.forEach(Item::update);
