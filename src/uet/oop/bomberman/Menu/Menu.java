@@ -1,8 +1,10 @@
 package uet.oop.bomberman.Menu;
 
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -18,77 +20,91 @@ import uet.oop.bomberman.LevelMap.Level3;
 
 
 public class Menu {
-  private static ImageView statusGame;
-  public static Text level, bomb, time;
-  // limit is 120 seconds
-  public static Image pauseGame, playGame;
+    private static ImageView statusGame, helpGame;
+    public static Text level, bomb, time;
+    // limit is 120 seconds
+    public static Image pauseGame, playGame;
 
-  public static void createMenu(Group root) { // Create a menu
-    level = new Text("Level");
-    level.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-    level.setFill(Color.WHITE);
-    level.setX(416);
-    level.setY(20);
-    bomb = new Text("Bombs");
-    bomb.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-    bomb.setFill(Color.WHITE);
-    bomb.setX(512);
-    bomb.setY(20);
-    time = new Text("Times");
-    time.setFont(Font.font("Arial", FontWeight.BOLD, 14));
-    time.setFill(Color.WHITE);
-    time.setX(608);
-    time.setY(20);
+    public static void createMenu(Group root) { // Create a menu
+        level = new Text("Level");
+        level.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+        level.setFill(Color.WHITE);
+        level.setX(500);
+        level.setY(20);
+        bomb = new Text("Bombs");
+        bomb.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+        bomb.setFill(Color.WHITE);
+        bomb.setX(600);
+        bomb.setY(20);
+        time = new Text("Times");
+        time.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+        time.setFill(Color.WHITE);
+        time.setX(700);
+        time.setY(20);
 
-    Image newGame = new Image("images/start.png");
-    statusGame = new ImageView(newGame);
-    statusGame.setX(-75);
-    statusGame.setY(-10);
-    statusGame.setScaleX(0.5);
-    statusGame.setScaleY(0.5);
+        Image newGame = new Image("images/start.png");
+        statusGame = new ImageView(newGame);
+        statusGame.setX(-75);
+        statusGame.setY(-10);
+        statusGame.setScaleX(0.5);
+        statusGame.setScaleY(0.5);
 
-    Pane pane = new Pane();
-    pane.getChildren().addAll(level, bomb, time, statusGame);
-    pane.setMinSize(800, 32);
-    pane.setMaxSize(800, 480);
-    pane.setStyle("-fx-background-color: #353535");
+        // help
+        Image helpButton = new Image("images/helpbutton.png");
+        helpGame = new ImageView(helpButton);
+        helpGame.setX(150);
+        helpGame.setY(-10);
+        helpGame.setScaleX(0.5);
+        helpGame.setScaleY(0.5);
 
-    root.getChildren().add(pane);
 
-    playGame = new Image("images/pause.png");
-    pauseGame = new Image("images/resume.png");
+        Pane pane = new Pane();
+        pane.getChildren().addAll(level, bomb, time, statusGame, helpGame);
+        pane.setMinSize(800, 32);
+        pane.setMaxSize(800, 480);
+        pane.setStyle("-fx-background-color: #353535");
 
-    statusGame.setOnMouseClicked(event -> {
-      if (bomberman.isAlive()) {
-        isPause = !isPause;
-      } else {
-        if (BombermanGame.currentLevel == 1) {
-          new Level1();
-          isOver = false;
-        } else if (BombermanGame.currentLevel == 2) {
-          new Level2();
-          isOver = false;
-        } else if (BombermanGame.currentLevel == 3) {
-          new Level3();
-          isOver = false;
-        }
+        root.getChildren().add(pane);
 
-      }
-      updateMenu();
-    });
+        playGame = new Image("images/pause.png");
+        pauseGame = new Image("images/resume.png");
 
-  }
+        statusGame.setOnMouseClicked(event -> {
+            if (bomberman.isAlive()) {
+                isPause = !isPause;
+            } else {
+                if (BombermanGame.currentLevel == 1) {
+                    new Level1();
+                    isOver = false;
+                } else if (BombermanGame.currentLevel == 2) {
+                    new Level2();
+                    isOver = false;
+                } else if (BombermanGame.currentLevel == 3) {
+                    new Level3();
+                    isOver = false;
+                }
 
-  public static void updateMenu() { // Update menu
-    if (bomberman.isAlive())
-      if (isPause) {
-        statusGame.setImage(pauseGame);
-      } else {
-        statusGame.setImage(playGame);
-      }
-    else {
-      Image newGame = new Image("images/start.png");
-      statusGame.setImage(newGame);
+            }
+            updateMenu();
+        });
+
+        helpGame.setOnMouseClicked(mouseEvent -> {
+          Image helpScene = new Image("images/levelUp.png");
+          author_view.setImage(helpScene);
+        });
+
     }
-  }
+
+    public static void updateMenu() { // Update menu
+        if (bomberman.isAlive())
+            if (isPause) {
+                statusGame.setImage(pauseGame);
+            } else {
+                statusGame.setImage(playGame);
+            }
+        else {
+            Image newGame = new Image("images/start.png");
+            statusGame.setImage(newGame);
+        }
+    }
 }
