@@ -5,41 +5,72 @@ import javafx.scene.image.Image;
 import uet.oop.bomberman.graphics.Sprite;
 
 public abstract class Entity {
-  // Tọa độ X tính từ góc trái trên trong Canvas
-  protected int x;
-  // Tọa độ Y tính từ góc trái trên trong Canvas
-  protected int y;
-  // Hình ảnh của vật thể
-  protected Image img;
+    // X cordinate from left to right of canvas
+    protected int x;
+    // Y cordinate from top to down of canvas
+    protected int y;
+    // X cordinate in matrix
+    protected int rx;
+    // Y cordinate in matrix
+    protected int ry;
+    // Hình ảnh của vật thể
+    protected Image img;
 
-  // Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
-  public Entity(int xUnit, int yUnit, Image img) {
-    this.x = xUnit * Sprite.SCALED_SIZE;
-    this.y = yUnit * Sprite.SCALED_SIZE;
-    this.img = img;
-  }
+    // Khởi tạo đối tượng, chuyển từ tọa độ đơn vị sang tọa độ trong canvas
+    public Entity(int rx, int ry, Image img) {
+        this.x = rx * Sprite.SCALED_SIZE;
+        this.y = ry * Sprite.SCALED_SIZE;
+        this.rx = rx;
+        this.ry = ry;
+        this.img = img;
+    }
 
-  public Entity() {}
+    public Entity() {
+    }
 
-  public void render(GraphicsContext gc) {
-    gc.drawImage(img, x, y);
-  }
+    public void render(GraphicsContext gc) {
+        gc.drawImage(img, x, y);
+    }
 
-  public abstract void update();
+    public abstract void update();
 
-  public int getX() {
-    return x;
-  }
+    public int getX() {
+        return x;
+    }
 
-  public void setX(int x) {
-    this.x = x;
-  }
+    public void setX(int x) {
+        this.x = x;
+    }
 
-  public int getY() {
-    return y;
-  }
+    public int getY() {
+        return y;
+    }
 
-  public void setY(int y) {
-    this.y = y;
-  }
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getRx() {
+        return rx;
+    }
+
+    public void setRx(int rx) {
+        this.rx = rx;
+    }
+
+    public int getRy() {
+        return ry;
+    }
+
+    public void setRy(int ry) {
+        this.ry = ry;
+    }
+
+    public Image getImg() {
+        return img;
+    }
+
+    public void setImg(Image img) {
+        this.img = img;
+    }
 }
