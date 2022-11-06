@@ -80,6 +80,7 @@ public class BombermanGame extends Application {
     public static boolean isStopMoving = false;// only bomberman, prevent press after being killed
     public static boolean isPause = false;
     public static boolean isLevelUp = false;
+    public static boolean isHelp = false;
 
     // camera smooth translate
     private static final TranslateTransition camera = new TranslateTransition();
@@ -115,12 +116,9 @@ public class BombermanGame extends Application {
         stage.setHeight(SCREEN_HEIGHT * 32 + 74);
         stage.show();
         // keyboard events
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (!isStopMoving && !isPause)
-                    bomberman.handleEventPress(keyEvent);
-            }
+        scene.setOnKeyPressed(keyEvent -> {
+            if (!isStopMoving && !isPause)
+                bomberman.handleEventPress(keyEvent);
         });
 
         // game loop
@@ -142,9 +140,7 @@ public class BombermanGame extends Application {
             }
         };
         timer.start();
-
         bomberman.setAlive(false);
-
         lastSecond = System.currentTimeMillis();
     }
 
@@ -185,7 +181,6 @@ public class BombermanGame extends Application {
         long now = System.currentTimeMillis();
         if (now - lastSecond > 1000) {
             lastSecond = now;
-
             if (bomberman.isAlive() && time_number > 0) {
                 time_number--;
                 Menu.time.setText("Time " + time_number);

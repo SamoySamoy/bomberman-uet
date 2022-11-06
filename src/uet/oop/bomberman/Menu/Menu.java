@@ -89,7 +89,7 @@ public class Menu {
         });
 
         helpGame.setOnMouseClicked(mouseEvent -> {
-          Image helpScene = new Image("images/levelUp.png");
+          Image helpScene = new Image("images/HelpMenu.png");
           author_view.setImage(helpScene);
         });
 
