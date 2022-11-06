@@ -72,7 +72,7 @@ public class BombermanGame extends Application {
     // add main player start at (rx:1, ry:1) (coordinates in objId),
     // (x:1, y:1) (cordinates in screen size)
     public static Bomber bomberman =
-            new Bomber(1, 1, Sprite.player_right.getFxImage(), 1, true, "right");
+            new Bomber(1, 1, Sprite.player_right.getFxImage(), true, "right");
     public static Entity portal1 = new Portal(42, 7, Sprite.portal.getFxImage());
     public static Entity portal2 = new Portal(16, 7, Sprite.portal.getFxImage());
     public static Entity portal3 = new Portal(16, 3, Sprite.portal.getFxImage());
@@ -173,7 +173,6 @@ public class BombermanGame extends Application {
         bombs.removeIf(Bomb::isExploded);
 
         items.forEach(Item::update);
-        items.removeIf(Item::isPicked);
 
         portal1.update();
         portal2.update();

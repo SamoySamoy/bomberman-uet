@@ -6,15 +6,14 @@ import uet.oop.bomberman.Menu.Menu;
 import uet.oop.bomberman.Sound.Sound;
 import uet.oop.bomberman.entities.MovableEntity;
 import uet.oop.bomberman.entities.blocks.Bomb;
-import uet.oop.bomberman.entities.items.Item;
 import uet.oop.bomberman.graphics.Sprite;
 
 import static uet.oop.bomberman.BombermanGame.*;
 
 public class Bomber extends MovableEntity {
-    private int deadAnimation = 1;
-    private int countTransform = 0;
-    private long lastPutBomb = 0;
+    private int deadAnimation;
+    private int countDeadTransform;
+    private long lastPutBomb;
     private int curBombRemain;
     public static int BOMBER_WAIT_NEXT_STEP;
     public static final int BOMBER_DEFAULT_SPEED = 8;
@@ -22,9 +21,12 @@ public class Bomber extends MovableEntity {
     public static final int BOMBER_WAIT_NEXT_STEP_NORMAL = 4;
     public static final int BOMBER_WAIT_NEXT_STEP_FAST = 2;
 
-    public Bomber(int rx, int ry, Image img, int deadAnimation, boolean isAlive, String direction) {
+    public Bomber(int rx, int ry, Image img, boolean isAlive, String direction) {
         super(rx, ry, img, isAlive, direction);
         this.curBombRemain = 1;
+        this.deadAnimation = 1;
+        this.countDeadTransform = 0;
+        this.lastPutBomb = 0;
         this.setSpeedState();
         // Set img
         upImg[0] = Sprite.player_up.getFxImage();
@@ -100,12 +102,11 @@ public class Bomber extends MovableEntity {
 
     private void checkPickItem() {
         if (itemMatrix[this.rx][this.ry] != 0) {
-            // 4 5 6 7 8 lần lượt là Speed, Flame, Bomb item, Bomb limit item, Time limit item
+            // Set item effect
+            // Note: 4 5 6 7 8 lần lượt là Speed, Flame, Bomb item, Bomb limit item, Time limit item
             switch (itemMatrix[this.rx][this.ry]) {
                 case 4: // High speed item
                     Bomber.BOMBER_WAIT_NEXT_STEP = Bomber.BOMBER_WAIT_NEXT_STEP_FAST;
-                    System.out.println("Speed: " + this.speed);
-                    System.out.println("Wait for next step: " + Bomber.BOMBER_WAIT_NEXT_STEP);
                     break;
                 case 5: // Gain bomb power item
                     Bomb.gainBombLevel();
@@ -113,19 +114,17 @@ public class Bomber extends MovableEntity {
                 case 6: // Gain amount of bomb can be put in once time
                     this.gainBombRemain();
                     break;
-                case 7:
+                case 7: // Gain bomb limit
                     bomb_number += 10;
                     Menu.bomb.setText("Bomb " + bomb_number);
                     break;
-                case 8:
+                case 8: // Gain time limit
                     time_number += 30;
                     Menu.time.setText("Time " + time_number);
                     break;
             }
-            for (Item item : items) {
-                if (item.getRx() == this.rx && item.getRy() == this.ry)
-                    item.setPicked(true);
-            }
+            // Remove item
+            items.removeIf(item -> item.getRx() == this.rx && item.getRy() == this.ry);
             objId[this.rx][this.ry] = 0;
             itemMatrix[this.rx][this.ry] = 0;
         }
@@ -142,9 +141,7 @@ public class Bomber extends MovableEntity {
             Bomb bomb = new Bomb(this.rx, this.ry, Sprite.bomb.getFxImage(), false, false);
             new Sound("sound/put_bombs.wav", "putBomb");
             bombs.add(bomb);
-
-        } else
-            System.out.println("Tam thoi het bomb");
+        }
     }
 
     private void setSpeedState() {
@@ -169,7 +166,7 @@ public class Bomber extends MovableEntity {
         isStopMoving = true;
         if (!this.isAlive) {
             // transform from dead1 state to dead3 state
-            if (countTransform % 15 == 0) {
+            if (countDeadTransform % 15 == 0) {
                 if (deadAnimation == 1) {
                     this.img = Sprite.player_dead.getFxImage();
                     deadAnimation = 2;
@@ -189,7 +186,7 @@ public class Bomber extends MovableEntity {
     public void reset() {
         this.setAlive(true);
         this.setDeadAnimation(1);
-        this.setCountTransform(0);
+        this.setCountDeadTransform(0);
         this.setLastPutBomb(0);
         this.setRx(1);
         this.setRy(1);
@@ -206,7 +203,7 @@ public class Bomber extends MovableEntity {
 
     @Override
     public void update() {
-        countTransform++;
+        countDeadTransform++;
         killedByBomb();
     }
 
@@ -234,12 +231,12 @@ public class Bomber extends MovableEntity {
         this.deadAnimation = deadAnimation;
     }
 
-    public int getCountTransform() {
-        return countTransform;
+    public int getCountDeadTransform() {
+        return countDeadTransform;
     }
 
-    public void setCountTransform(int countTransform) {
-        this.countTransform = countTransform;
+    public void setCountDeadTransform(int countDeadTransform) {
+        this.countDeadTransform = countDeadTransform;
     }
 
     public long getLastPutBomb() {
