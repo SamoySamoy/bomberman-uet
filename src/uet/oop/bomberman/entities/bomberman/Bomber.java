@@ -166,7 +166,7 @@ public class Bomber extends MovableEntity {
 
     public void killedByEnemy() {
         isStopMoving = true;
-        this.setAlive(false);
+        isAlive = false;
         if (!this.isAlive) {
             // transform from dead1 state to dead3 state
             if (countDeadTransform % 15 == 0) {
