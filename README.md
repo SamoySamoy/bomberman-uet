@@ -74,7 +74,7 @@
     <div align="center">
         <img src="res/UML/entities.png" alt="">
     </div>
-    <h4>2. blocks</h4>
+    <h3>2. blocks</h3>
     <div align="center">
         <img src="res/UML/blocks.png" alt="">
     </div>
