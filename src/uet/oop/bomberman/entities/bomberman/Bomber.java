@@ -158,7 +158,6 @@ public class Bomber extends MovableEntity {
             if (bomb.isFinal()) {
                 if (bomb.getRx() == this.rx && bomb.getRy() == this.ry) {
                     this.killedByEnemy();
-                    this.setAlive(false);
                     isOver = true;
                 }
             }
@@ -167,6 +166,7 @@ public class Bomber extends MovableEntity {
 
     public void killedByEnemy() {
         isStopMoving = true;
+        this.setAlive(false);
         if (!this.isAlive) {
             // transform from dead1 state to dead3 state
             if (countDeadTransform % 15 == 0) {
