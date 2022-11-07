@@ -3,11 +3,9 @@ package uet.oop.bomberman.Menu;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
@@ -16,7 +14,6 @@ public class GameButton extends Button {
 
     public GameButton(String text) {
         setStyle("-fx-background-color: transparent");
-        //setStyle("-fx-background-image: url('/Demo/yellow_button.png')");
         setBackground(getBackground());
         setText(text);
         setButtonFont();
@@ -37,7 +34,6 @@ public class GameButton extends Button {
 
     private void setButtonPressedStyle() {
         setStyle("-fx-background-color: transparent");
-        //setStyle("-fx-background-image: url('/Demo/yellow_button_pressed.png')");
         setPrefHeight(30);
         setLayoutY(getLayoutY() + 4);
 
@@ -45,7 +41,6 @@ public class GameButton extends Button {
 
     private void setButtonReleasedStyle() {
         setStyle("-fx-background-color: transparent");
-        //setStyle("-fx-background-image: url('/Demo/yellow_button.png')");
         setPrefHeight(30);
         setLayoutY(getLayoutY() - 4);
     }

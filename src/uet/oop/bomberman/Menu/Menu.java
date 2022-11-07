@@ -10,7 +10,6 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import uet.oop.bomberman.Sound.Sound;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,6 @@ public class Menu {
     public List<GameButton> menuButtons;
     public List<GameButton> helpButtonList;
 
-    private Sound sound;
     public static Text level, bomb, time;
     // limit is 120 seconds
     public static Image pauseGame, playGame;
